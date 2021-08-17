@@ -8,5 +8,14 @@
         android:id="@+id/onBoardingFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.OnBoardingFragment"
         android:label="on_boarding_fragment"
-        tools:layout="@layout/on_boarding_fragment" />
+        tools:layout="@layout/on_boarding_fragment" >
+        <action
+            android:id="@+id/action_onBoardingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" />
 </navigation>
