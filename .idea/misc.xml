@@ -5,11 +5,14 @@
       <map>
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/black_button_style.xml" value="0.14635416666666667" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/activity_main.xml" value="0.17300724637681159" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/date_item.xml" value="0.1546875" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/day_item.xml" value="0.6" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/home_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/home_header_item.xml" value="0.4" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/home_transaction_item.xml" value="0.1" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/income_item.xml" value="1.6" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/main_card_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/main_fragment.xml" value="0.264" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/on_boarding_fragment.xml" value="0.264" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/transaction_item.xml" value="0.4" />
       </map>
