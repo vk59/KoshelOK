@@ -11,15 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.OnBoardingFragmentBinding
-import com.tinkoff_sirius.koshelok.model.Account
+import com.tinkoff_sirius.koshelok.repository.AccountShared.saveAccount
 
 
 class OnBoardingFragment : Fragment() {
@@ -27,8 +25,8 @@ class OnBoardingFragment : Fragment() {
     private val binding by viewBinding(OnBoardingFragmentBinding::bind)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.on_boarding_fragment, container, false)
     }
@@ -44,10 +42,10 @@ class OnBoardingFragment : Fragment() {
         }
     }
 
-    fun getSignInIntent(): Intent {
+    private fun getSignInIntent(): Intent {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
+                .requestEmail()
+                .build()
 
         val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 
@@ -57,37 +55,23 @@ class OnBoardingFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(requireContext())
-        Log.d("ACCOUNT", account?.displayName + account?.email ?: " null ")
+        Log.d("ACCOUNT", account?.displayName + account?.email)
         if (account != null) {
             navigateWith(account)
         }
     }
 
     private val loginResultHandler =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
 
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
-            val account = task.result
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
+                val account = task.result
 
-            navigateWith(account)
-        }
+                navigateWith(account)
+            }
 
     private fun navigateWith(account: GoogleSignInAccount) {
         findNavController().navigate(R.id.action_onBoardingFragment_to_mainFragment)
-        saveAccount(account)
-    }
-
-    private fun saveAccount(account: GoogleSignInAccount) {
-        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-        val sharedPreferences = EncryptedSharedPreferences.create(
-            Account.ACCOUNT_DATA,
-            masterKeyAlias,
-            requireContext().applicationContext,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        sharedPreferences.edit()
-            .putString(Account.ACCOUNT_EMAIL, account.email)
-            .apply()
+        saveAccount(account, requireContext())
     }
 }
