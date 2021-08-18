@@ -14,12 +14,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.adapters.MainRecyclerAdapter
+import com.tinkoff_sirius.koshelok.config.AppConfig
+import com.tinkoff_sirius.koshelok.config.AppConfig.WAIT_FOR_PUSH_AGAIN
 import com.tinkoff_sirius.koshelok.databinding.FragmentMainBinding
-import com.tinkoff_sirius.koshelok.model.MainItem
 
 class MainFragment : Fragment() {
 
-    private val WAIT_FOR_PUSH_AGAIN = 3000L
     private val viewModel: MainViewModel by viewModels()
     private val binding by viewBinding(FragmentMainBinding::bind)
     private var exitFlag = false
@@ -37,9 +37,8 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initRecycler()
         initButtons()
+        initRecycler()
     }
 
     private fun initButtons() {
@@ -70,9 +69,7 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(this@MainFragment.context)
         }
 
-        val mTransaction = listOf<MainItem>(
-            MainItem.Header("Кошелек 1", "60 000", "170 000", "66400", "230 000")
-        )
+        val mTransaction = AppConfig.headerExample
         mainRecyclerAdapter.setData(mTransaction)
     }
 }

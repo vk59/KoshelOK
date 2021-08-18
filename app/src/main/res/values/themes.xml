@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Koshelok" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Koshelok" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/main_blue</item>
         <item name="colorPrimaryVariant">@color/white</item>
@@ -20,6 +20,7 @@
     <style name="Theme.Koshelok.Launcher" parent="Theme.Koshelok">
         <item name="android:windowBackground">@drawable/launch_screen</item>
         <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
     </style>
 
 </resources>

@@ -7,7 +7,10 @@ sealed class MainItem {
         val currentMoney: String,
         val income: String,
         val outcome: String,
-        maxOutcome: String?) : MainItem()
+        val maxOutcome: String?
+        ) : MainItem()
 
     data class Transaction(val string: String) : MainItem()
+
+    class Date(val date: String) : MainItem()
 }

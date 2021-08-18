@@ -10,4 +10,5 @@
     <string name="text_button_add_operation">Добавить операцию</string>
     <string name="card_outcome_title">Расход</string>
     <string name="snackbar_push_exit">Нажмите ещё раз для выхода</string>
+    <string name="rubles">%1$s ₽</string>
 </resources>
