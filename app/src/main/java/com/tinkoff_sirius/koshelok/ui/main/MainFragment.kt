@@ -60,8 +60,8 @@ class MainFragment : Fragment() {
                 .make(binding.root, getString(R.string.snackbar_push_exit), Snackbar.LENGTH_LONG)
                 .show()
             Handler(Looper.getMainLooper()!!).postDelayed({
-                    exitFlag = false
-                }, WAIT_FOR_PUSH_AGAIN)
+                exitFlag = false
+            }, WAIT_FOR_PUSH_AGAIN)
         }
     }
 
@@ -73,7 +73,9 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(this@MainFragment.context)
         }
 
-        val mTransaction = AppConfig.headerExample
-        mainRecyclerAdapter.setData(mTransaction)
+        val header = AppConfig.headerExample.toMutableList()
+        header.addAll(viewModel.transactions)
+        binding.textNoEntities.visibility = View.GONE
+        mainRecyclerAdapter.setData(header.toList())
     }
 }

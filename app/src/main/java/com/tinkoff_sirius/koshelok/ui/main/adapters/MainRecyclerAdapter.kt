@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
+import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.DateViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.HeaderViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.MainViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.TransactionViewHolder
@@ -25,7 +26,8 @@ class MainRecyclerAdapter() :
         return when(viewType) {
             TYPE_TRANSACTION -> TransactionViewHolder(inflater.inflate(R.layout.item_transaction, parent, false))
             TYPE_HEADER ->  HeaderViewHolder(inflater.inflate(R.layout.item_home_header, parent, false))
-            else -> throw Exception("You should youse Transaction and Header View Holder")
+            TYPE_DATE -> DateViewHolder(inflater.inflate(R.layout.item_date, parent, false))
+            else -> throw Exception("You should use Transaction and Header View Holder")
         }
     }
 

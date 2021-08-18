@@ -36,11 +36,12 @@
             android:layout_marginStart="@dimen/margin_main_screen"
             android:layout_marginEnd="@dimen/margin_main_screen"
             android:overScrollMode="never"
-            android:paddingBottom="@dimen/padding_recycler"
+            android:paddingBottom="64dp"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
     </androidx.core.widget.NestedScrollView>
 
     <TextView
+        android:id="@+id/textNoEntities"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
