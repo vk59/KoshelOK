@@ -1,22 +1,18 @@
-package com.tinkoff_sirius.koshelok.adapters
+package com.tinkoff_sirius.koshelok.ui.transaction_category.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.model.MainAdapterItem
+import com.tinkoff_sirius.koshelok.model.Transaction
 
 class TransactionCategoryAdapter() : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
 
-    private var list: MutableList<MainAdapterItem.Transaction> = mutableListOf()
+    private var list: MutableList<Transaction> = mutableListOf()
 
-    fun setData(data: MutableList<MainAdapterItem.Transaction>) {
+    fun setData(data: MutableList<Transaction>) {
        list = data
     }
-
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,11 +24,9 @@ class TransactionCategoryAdapter() : RecyclerView.Adapter<TransactionCategoryVie
     }
 
     override fun onBindViewHolder(holder: TransactionCategoryViewHolder, position: Int) {
-        val transaction: MainAdapterItem.Transaction = list[position]
-        holder.bind(transaction.title)
+        val transaction: Transaction = list[position]
+        holder.bind(transaction)
     }
 
     override fun getItemCount(): Int = list.size
-
-
 }

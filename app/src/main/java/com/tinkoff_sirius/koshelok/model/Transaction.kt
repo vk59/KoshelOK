@@ -2,8 +2,8 @@ package com.tinkoff_sirius.koshelok.model
 
 import kotlinx.datetime.LocalDate
 
-class Transaction(
-    sum: Double,
-    type: TransactionType,
-    date: LocalDate
+data class Transaction(
+    val sum: Double,
+    val category: Category,
+    val date: LocalDate
 )

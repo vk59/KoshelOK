@@ -1,4 +1,4 @@
-package com.tinkoff_sirius.koshelok.ui
+package com.tinkoff_sirius.koshelok.ui.main
 
 import androidx.lifecycle.ViewModel
 

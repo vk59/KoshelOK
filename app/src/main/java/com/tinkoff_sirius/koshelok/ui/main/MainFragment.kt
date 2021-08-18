@@ -1,4 +1,4 @@
-package com.tinkoff_sirius.koshelok.ui
+package com.tinkoff_sirius.koshelok.ui.main
 
 import android.os.Bundle
 import android.os.Handler
@@ -8,15 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.adapters.MainRecyclerAdapter
 import com.tinkoff_sirius.koshelok.config.AppConfig
 import com.tinkoff_sirius.koshelok.config.AppConfig.WAIT_FOR_PUSH_AGAIN
 import com.tinkoff_sirius.koshelok.databinding.FragmentMainBinding
+import com.tinkoff_sirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 
 class MainFragment : Fragment() {
 
@@ -44,6 +45,9 @@ class MainFragment : Fragment() {
     private fun initButtons() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+        binding.buttonAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_setSumFragment)
         }
     }
 

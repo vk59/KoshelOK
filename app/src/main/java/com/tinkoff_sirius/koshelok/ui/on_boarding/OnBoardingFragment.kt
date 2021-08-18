@@ -1,4 +1,4 @@
-package com.tinkoff_sirius.koshelok.ui
+package com.tinkoff_sirius.koshelok.ui.on_boarding
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentOnBoardingBinding
 import com.tinkoff_sirius.koshelok.repository.AccountShared.saveAccount
+import com.tinkoff_sirius.koshelok.ui.main.MainViewModel
 import timber.log.Timber
 
 

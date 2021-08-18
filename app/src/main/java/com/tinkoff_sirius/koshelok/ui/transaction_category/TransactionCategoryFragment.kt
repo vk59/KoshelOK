@@ -1,24 +1,19 @@
-package com.tinkoff_sirius.koshelok.ui
+package com.tinkoff_sirius.koshelok.ui.transaction_category
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.adapters.MainRecyclerAdapter
-import com.tinkoff_sirius.koshelok.adapters.TransactionCategoryAdapter
-import com.tinkoff_sirius.koshelok.databinding.MainFragmentBinding
+import com.tinkoff_sirius.koshelok.config.AppConfig
 import com.tinkoff_sirius.koshelok.databinding.TransactionCategoryFragmentBinding
-import com.tinkoff_sirius.koshelok.model.MainAdapterItem
+import com.tinkoff_sirius.koshelok.ui.transaction_category.adapters.TransactionCategoryAdapter
 
 class TransactionCategoryFragment : Fragment() {
-
-
     private lateinit var viewModel: TransactionCategoryViewModel
 
     private val binding by viewBinding(TransactionCategoryFragmentBinding::bind)
@@ -44,16 +39,8 @@ class TransactionCategoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(this@TransactionCategoryFragment.context)
         }
 
-        val mTransaction = mutableListOf<MainAdapterItem.Transaction>(
-
-            MainAdapterItem.Transaction("aaaaaaaaaa"),
-            MainAdapterItem.Transaction("aaaaaaaaaa"),
-            MainAdapterItem.Transaction("aaaaaaaaaa"),
-            MainAdapterItem.Transaction("aaaaaaaaaa")
-        )
+        val mTransaction = AppConfig.transactionExample
 
         recyclerAdapter.setData(mTransaction)
     }
-
-
 }

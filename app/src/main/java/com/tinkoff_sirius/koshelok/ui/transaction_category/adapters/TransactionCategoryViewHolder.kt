@@ -1,12 +1,14 @@
-package com.tinkoff_sirius.koshelok.adapters
+package com.tinkoff_sirius.koshelok.ui.transaction_category.adapters
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
+import com.tinkoff_sirius.koshelok.model.Transaction
 
 class TransactionCategoryViewHolder(itemView: View) :
-    MainViewHolder(itemView) {
+    RecyclerView.ViewHolder(itemView) {
     private var mTransactionCategoryImage: ImageView? = null
     private var mTransactionCategoryTitle: TextView? = null
 
@@ -15,9 +17,8 @@ class TransactionCategoryViewHolder(itemView: View) :
         mTransactionCategoryTitle = itemView.findViewById(R.id.transaction_category_title)
     }
 
-    override fun bind(vararg data: Any) {
-        mTransactionCategoryImage?.setBackgroundResource(R.drawable.ic_transaction_category)
-        mTransactionCategoryTitle?.text = data.toString()
-
+    fun bind(transaction: Transaction) {
+        mTransactionCategoryImage?.setBackgroundResource(transaction.category.icon)
+        mTransactionCategoryTitle?.text = transaction.category.type.nameType
     }
 }

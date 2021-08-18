@@ -1,4 +1,4 @@
-package com.tinkoff_sirius.koshelok.adapters
+package com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders
 
 import android.view.View
 import android.widget.ImageView
@@ -7,8 +7,8 @@ import androidx.cardview.widget.CardView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.ItemHomeHeaderBinding
-import com.tinkoff_sirius.koshelok.model.MainItem
-import com.tinkoff_sirius.koshelok.model.MainItem.Header
+import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
+import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem.Header
 
 class HeaderViewHolder(val view: View) : MainViewHolder(view) {
 

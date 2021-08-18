@@ -1,11 +1,14 @@
-package com.tinkoff_sirius.koshelok.adapters
+package com.tinkoff_sirius.koshelok.ui.main.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.model.MainItem
+import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
+import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.HeaderViewHolder
+import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.MainViewHolder
+import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.TransactionViewHolder
 
 
 class MainRecyclerAdapter() :

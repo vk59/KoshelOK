@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/transactionCategoryFragment">
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="com.tinkoff_sirius.koshelok.ui.OnBoardingFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.on_boarding.OnBoardingFragment"
         android:label="on_boarding_fragment"
-        tools:layout="@layout/on_boarding_fragment" >
+        tools:layout="@layout/fragment_on_boarding" >
         <action
             android:id="@+id/action_onBoardingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.tinkoff_sirius.koshelok.ui.MainFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.main.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment" >
+        tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_setSumFragment"
             app:destination="@id/setSumFragment" />
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/setSumFragment"
-        android:name="com.tinkoff_sirius.koshelok.ui.SetSumFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.set_sum.SetSumFragment"
         android:label="set_sum_fragment"
         tools:layout="@layout/fragment_set_sum"
         >
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/operationTypeFragment"
-        android:name="com.tinkoff_sirius.koshelok.ui.OperationTypeFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.operation.OperationTypeFragment"
         android:label="operation_type_fragment"
         tools:layout="@layout/fragment_operation_type"
         >
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/transactionCategoryFragment"
-        android:name="com.tinkoff_sirius.koshelok.ui.TransactionCategoryFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.transaction_category.TransactionCategoryFragment"
         android:label="transaction_category_fragment"
         tools:layout="@layout/transaction_category_fragment"
         >
