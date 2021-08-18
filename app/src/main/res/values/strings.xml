@@ -5,4 +5,6 @@
     <string name="onboarding_title">Добро пожаловать\nв КошелОК</string>
     <string name="onboardind_sub_title">Тут вы сможете контролировать свои доходы и расходы</string>
     <string name="onboarding_button_text">Войти с помощью Google</string>
+    <string name="set_sum_fragment_button_text">Готово</string>
+    <string name="set_sum_fragment_edit_text_hint">Сумма операции</string>
 </resources>
