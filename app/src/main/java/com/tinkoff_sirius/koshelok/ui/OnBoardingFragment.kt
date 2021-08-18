@@ -15,7 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.databinding.OnBoardingFragmentBinding
+import com.tinkoff_sirius.koshelok.databinding.FragmentOnBoardingBinding
 import com.tinkoff_sirius.koshelok.repository.AccountShared.saveAccount
 import timber.log.Timber
 
@@ -23,13 +23,13 @@ import timber.log.Timber
 class OnBoardingFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels()
-    private val binding by viewBinding(OnBoardingFragmentBinding::bind)
+    private val binding by viewBinding(FragmentOnBoardingBinding::bind)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.on_boarding_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_on_boarding, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

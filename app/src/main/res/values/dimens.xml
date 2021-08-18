@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_type_payment_size">12sp</dimen>
+    <dimen name="text_money_spent_size">16sp</dimen>
+    <dimen name="radius_card_payment">8dp</dimen>
+    <dimen name="margin_icon_payment">10dp</dimen>
+    <dimen name="margin_between_cards">4dp</dimen>
+    <dimen name="text_name_koshelok">12sp</dimen>
+    <dimen name="text_current_money">32sp</dimen>
+    <dimen name="margin_main_screen">16sp</dimen>
+    <dimen name="padding_recycler">20dp</dimen>
+    <dimen name="text_button_size">16sp</dimen>
+    <dimen name="text_description_app_size">20sp</dimen>
+    <dimen name="text_title_onboarding_size">24sp</dimen>
+    <dimen name="guideline_top">50dp</dimen>
+</resources>

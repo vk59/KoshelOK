@@ -4,18 +4,14 @@ import android.view.View
 import android.widget.TextView
 import com.tinkoff_sirius.koshelok.R
 
-class TransactionViewHolder(itemView: View) :
+class TransactionViewHolder(private val itemView: View) :
     MainViewHolder(itemView) {
-    private var mTitleView: TextView? = null
+//    private val titleView: TextView by lazy(LazyThreadSafetyMode.NONE) {
+//
+//    }
 
-
-    init {
-        mTitleView = itemView.findViewById(R.id.title)
-
-    }
-
-    override fun bind(vararg data: Any) {
-        mTitleView?.text = data.toString()
+    override fun bind(data: Any) {
+        itemView.findViewById<TextView>(R.id.title).text = data.toString()
 
     }
 }
