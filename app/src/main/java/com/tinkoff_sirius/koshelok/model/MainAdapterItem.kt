@@ -4,5 +4,5 @@ sealed class MainAdapterItem {
 
     object Header : MainAdapterItem()
 
-    data class Transaction(val string: String) : MainAdapterItem()
+    data class Transaction(val title: String) : MainAdapterItem()
 }
