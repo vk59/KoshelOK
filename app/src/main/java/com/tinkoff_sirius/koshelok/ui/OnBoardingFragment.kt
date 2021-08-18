@@ -2,7 +2,6 @@ package com.tinkoff_sirius.koshelok.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +17,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.OnBoardingFragmentBinding
 import com.tinkoff_sirius.koshelok.repository.AccountShared.saveAccount
+import timber.log.Timber
 
 
 class OnBoardingFragment : Fragment() {
+
     private val mainViewModel: MainViewModel by viewModels()
     private val binding by viewBinding(OnBoardingFragmentBinding::bind)
 
@@ -55,7 +56,7 @@ class OnBoardingFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(requireContext())
-        Log.d("ACCOUNT", account?.displayName + account?.email)
+        Timber.tag("ACCOUNT").d("${account?.displayName}  ${account?.email}")
         if (account != null) {
             navigateWith(account)
         }
@@ -72,6 +73,6 @@ class OnBoardingFragment : Fragment() {
 
     private fun navigateWith(account: GoogleSignInAccount) {
         findNavController().navigate(R.id.action_onBoardingFragment_to_mainFragment)
-        saveAccount(account, requireContext())
+        saveAccount(account, requireActivity().applicationContext)
     }
 }

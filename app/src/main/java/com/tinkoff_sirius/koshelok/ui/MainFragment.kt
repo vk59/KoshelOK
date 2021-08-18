@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.tinkoff_sirius.koshelok.R
 
 class MainFragment : Fragment() {
+
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
