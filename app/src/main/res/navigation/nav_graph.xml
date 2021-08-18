@@ -8,7 +8,7 @@
         android:id="@+id/onBoardingFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.OnBoardingFragment"
         android:label="on_boarding_fragment"
-        tools:layout="@layout/fragment_on_boarding" >
+        tools:layout="@layout/on_boarding_fragment" >
         <action
             android:id="@+id/action_onBoardingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -17,5 +17,43 @@
         android:id="@+id/mainFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_setSumFragment"
+            app:destination="@id/setSumFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/setSumFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.SetSumFragment"
+        android:label="set_sum_fragment"
+        tools:layout="@layout/fragment_set_sum"
+        >
+        <action
+            android:id="@+id/action_setSumFragment_to_operationTypeFragment"
+            app:destination="@id/operationTypeFragment" />
+        <action
+            android:id="@+id/action_setSumFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/operationTypeFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.OperationTypeFragment"
+        android:label="operation_type_fragment"
+        tools:layout="@layout/fragment_operation_type"
+        >
+        <action
+            android:id="@+id/action_operationTypeFragment_to_setSumFragment"
+            app:destination="@id/setSumFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionCategoryFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.TransactionCategoryFragment"
+        android:label="transaction_category_fragment"
+        tools:layout="@layout/transaction_category_fragment"
+        >
+
+    </fragment>
 </navigation>

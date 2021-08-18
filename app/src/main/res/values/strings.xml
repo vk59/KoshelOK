@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Koshelok</string>
     <string name="click">Click</string>
@@ -11,4 +10,6 @@
     <string name="card_outcome_title">Расход</string>
     <string name="snackbar_push_exit">Нажмите ещё раз для выхода</string>
     <string name="rubles">%1$s ₽</string>
+    <string name="set_sum_fragment_button_text">Готово</string>
+    <string name="set_sum_fragment_edit_text_hint">Сумма операции</string>
 </resources>
