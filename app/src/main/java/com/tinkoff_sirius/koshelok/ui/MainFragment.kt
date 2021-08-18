@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -16,7 +16,7 @@ import com.tinkoff_sirius.koshelok.model.MainAdapterItem
 
 class MainFragment : Fragment() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
     private val binding by viewBinding(MainFragmentBinding::bind)
 
     private val recyclerView: RecyclerView by lazy(LazyThreadSafetyMode.NONE) {
@@ -27,8 +27,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -49,5 +47,4 @@ class MainFragment : Fragment() {
         )
         mainRecyclerAdapter.setData(mTransaction)
     }
-
 }

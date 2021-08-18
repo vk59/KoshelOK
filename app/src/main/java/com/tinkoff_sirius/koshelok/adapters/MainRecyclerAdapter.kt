@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.model.MainAdapterItem
-import java.lang.Exception
 
 
 class MainRecyclerAdapter() :

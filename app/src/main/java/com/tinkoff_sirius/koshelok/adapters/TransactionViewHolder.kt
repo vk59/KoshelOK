@@ -1,8 +1,6 @@
 package com.tinkoff_sirius.koshelok.adapters
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import com.tinkoff_sirius.koshelok.R
 
