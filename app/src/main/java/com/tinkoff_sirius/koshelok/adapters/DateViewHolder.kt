@@ -10,6 +10,6 @@ class DateViewHolder (view: View) : MainViewHolder(view) {
 
     override fun bind(vararg data: Any) {
 
-        
+
     }
 }
