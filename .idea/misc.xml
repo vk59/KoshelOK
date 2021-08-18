@@ -5,10 +5,11 @@
       <map>
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/black_button_style.xml" value="0.14635416666666667" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/on_boarding_fragment.xml" value="0.4" />
+        <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/on_boarding_fragment.xml" value="0.10416666666666667" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
