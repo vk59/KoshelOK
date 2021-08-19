@@ -5,7 +5,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.databinding.ItemDateBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
-class DateViewHolder (view: View) : MainViewHolder(view) {
+class DateViewHolder(view: View) : MainViewHolder(view) {
 
     private val binding: ItemDateBinding by viewBinding(ItemDateBinding::bind)
 

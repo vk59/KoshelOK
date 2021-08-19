@@ -28,7 +28,6 @@ class MainViewModel : ViewModel() {
         transactions = transItems.toList()
     }
 
-
     private fun toString(localDate: LocalDate): String {
         val result = StringBuffer().append("${localDate.dayOfMonth} ")
         result.append(

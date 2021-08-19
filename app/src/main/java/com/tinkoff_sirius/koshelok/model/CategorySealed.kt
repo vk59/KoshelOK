@@ -8,7 +8,7 @@ sealed class CategorySealed {
     abstract val type: String
     abstract val icon: Int
 
-    sealed class Income() : CategorySealed() {
+    sealed class Income : CategorySealed() {
         class Salary(override val color: Int = R.color.green) : Income() {
             override val type: String
                 get() = Types.SALARY.nameType
@@ -38,7 +38,7 @@ sealed class CategorySealed {
         }
     }
 
-    sealed class Outcome() : CategorySealed() {
+    sealed class Outcome : CategorySealed() {
         class Food(override val color: Int = R.color.green) : Outcome() {
             override val type: String
                 get() = Types.FOOD.nameType

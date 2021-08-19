@@ -61,5 +61,4 @@ object AppConfig {
             "16:15"
         )
     )
-
 }

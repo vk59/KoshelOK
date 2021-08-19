@@ -11,8 +11,7 @@ import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.HeaderViewHolde
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.MainViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.TransactionViewHolder
 
-
-class MainRecyclerAdapter() :
+class MainRecyclerAdapter :
     RecyclerView.Adapter<MainViewHolder>() {
 
     fun setData(data: List<MainItem>) {
@@ -23,11 +22,11 @@ class MainRecyclerAdapter() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when(viewType) {
+        return when (viewType) {
             TYPE_TRANSACTION -> TransactionViewHolder(inflater.inflate(R.layout.item_transaction, parent, false))
             TYPE_HEADER ->  HeaderViewHolder(inflater.inflate(R.layout.item_home_header, parent, false))
             TYPE_DATE -> DateViewHolder(inflater.inflate(R.layout.item_date, parent, false))
-            else -> throw Exception("You should use Transaction and Header View Holder")
+            else -> @Suppress throw Exception("You should use Transaction and Header View Holder")
         }
     }
 
@@ -36,7 +35,7 @@ class MainRecyclerAdapter() :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(diff.currentList[position]) {
+        return when (diff.currentList[position]) {
             is MainItem.Header -> TYPE_HEADER
             is MainItem.Transaction -> TYPE_TRANSACTION
             is MainItem.Date -> TYPE_DATE

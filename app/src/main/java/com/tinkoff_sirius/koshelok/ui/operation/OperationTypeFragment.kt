@@ -28,8 +28,8 @@ class OperationTypeFragment : Fragment() {
         initListeners(view)
     }
 
-    private fun initListeners(v: View){
-        binding.setType.setOnClickListener{
+    private fun initListeners(v: View) {
+        binding.setType.setOnClickListener {
 //            v.findNavController().navigate(R.id.)
         }
         binding.toolbar.setNavigationOnClickListener {

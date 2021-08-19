@@ -22,7 +22,6 @@ import com.tinkoff_sirius.koshelok.config.AppConfig.WAIT_FOR_PUSH_AGAIN
 import com.tinkoff_sirius.koshelok.databinding.FragmentMainBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 
-
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
@@ -33,10 +32,9 @@ class MainFragment : Fragment() {
         binding.recyclerView
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
@@ -140,11 +138,8 @@ class MainFragment : Fragment() {
                     } else {
                         background.setBounds(0, 0, 0, 0)
                     }
-
                     background.draw(c)
                 }
-
-
             }
         val itemTouchHelper = ItemTouchHelper(touchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)

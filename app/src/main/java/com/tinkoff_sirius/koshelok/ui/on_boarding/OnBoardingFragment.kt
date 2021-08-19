@@ -20,7 +20,6 @@ import com.tinkoff_sirius.koshelok.repository.AccountShared.saveAccount
 import com.tinkoff_sirius.koshelok.ui.main.MainViewModel
 import timber.log.Timber
 
-
 class OnBoardingFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels()

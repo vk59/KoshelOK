@@ -54,7 +54,6 @@ class HeaderViewHolder(val view: View) : MainViewHolder(view) {
 
             cardOutcome.findViewById<TextView>(R.id.textMaxMoneyCard).text =
                 "/${data.maxOutcome} ₽"
-
         }
     }
 }

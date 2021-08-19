@@ -10,7 +10,7 @@ sealed class MainItem {
         val income: String,
         val outcome: String,
         val maxOutcome: String?
-        ) : MainItem()
+    ) : MainItem()
 
     class Transaction(
         val sum: Int,
