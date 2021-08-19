@@ -11,7 +11,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentSetSumBinding
 
-
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
 
@@ -30,20 +29,17 @@ class SetSumFragment : Fragment() {
         initListeners(view)
     }
 
-
-
     private fun initListeners(v: View){
-
         binding.setSumButton.setOnClickListener{
-            if(!binding.sumText.text?.trim().isNullOrEmpty()) {
+            if (!binding.sumText.text?.trim().isNullOrEmpty()) {
                 v.findNavController().navigate(R.id.action_setSumFragment_to_operationTypeFragment)
-            }else{
-                Toast.makeText(requireContext() , "Введите сумму!" , Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(requireContext(), "Введите сумму!", Toast.LENGTH_LONG).show()
             }
         }
+
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_setSumFragment_to_mainFragment)
         }
-
     }
 }

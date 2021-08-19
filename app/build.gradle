@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id("io.gitlab.arturbosch.detekt").version("1.18.0")
 }
 
 android {
@@ -36,7 +37,19 @@ android {
     }
 }
 
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    allRules = false // activate all available (even unstable) rules.
+
+    reports {
+        html.enabled = true // observe findings in your browser with structure and code snippets
+    }
+}
+
 dependencies {
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.0")
     // Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'

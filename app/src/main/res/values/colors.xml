@@ -13,4 +13,6 @@
     <color name="black50">#80000000</color>
     <color name="edit_text_border">#1F000000</color>
     <color name="edit_text_hint">#99000000</color>
+    <color name="green">#8BC34A</color>
+    <color name="red">#C34A4A</color>
 </resources>

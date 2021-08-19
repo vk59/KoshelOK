@@ -1,5 +1,7 @@
 package com.tinkoff_sirius.koshelok.ui.main.adapters.model
 
+import com.tinkoff_sirius.koshelok.model.CategorySealed
+
 sealed class MainItem {
 
     class Header(
@@ -8,9 +10,14 @@ sealed class MainItem {
         val income: String,
         val outcome: String,
         val maxOutcome: String?
-        ) : MainItem()
+    ) : MainItem()
 
-    data class Transaction(val title: String) : MainItem()
+    class Transaction(
+        val sum: Int,
+        val category: CategorySealed,
+        val date: String,
+        val time: String
+    ) : MainItem()
 
     class Date(val date: String) : MainItem()
 }

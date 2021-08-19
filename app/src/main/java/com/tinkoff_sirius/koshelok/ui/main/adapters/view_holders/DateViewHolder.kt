@@ -1,14 +1,17 @@
 package com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders
 
 import android.view.View
-import android.widget.TextView
-import com.tinkoff_sirius.koshelok.R
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoff_sirius.koshelok.databinding.ItemDateBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
-class DateViewHolder (view: View) : MainViewHolder(view) {
+class DateViewHolder(view: View) : MainViewHolder(view) {
 
-    private val date: TextView = itemView.findViewById(R.id.date_title)
+    private val binding: ItemDateBinding by viewBinding(ItemDateBinding::bind)
 
     override fun bind(data: MainItem) {
+        if (data is MainItem.Date) {
+            binding.dateTitle.text = data.date
+        }
     }
 }

@@ -10,13 +10,12 @@ import androidx.security.crypto.MasterKey.DEFAULT_AES_GCM_MASTER_KEY_SIZE
 import androidx.security.crypto.MasterKey.DEFAULT_MASTER_KEY_ALIAS
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
-
 object AccountShared {
 
     private const val ACCOUNT_DATA = "account_data"
     private const val ACCOUNT_EMAIL = "account_email"
 
-    private fun getPreferences(context: Context) : SharedPreferences {
+    private fun getPreferences(context: Context): SharedPreferences {
         val spec = KeyGenParameterSpec.Builder(
             DEFAULT_MASTER_KEY_ALIAS,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
@@ -39,14 +38,13 @@ object AccountShared {
         )
     }
 
-
     fun saveAccount(account: GoogleSignInAccount, context: Context) {
         getPreferences(context).edit()
                 .putString(ACCOUNT_EMAIL, account.email)
                 .apply()
     }
 
-    fun getAccountEmail(context: Context) : String {
+    fun getAccountEmail(context: Context): String {
         return getPreferences(context).getString(ACCOUNT_EMAIL, null)!!
     }
 }

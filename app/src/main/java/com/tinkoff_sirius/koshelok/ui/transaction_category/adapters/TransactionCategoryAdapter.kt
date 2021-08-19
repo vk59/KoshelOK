@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.model.Transaction
 
-class TransactionCategoryAdapter() : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
+class TransactionCategoryAdapter : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
 
     private var list: MutableList<Transaction> = mutableListOf()
 

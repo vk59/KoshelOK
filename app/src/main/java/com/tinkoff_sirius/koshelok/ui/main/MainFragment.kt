@@ -1,5 +1,7 @@
 package com.tinkoff_sirius.koshelok.ui.main
 
+import android.graphics.Canvas
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -29,10 +32,9 @@ class MainFragment : Fragment() {
         binding.recyclerView
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
@@ -60,8 +62,8 @@ class MainFragment : Fragment() {
                 .make(binding.root, getString(R.string.snackbar_push_exit), Snackbar.LENGTH_LONG)
                 .show()
             Handler(Looper.getMainLooper()!!).postDelayed({
-                    exitFlag = false
-                }, WAIT_FOR_PUSH_AGAIN)
+                exitFlag = false
+            }, WAIT_FOR_PUSH_AGAIN)
         }
     }
 
@@ -73,7 +75,73 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(this@MainFragment.context)
         }
 
-        val mTransaction = AppConfig.headerExample
-        mainRecyclerAdapter.setData(mTransaction)
+        val header = AppConfig.headerExample.toMutableList()
+        header.addAll(viewModel.transactions)
+        binding.textNoEntities.visibility = View.GONE
+        mainRecyclerAdapter.setData(header.toList())
+
+//        initTouchHelper()
+    }
+
+    private fun initTouchHelper() {
+        val touchHelperCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+                private val background = ColorDrawable(resources.getColor(R.color.main_blue))
+
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChildDraw(
+                    c: Canvas,
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    dX: Float,
+                    dY: Float,
+                    actionState: Int,
+                    isCurrentlyActive: Boolean
+                ) {
+                    super.onChildDraw(
+                        c,
+                        recyclerView,
+                        viewHolder,
+                        dX,
+                        dY,
+                        actionState,
+                        isCurrentlyActive
+                    )
+                    val itemView = viewHolder.itemView
+
+                    if (dX > 0) {
+                        background.setBounds(
+                            itemView.left,
+                            itemView.top,
+                            itemView.left + dX.toInt(),
+                            itemView.bottom
+                        )
+                    } else if (dX < 0) {
+                        background.setBounds(
+                            itemView.right + dX.toInt(),
+                            itemView.top,
+                            itemView.right,
+                            itemView.bottom
+                        )
+                    } else {
+                        background.setBounds(0, 0, 0, 0)
+                    }
+                    background.draw(c)
+                }
+            }
+        val itemTouchHelper = ItemTouchHelper(touchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }
