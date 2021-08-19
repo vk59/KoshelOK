@@ -4,9 +4,10 @@ import android.view.View
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.databinding.ItemTransactionBinding
 import com.tinkoff_sirius.koshelok.model.CategorySealed
+import com.tinkoff_sirius.koshelok.ui.main.adapters.OptionsCallback
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
-class TransactionViewHolder(private val itemView: View) : MainViewHolder(itemView) {
+class TransactionViewHolder(private val itemView: View, private val callback: OptionsCallback) : MainViewHolder(itemView) {
 
     private val binding: ItemTransactionBinding by viewBinding(ItemTransactionBinding::bind)
 
@@ -27,6 +28,12 @@ class TransactionViewHolder(private val itemView: View) : MainViewHolder(itemVie
                 .setBackgroundTintList(
                     binding.root.getResources().getColorStateList(data.category.color)
                 )
+            binding.deleteButton.setOnClickListener {
+                callback.deleteItem(data)
+            }
+            binding.editButton.setOnClickListener {
+                callback.editItem(data)
+            }
         }
     }
 }

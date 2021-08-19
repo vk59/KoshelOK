@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.rambler.libs.swipe_layout.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,87 +9,143 @@
     android:layout_marginBottom="8dp"
     android:orientation="horizontal">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="52dp">
-
-        <ImageView
-            android:id="@+id/iconTransactionBackground"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:background="@drawable/icon_background"
-            android:backgroundTint="@color/main_blue" />
-
-        <ImageView
-            android:id="@+id/iconTransaction"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_clothes" />
-
-    </FrameLayout>
-
     <LinearLayout
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        app:right_swipe_enabled="true"
+        app:left_swipe_enabled="true">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="52dp">
+
+            <ImageView
+                android:id="@+id/iconTransactionBackground"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_background"
+                android:backgroundTint="@color/main_blue" />
+
+            <ImageView
+                android:id="@+id/iconTransaction"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_clothes" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/categoryTransaction"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:text="Транзакция" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/moneyTransaction"
+                <TextView
+                    android:id="@+id/categoryTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:text="Транзакция" />
+
+                <TextView
+                    android:id="@+id/moneyTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:text="-12 000" />
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="end"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:text="-12 000" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/typeTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black50"
+                    android:textSize="12sp"
+                    tools:text="Транзакция" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/timeTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="end"
+                    android:textColor="@color/black50"
+                    android:textSize="12sp"
+                    tools:text="14:00" />
 
-
-            <TextView
-                android:id="@+id/typeTransaction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/black50"
-                android:textSize="12sp"
-                tools:text="Транзакция" />
-
-            <TextView
-                android:id="@+id/timeTransaction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="end"
-                android:textColor="@color/black50"
-                android:textSize="12sp"
-                tools:text="14:00" />
+            </FrameLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:gravity="right"
+        app:bring_to_clamp="40dp"
+        app:clamp="self"
+        app:sticky="100dp">
+
+        <FrameLayout
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:src="@drawable/ic_options_background"
+                android:layout_gravity="center"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+
+            <ImageView
+                android:src="@drawable/ic_edit"
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:src="@drawable/ic_options_background"
+                android:layout_gravity="center"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+
+            <ImageView
+                android:src="@drawable/ic_delete"
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+</ru.rambler.libs.swipe_layout.SwipeLayout>

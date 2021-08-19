@@ -1,16 +1,23 @@
 package com.tinkoff_sirius.koshelok.ui.main
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoff_sirius.koshelok.config.AppConfig
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import kotlinx.datetime.*
 
 class MainViewModel : ViewModel() {
-    var transactions = listOf<MainItem>()
+    var items: MutableLiveData<MutableList<MainItem>> = MutableLiveData(mutableListOf())
+    private var transactionsItems = listOf<MainItem>()
+    private var transactions = AppConfig.mainTransactionsExample.toMutableList()
 
     init {
+        createNewMainItemList()
+    }
+
+    private fun createNewMainItemList() {
         val transItems = mutableListOf<MainItem>()
-        val transDate = AppConfig.mainTransactionsExample.groupBy { it.date }
+        val transDate = transactions.groupBy { it.date }
         val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         val currentDate =
             LocalDate(currentTime.year, currentTime.monthNumber, currentTime.dayOfMonth)
@@ -25,7 +32,11 @@ class MainViewModel : ViewModel() {
             transItems.addAll(list)
         }
 
-        transactions = transItems.toList()
+        transactionsItems = transItems.toList()
+
+        val header = AppConfig.headerExample.toMutableList()
+        header.addAll(transactionsItems)
+        items.value = header
     }
 
     private fun toString(localDate: LocalDate): String {
@@ -48,5 +59,14 @@ class MainViewModel : ViewModel() {
             }
         )
         return result.toString()
+    }
+
+    fun loadData() {
+        createNewMainItemList()
+    }
+
+    fun deleteTransaction(element: MainItem) {
+        transactions.remove(element)
+        createNewMainItemList()
     }
 }
