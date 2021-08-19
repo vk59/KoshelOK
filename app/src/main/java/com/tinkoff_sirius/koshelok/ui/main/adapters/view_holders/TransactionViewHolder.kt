@@ -3,7 +3,7 @@ package com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders
 import android.view.View
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.databinding.ItemTransactionBinding
-import com.tinkoff_sirius.koshelok.model.CategorySealed
+import com.tinkoff_sirius.koshelok.model.Category
 import com.tinkoff_sirius.koshelok.ui.main.adapters.OptionsCallback
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
@@ -14,8 +14,8 @@ class TransactionViewHolder(private val itemView: View, private val callback: Op
     override fun bind(data: MainItem) {
         if (data is MainItem.Transaction) {
             val type = when (data.category) {
-                is CategorySealed.Income -> "Пополнение"
-                is CategorySealed.Outcome -> "Траты"
+                is Category.Income -> "Пополнение"
+                is Category.Outcome -> "Траты"
             }
 
             binding.categoryTransaction.text = data.category.type

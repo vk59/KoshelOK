@@ -2,7 +2,6 @@ package com.tinkoff_sirius.koshelok.config
 
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.model.Category
-import com.tinkoff_sirius.koshelok.model.CategorySealed
 import com.tinkoff_sirius.koshelok.model.Transaction
 import com.tinkoff_sirius.koshelok.model.Types
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
@@ -18,7 +17,7 @@ object AppConfig {
         Transaction(
             6000.0,
             Category.Income(
-                Types.CAPITALIZATION,
+                Types.CAPITALIZATION.nameType,
                 R.drawable.ic_transaction_category,
                 R.color.black
             ),
@@ -27,7 +26,7 @@ object AppConfig {
         Transaction(
             400.0,
             Category.Income(
-                Types.SALARY,
+                Types.SALARY.nameType,
                 R.drawable.ic_transaction_category,
                 R.color.black
             ),
@@ -37,26 +36,26 @@ object AppConfig {
 
     val mainTransactionsExample = listOf(
         MainItem.Transaction(
-            940,
-            CategorySealed.Outcome.Food(),
+            500000,
+            Category.Income(type = Types.SALARY.nameType, R.drawable.ic_salary, R.color.green),
             "2021-08-19",
             "01:05"
         ),
         MainItem.Transaction(
-            400000,
-            CategorySealed.Income.Salary(),
+            940,
+            Category.Outcome(type = Types.FOOD.nameType, R.drawable.ic_food, R.color.red),
             "2021-08-18",
             "18:46"
         ),
         MainItem.Transaction(
             21000,
-            CategorySealed.Income.Present(R.color.red),
+            Category.Outcome(type = Types.ENTERTAINMENT.nameType, R.drawable.ic_sport, R.color.red),
             "2021-08-17",
             "19:15"
         ),
         MainItem.Transaction(
             8000,
-            CategorySealed.Outcome.Clothes(R.color.main_blue),
+            Category.Outcome(type = Types.CLOTHES.nameType, R.drawable.ic_clothes, R.color.main_blue),
             "2021-08-17",
             "16:15"
         )
