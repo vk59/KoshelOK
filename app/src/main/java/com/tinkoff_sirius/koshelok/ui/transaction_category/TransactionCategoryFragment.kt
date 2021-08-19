@@ -5,18 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.config.AppConfig
-import com.tinkoff_sirius.koshelok.databinding.TransactionCategoryFragmentBinding
+import com.tinkoff_sirius.koshelok.databinding.FragmentTransactionCategoryBinding
 import com.tinkoff_sirius.koshelok.ui.transaction_category.adapters.TransactionCategoryAdapter
 
 class TransactionCategoryFragment : Fragment() {
     private lateinit var viewModel: TransactionCategoryViewModel
 
-    private val binding by viewBinding(TransactionCategoryFragmentBinding::bind)
+    private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
 
     private val recyclerView: RecyclerView by lazy(LazyThreadSafetyMode.NONE) {
         binding.transactionCategoryRecycler
@@ -26,7 +27,7 @@ class TransactionCategoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.transaction_category_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_transaction_category, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,5 +43,19 @@ class TransactionCategoryFragment : Fragment() {
         val mTransaction = AppConfig.transactionExample
 
         recyclerAdapter.setData(mTransaction)
+
+        initListeners(view)
     }
+
+    private fun initListeners(v: View){
+
+        binding.setCategory.setOnClickListener{
+            v.findNavController().navigate(R.id.action_transactionCategoryFragment_to_transactionEditingFragment)
+        }
+
+        binding.toolbar.setNavigationOnClickListener {
+            v.findNavController().navigate(R.id.action_transactionCategoryFragment_to_operationTypeFragment)
+        }
+    }
+
 }

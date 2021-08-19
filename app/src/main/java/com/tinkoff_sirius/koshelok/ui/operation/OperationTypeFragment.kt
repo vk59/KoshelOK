@@ -29,8 +29,11 @@ class OperationTypeFragment : Fragment() {
     }
 
     private fun initListeners(v: View) {
+        binding.operationTypeRadioButton1.isChecked = true
+
         binding.setType.setOnClickListener {
-//            v.findNavController().navigate(R.id.)
+            v.findNavController()
+                .navigate(R.id.action_operationTypeFragment_to_transactionCategoryFragment)
         }
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_operationTypeFragment_to_setSumFragment)

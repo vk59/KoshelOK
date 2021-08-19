@@ -10,7 +10,6 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,6 +17,7 @@
         app:title="Выберите тип операции" />
 
     <RadioGroup
+        android:id="@+id/operation_type_radio_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -29,20 +29,22 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <RadioButton
+            android:id="@+id/operation_type_radio_button_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:button="@drawable/ic_selected_arrow"
             android:layoutDirection="rtl"
-            android:text="Доход" />
+            android:text="@string/operation_type_fragment_radio_button_1" />
 
         <RadioButton
+            android:id="@+id/operation_type_radio_button_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:button="@drawable/ic_selected_arrow"
             android:layoutDirection="rtl"
-            android:text="Расход" />
+            android:text="@string/operation_type_fragment_radio_button_2" />
 
 
     </RadioGroup>
@@ -57,7 +59,7 @@
         android:fontFamily="@font/roboto"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"
-        android:text="Далее"
+        android:text="@string/trans_category_button"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
