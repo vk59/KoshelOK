@@ -39,38 +39,26 @@ object AppConfig {
         MainItem.Transaction(
             940,
             CategorySealed.Outcome.Food(),
-            "2021-08-19"
+            "2021-08-19",
+            "01:05"
         ),
         MainItem.Transaction(
             400000,
             CategorySealed.Income.Salary(),
-            "2021-08-18"
+            "2021-08-18",
+            "18:46"
         ),
         MainItem.Transaction(
             21000,
             CategorySealed.Income.Present(R.color.red),
-            "2021-08-17"
+            "2021-08-17",
+            "19:15"
         ),
         MainItem.Transaction(
             8000,
             CategorySealed.Outcome.Clothes(R.color.main_blue),
-            "2021-08-17"
-        ),
-
-        MainItem.Transaction(
-            4000,
-            CategorySealed.Outcome.Clothes(R.color.main_blue),
-            "2021-08-16"
-        ),
-        MainItem.Transaction(
-            200,
-            CategorySealed.Outcome.Sport(),
-            "2021-08-16"
-        ),
-        MainItem.Transaction(
-            600000,
-            CategorySealed.Income.Capitalization(R.color.red),
-            "2021-08-16"
+            "2021-08-17",
+            "16:15"
         )
     )
 

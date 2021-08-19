@@ -15,7 +15,8 @@ sealed class MainItem {
     class Transaction(
         val sum: Int,
         val category: CategorySealed,
-        val date: String
+        val date: String,
+        val time: String
     ) : MainItem()
 
     class Date(val date: String) : MainItem()

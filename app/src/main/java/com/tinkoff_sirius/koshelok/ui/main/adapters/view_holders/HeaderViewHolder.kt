@@ -43,12 +43,18 @@ class HeaderViewHolder(val view: View) : MainViewHolder(view) {
             cardIncome.findViewById<TextView>(R.id.textMoneyCard).text =
                 view.context.getString(R.string.rubles, data.income)
 
+            cardIncome.findViewById<TextView>(R.id.textMaxMoneyCard).visibility = View.GONE
+
             cardOutcome.findViewById<TextView>(R.id.typeCard).text =
                 view.context.resources.getString(R.string.card_outcome_title)
 
             cardOutcome.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_green_point)
             cardOutcome.findViewById<TextView>(R.id.textMoneyCard).text =
                 view.context.resources.getString(R.string.rubles, data.outcome)
+
+            cardOutcome.findViewById<TextView>(R.id.textMaxMoneyCard).text =
+                "/${data.maxOutcome} ₽"
+
         }
     }
 }

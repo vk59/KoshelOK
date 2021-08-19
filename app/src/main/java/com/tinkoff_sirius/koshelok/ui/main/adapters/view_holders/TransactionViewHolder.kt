@@ -15,14 +15,13 @@ class TransactionViewHolder(private val itemView: View) : MainViewHolder(itemVie
             val type = when (data.category) {
                 is CategorySealed.Income -> "Пополнение"
                 is CategorySealed.Outcome -> "Траты"
-                else -> "???"
             }
 
             binding.categoryTransaction.text = data.category.type
             binding.moneyTransaction.text =
                 if (type == "Траты") "-${data.sum}" else data.sum.toString()
             binding.typeTransaction.text = type
-//            binding.timeTransaction.text = data.date
+            binding.timeTransaction.text = data.time
             binding.iconTransaction.setImageResource(data.category.icon)
             binding.iconTransactionBackground
                 .setBackgroundTintList(

@@ -56,7 +56,19 @@
                 android:layout_gravity="start"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_money_spent_size"
-                tools:text="160 000 ₽" />
+                tools:text="160 000 ₽"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/textMaxMoneyCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                tools:text="/600000"
+                android:textColor="@color/white60"
+                android:layout_weight="1"
+                />
         </LinearLayout>
     </LinearLayout>
 
