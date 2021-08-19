@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/transactionCategoryFragment">
+    app:startDestination="@id/onBoardingFragment">
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.on_boarding.OnBoardingFragment"
         android:label="on_boarding_fragment"
-        tools:layout="@layout/fragment_on_boarding" >
+        tools:layout="@layout/fragment_on_boarding">
         <action
             android:id="@+id/action_onBoardingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -17,7 +17,7 @@
         android:id="@+id/mainFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.main.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_setSumFragment"
             app:destination="@id/setSumFragment" />
@@ -27,8 +27,7 @@
         android:id="@+id/setSumFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.set_sum.SetSumFragment"
         android:label="set_sum_fragment"
-        tools:layout="@layout/fragment_set_sum"
-        >
+        tools:layout="@layout/fragment_set_sum">
         <action
             android:id="@+id/action_setSumFragment_to_operationTypeFragment"
             app:destination="@id/operationTypeFragment" />
@@ -41,19 +40,41 @@
         android:id="@+id/operationTypeFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.operation.OperationTypeFragment"
         android:label="operation_type_fragment"
-        tools:layout="@layout/fragment_operation_type"
-        >
+        tools:layout="@layout/fragment_operation_type">
         <action
             android:id="@+id/action_operationTypeFragment_to_setSumFragment"
             app:destination="@id/setSumFragment" />
+        <action
+            android:id="@+id/action_operationTypeFragment_to_transactionCategoryFragment"
+            app:destination="@id/transactionCategoryFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/transactionCategoryFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.transaction_category.TransactionCategoryFragment"
         android:label="transaction_category_fragment"
-        tools:layout="@layout/transaction_category_fragment"
-        >
+        tools:layout="@layout/fragment_transaction_category">
 
+        <action
+            android:id="@+id/action_transactionCategoryFragment_to_operationTypeFragment"
+            app:destination="@id/operationTypeFragment" />
+        <action
+            android:id="@+id/action_transactionCategoryFragment_to_transactionEditingFragment"
+            app:destination="@id/transactionEditingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionEditingFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionEditingFragment"
+        android:label="transaction_editing_fragment"
+        tools:layout="@layout/fragment_transaction_editing">
+
+
+        <action
+            android:id="@+id/action_transactionEditingFragment_to_transactionCategoryFragment"
+            app:destination="@id/transactionCategoryFragment" />
+        <action
+            android:id="@+id/action_transactionEditingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

@@ -12,4 +12,15 @@
     <string name="rubles">%1$s ₽</string>
     <string name="set_sum_fragment_button_text">Готово</string>
     <string name="set_sum_fragment_edit_text_hint">Сумма операции</string>
+    <string name="trans_editing_sub_title">Дополнительные</string>
+    <string name="trans_editing_title">Основные</string>
+    <string name="summary">Сумма</string>
+    <string name="type">Тип</string>
+    <string name="category">Категория</string>
+    <string name="date">Дата операции</string>
+    <string name="trans_editing_button">Создать операцию</string>
+    <string name="trans_category_button">Далее</string>
+    <string name="operation_type_fragment_radio_button_1">Доход</string>
+    <string name="operation_type_fragment_radio_button_2">Расход</string>
+
 </resources>

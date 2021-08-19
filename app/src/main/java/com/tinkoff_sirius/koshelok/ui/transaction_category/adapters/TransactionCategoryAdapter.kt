@@ -20,7 +20,7 @@ class TransactionCategoryAdapter() : RecyclerView.Adapter<TransactionCategoryVie
     ): TransactionCategoryViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
-        return TransactionCategoryViewHolder(inflater.inflate(R.layout.transaction_category_item, parent , false))
+        return TransactionCategoryViewHolder(inflater.inflate(R.layout.item_transaction_category, parent , false))
     }
 
     override fun onBindViewHolder(holder: TransactionCategoryViewHolder, position: Int) {

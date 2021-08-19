@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -28,10 +29,15 @@ class OperationTypeFragment : Fragment() {
         initListeners(view)
     }
 
-    private fun initListeners(v: View){
-        binding.setType.setOnClickListener{
-//            v.findNavController().navigate(R.id.)
+    private fun initListeners(v: View) {
+        binding.operationTypeRadioButton1.isChecked = true
+
+        binding.setType.setOnClickListener {
+            v.findNavController()
+                .navigate(R.id.action_operationTypeFragment_to_transactionCategoryFragment)
         }
+
+
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_operationTypeFragment_to_setSumFragment)
         }
