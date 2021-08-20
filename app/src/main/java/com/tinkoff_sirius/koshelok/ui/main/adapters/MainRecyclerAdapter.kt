@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.databinding.ItemHomeHeaderBinding
-import com.tinkoff_sirius.koshelok.databinding.ItemTransactionBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.DateViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.HeaderViewHolder
@@ -14,7 +12,7 @@ import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.MainViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.TransactionViewHolder
 
 class MainRecyclerAdapter(
-    private val deleteCallback: (MainItem) -> Unit,
+    private val deleteCallback: (Long) -> Unit,
     private val editCallback: (MainItem) -> Unit
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
@@ -28,13 +26,15 @@ class MainRecyclerAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             TYPE_TRANSACTION -> TransactionViewHolder(
-                ItemTransactionBinding.inflate(inflater),
+                LayoutInflater.from(parent.context).inflate(R.layout.item_transaction, parent, false),
                 deleteCallback, editCallback
             )
             TYPE_HEADER -> HeaderViewHolder(
-                ItemHomeHeaderBinding.inflate(inflater)
+                LayoutInflater.from(parent.context).inflate(R.layout.item_home_header, parent, false)
             )
-            TYPE_DATE -> DateViewHolder(inflater.inflate(R.layout.item_date, parent, false))
+            TYPE_DATE ->  DateViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.item_date, parent, false)
+            )
             else -> throw Error("You should use Transaction and Header View Holder")
         }
     }

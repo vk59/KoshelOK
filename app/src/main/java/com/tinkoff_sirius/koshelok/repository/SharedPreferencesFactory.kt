@@ -9,7 +9,7 @@ import androidx.security.crypto.MasterKey
 
 class SharedPreferencesFactory {
 
-    fun create(context: Context): SharedPreferences {
+    fun create(context: Context, name: String): SharedPreferences {
         val spec = KeyGenParameterSpec.Builder(
             MasterKey.DEFAULT_MASTER_KEY_ALIAS,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
@@ -25,7 +25,7 @@ class SharedPreferencesFactory {
 
         return EncryptedSharedPreferences.create(
             context,
-            ACCOUNT_DATA,
+            name,
             masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

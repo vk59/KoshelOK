@@ -7,26 +7,43 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentMainBinding
+import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
+import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.ui.main.adapters.MainRecyclerAdapter
-import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
 class MainFragment : Fragment() {
 
     private val mainRecyclerAdapter by lazy {
         MainRecyclerAdapter(
-            { element -> showDeleteDialog(element) },
-            { element -> navController.navigate(R.id.action_mainFragment_to_setSumFragment) }
+            { id -> showDeleteDialog(id) },
+            { element -> findNavController().navigate(R.id.action_mainFragment_to_setSumFragment) }
         )
     }
 
-    private val navController = findNavController()
-    private val viewModel: MainViewModel by viewModels()
+//    private val navController = findNavController()
+    private val viewModel: MainViewModel by viewModels(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return MainViewModel(
+                    AccountSharedRepository(
+                        SharedPreferencesFactory().create(
+                            requireContext(),
+                            SharedPreferencesFactory.ACCOUNT_DATA
+                        )
+                    )
+                ) as T
+            }
+        }
+    })
+
     private val binding by viewBinding(FragmentMainBinding::bind)
 
     override fun onCreateView(
@@ -48,7 +65,7 @@ class MainFragment : Fragment() {
             onBackPressed()
         }
         binding.buttonAdd.setOnClickListener {
-            navController.navigate(R.id.action_mainFragment_to_setSumFragment)
+            findNavController().navigate(R.id.action_mainFragment_to_setSumFragment)
         }
     }
 
@@ -77,7 +94,7 @@ class MainFragment : Fragment() {
 
         binding.textNoEntities.visibility = View.GONE
         viewModel.loadData()
-        viewModel.items.value!!.let { mainRecyclerAdapter.setData(it) }
+//        viewModel.items.value!!.let { mainRecyclerAdapter.setData(it) }
 
         setItemsObserving()
     }
@@ -88,11 +105,11 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun showDeleteDialog(element: MainItem) {
+    private fun showDeleteDialog(id: Long) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage("Вы действительно хотите удалить запись?")
             .setPositiveButton("Удалить") { _, _ ->
-                viewModel.deleteTransaction(element)
+                viewModel.deleteTransactionById(id)
             }
             .setNegativeButton("Отмена") { dialog, _ ->
                 dialog.cancel()

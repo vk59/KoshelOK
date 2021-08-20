@@ -4,7 +4,8 @@ import kotlinx.datetime.LocalDate
 
 data class Transaction(
 //    val sum: BigDecimal,
-    val sum: Double,
+    val sum: String,
     val category: Category,
-    val date: LocalDate
+    val date: LocalDate,
+    val currency: String = Currency.RUB.name
 )

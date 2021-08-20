@@ -18,6 +18,7 @@ import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentOnBoardingBinding
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
+import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory.Companion.ACCOUNT_DATA
 import com.tinkoff_sirius.koshelok.ui.main.MainViewModel
 import timber.log.Timber
 
@@ -34,7 +35,7 @@ class OnBoardingFragment : Fragment() {
             navigateWith(account)
         }
 
-    private val navController = findNavController()
+    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +75,7 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun navigateWith(account: GoogleSignInAccount) {
-        AccountSharedRepository(SharedPreferencesFactory().create(requireContext())).saveAccount(account)
+        AccountSharedRepository(SharedPreferencesFactory().create(requireContext(), ACCOUNT_DATA)).saveAccount(account)
         navController.navigate(R.id.action_onBoardingFragment_to_mainFragment)
     }
 }

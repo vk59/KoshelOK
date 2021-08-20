@@ -12,8 +12,8 @@ class AccountSharedRepository(private val sharedPreferences: SharedPreferences) 
             .apply()
     }
 
-    fun getAccount(): String {
-        return sharedPreferences.getString(ACCOUNT_EMAIL, null)!!
+    fun getAccount(name: String = ACCOUNT_ID): String {
+        return sharedPreferences.getString(ACCOUNT_ID, null)!!
     }
 
     companion object {

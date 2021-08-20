@@ -5,15 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/onBoardingFragment">
     <fragment
-        android:id="@+id/onBoardingFragment"
-        android:name="com.tinkoff_sirius.koshelok.ui.on_boarding.OnBoardingFragment"
-        android:label="on_boarding_fragment"
-        tools:layout="@layout/fragment_on_boarding">
-        <action
-            android:id="@+id/action_onBoardingFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/mainFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.main.MainFragment"
         android:label="main_fragment"
@@ -75,6 +66,15 @@
             app:destination="@id/transactionCategoryFragment" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.on_boarding.OnBoardingFragment"
+        android:label="fragment_on_boarding"
+        tools:layout="@layout/fragment_on_boarding" >
+        <action
+            android:id="@+id/action_onBoardingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 </navigation>
