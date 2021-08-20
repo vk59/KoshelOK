@@ -22,5 +22,6 @@
     <string name="trans_category_button">Далее</string>
     <string name="operation_type_fragment_radio_button_1">Доход</string>
     <string name="operation_type_fragment_radio_button_2">Расход</string>
+    <string name="set_sum_fragment_toolbar">Введите сумму</string>
 
 </resources>

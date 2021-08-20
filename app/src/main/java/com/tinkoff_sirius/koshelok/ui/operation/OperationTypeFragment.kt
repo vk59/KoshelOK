@@ -25,16 +25,18 @@ class OperationTypeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initListeners(view)
     }
 
     private fun initListeners(v: View) {
-        binding.operationTypeRadioButton1.isChecked = true
 
         binding.setType.setOnClickListener {
             v.findNavController()
                 .navigate(R.id.action_operationTypeFragment_to_transactionCategoryFragment)
         }
+
+
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_operationTypeFragment_to_setSumFragment)
         }
