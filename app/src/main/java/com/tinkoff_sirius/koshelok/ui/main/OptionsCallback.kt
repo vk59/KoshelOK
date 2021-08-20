@@ -1,4 +1,4 @@
-package com.tinkoff_sirius.koshelok.ui.main.adapters
+package com.tinkoff_sirius.koshelok.ui.main
 
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 

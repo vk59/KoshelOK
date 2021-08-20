@@ -18,7 +18,6 @@ import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.config.AppConfig.WAIT_FOR_PUSH_AGAIN
 import com.tinkoff_sirius.koshelok.databinding.FragmentMainBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.MainRecyclerAdapter
-import com.tinkoff_sirius.koshelok.ui.main.adapters.OptionsCallback
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
 class MainFragment : Fragment() {
@@ -101,10 +100,10 @@ class MainFragment : Fragment() {
     private fun showDeleteDialog(element: MainItem) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage("Вы действительно хотите удалить запись?")
-            .setPositiveButton("Удалить") { dialog, id ->
+            .setPositiveButton("Удалить") { _, _ ->
                 viewModel.deleteTransaction(element)
             }
-            .setNegativeButton("Отмена") { dialog, id ->
+            .setNegativeButton("Отмена") { dialog, _ ->
                 dialog.cancel()
             }
             .create().show()

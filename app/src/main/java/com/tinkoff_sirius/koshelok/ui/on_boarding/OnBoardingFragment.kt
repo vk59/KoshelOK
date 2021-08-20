@@ -73,7 +73,7 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun navigateWith(account: GoogleSignInAccount) {
-        findNavController().navigate(R.id.action_onBoardingFragment_to_mainFragment)
         AccountShared(SharedPreferencesFactory().create(requireContext())).saveAccount(account)
+        findNavController().navigate(R.id.action_onBoardingFragment_to_mainFragment)
     }
 }
