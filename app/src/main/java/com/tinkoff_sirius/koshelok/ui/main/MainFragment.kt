@@ -38,9 +38,7 @@ class MainFragment : Fragment() {
     private val binding by viewBinding(FragmentMainBinding::bind)
     private var exitFlag = false
 
-    private val recyclerView: RecyclerView by lazy(LazyThreadSafetyMode.NONE) {
-        binding.recyclerView
-    }
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +78,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecycler() {
+        recyclerView = binding.recyclerView
 
         recyclerView.apply {
             adapter = mainRecyclerAdapter

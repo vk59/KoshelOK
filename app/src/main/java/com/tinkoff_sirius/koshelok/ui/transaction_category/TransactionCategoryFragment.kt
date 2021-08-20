@@ -19,9 +19,7 @@ class TransactionCategoryFragment : Fragment() {
 
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
 
-    private val recyclerView: RecyclerView by lazy(LazyThreadSafetyMode.NONE) {
-        binding.transactionCategoryRecycler
-    }
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +32,7 @@ class TransactionCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerAdapter = TransactionCategoryAdapter()
 
+        recyclerView = binding.transactionCategoryRecycler
         recyclerView.apply {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(this@TransactionCategoryFragment.context)
