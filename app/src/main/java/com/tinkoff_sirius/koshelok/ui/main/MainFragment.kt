@@ -23,6 +23,18 @@ import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
 class MainFragment : Fragment() {
 
+    private val mainRecyclerAdapter by lazy {
+        MainRecyclerAdapter(object : OptionsCallback {
+            override fun deleteItem(element: MainItem.Transaction) {
+                showDeleteDialog(element)
+            }
+
+            override fun editItem(element: MainItem.Transaction) {
+                findNavController().navigate(R.id.action_mainFragment_to_setSumFragment)
+            }
+        })
+    }
+
     private val viewModel: MainViewModel by viewModels()
     private val binding by viewBinding(FragmentMainBinding::bind)
     private var exitFlag = false
@@ -67,15 +79,6 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val mainRecyclerAdapter = MainRecyclerAdapter(object : OptionsCallback {
-            override fun deleteItem(element: MainItem.Transaction) {
-                showDeleteDialog(element)
-            }
-
-            override fun editItem(element: MainItem.Transaction) {
-                findNavController().navigate(R.id.action_mainFragment_to_setSumFragment)
-            }
-        })
 
         recyclerView.apply {
             adapter = mainRecyclerAdapter
@@ -86,6 +89,10 @@ class MainFragment : Fragment() {
         viewModel.loadData()
         viewModel.items.value!!.let { mainRecyclerAdapter.setData(it) }
 
+        setItemsObserving()
+    }
+
+    private fun setItemsObserving() {
         viewModel.items.observe(viewLifecycleOwner) {
             mainRecyclerAdapter.setData(it)
         }
