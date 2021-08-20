@@ -1,15 +1,14 @@
 package com.tinkoff_sirius.koshelok.ui.transaction_editing
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentTransactionEditingBinding
-
 
 class TransactionEditingFragment : Fragment() {
 
@@ -30,13 +29,8 @@ class TransactionEditingFragment : Fragment() {
     }
 
     private fun initListeners(v: View){
-
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
         }
-
     }
-
-
-
 }

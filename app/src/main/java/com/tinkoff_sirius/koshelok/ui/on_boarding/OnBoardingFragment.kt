@@ -26,8 +26,7 @@ class OnBoardingFragment : Fragment() {
     private val mainViewModel: MainViewModel by viewModels()
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
     private val loginResultHandler =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                result: ActivityResult? ->
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
 
             val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
             val account = task.result
@@ -36,8 +35,8 @@ class OnBoardingFragment : Fragment() {
         }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_on_boarding, container, false)
     }
@@ -55,8 +54,8 @@ class OnBoardingFragment : Fragment() {
 
     private fun getSignInIntent(): Intent {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
+            .requestEmail()
+            .build()
 
         val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 

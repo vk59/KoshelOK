@@ -30,12 +30,10 @@ class OperationTypeFragment : Fragment() {
     }
 
     private fun initListeners(v: View) {
-
         binding.setType.setOnClickListener {
             v.findNavController()
                 .navigate(R.id.action_operationTypeFragment_to_transactionCategoryFragment)
         }
-
 
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_operationTypeFragment_to_setSumFragment)

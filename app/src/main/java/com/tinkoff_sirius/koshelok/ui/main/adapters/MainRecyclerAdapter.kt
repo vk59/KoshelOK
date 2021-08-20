@@ -28,7 +28,7 @@ class MainRecyclerAdapter(private val callback: OptionsCallback) :
                 inflater.inflate(R.layout.item_transaction, parent, false),
             callback
             )
-            TYPE_HEADER ->  HeaderViewHolder(inflater.inflate(R.layout.item_home_header, parent, false))
+            TYPE_HEADER -> HeaderViewHolder(inflater.inflate(R.layout.item_home_header, parent, false))
             TYPE_DATE -> DateViewHolder(inflater.inflate(R.layout.item_date, parent, false))
             else -> @Suppress throw Exception("You should use Transaction and Header View Holder")
         }

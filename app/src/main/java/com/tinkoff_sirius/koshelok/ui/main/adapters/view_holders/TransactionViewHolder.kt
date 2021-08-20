@@ -7,7 +7,8 @@ import com.tinkoff_sirius.koshelok.model.Category
 import com.tinkoff_sirius.koshelok.ui.main.OptionsCallback
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
-class TransactionViewHolder(private val itemView: View, private val callback: OptionsCallback) : MainViewHolder(itemView) {
+class TransactionViewHolder(private val itemView: View, private val callback: OptionsCallback)
+    : MainViewHolder(itemView) {
 
     private val binding: ItemTransactionBinding by viewBinding(ItemTransactionBinding::bind)
 
