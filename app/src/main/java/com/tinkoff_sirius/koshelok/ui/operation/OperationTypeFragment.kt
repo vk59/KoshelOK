@@ -14,7 +14,7 @@ import com.tinkoff_sirius.koshelok.databinding.FragmentOperationTypeBinding
 class OperationTypeFragment : Fragment() {
 
     private val binding: FragmentOperationTypeBinding by viewBinding(FragmentOperationTypeBinding::bind)
-    private val navController = findNavController()
+    private val navController by lazy { findNavController() }
 
     private val viewModel: OperationTypeViewModel by viewModels()
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +17,7 @@ import com.tinkoff_sirius.koshelok.ui.transaction_category.adapters.TransactionC
 class TransactionCategoryFragment : Fragment() {
     private lateinit var viewModel: TransactionCategoryViewModel
 
-    // nav controller lazy
-
+    private val navController by lazy { findNavController() }
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
 
     private lateinit var recyclerView: RecyclerView
@@ -48,13 +46,13 @@ class TransactionCategoryFragment : Fragment() {
         initListeners(view)
     }
 
-    private fun initListeners(v: View){
-        binding.setCategory.setOnClickListener{
-            findNavController().navigate(R.id.action_transactionCategoryFragment_to_transactionEditingFragment)
+    private fun initListeners(v: View) {
+        binding.setCategory.setOnClickListener {
+            navController.navigate(R.id.action_transactionCategoryFragment_to_transactionEditingFragment)
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            v.findNavController().navigate(R.id.action_transactionCategoryFragment_to_operationTypeFragment)
+            navController.navigate(R.id.action_transactionCategoryFragment_to_operationTypeFragment)
         }
     }
 }

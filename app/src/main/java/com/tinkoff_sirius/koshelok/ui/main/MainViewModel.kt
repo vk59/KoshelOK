@@ -8,7 +8,8 @@ import com.tinkoff_sirius.koshelok.entities.TransactionType
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID_TOKEN
-import com.tinkoff_sirius.koshelok.repository.Repository
+import com.tinkoff_sirius.koshelok.repository.RepositoryImpl
+import com.tinkoff_sirius.koshelok.repository.WalletRepository
 import com.tinkoff_sirius.koshelok.repository.entities.TransactionData
 import com.tinkoff_sirius.koshelok.repository.entities.WalletData
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
@@ -23,9 +24,10 @@ import kotlin.time.ExperimentalTime
 class MainViewModel(private val accountSharedRepository: AccountSharedRepository) : ViewModel() {
     val items: MutableLiveData<MutableList<MainItem>> = MutableLiveData(mutableListOf())
     val exitFlag = MutableLiveData(false)
+    val isThereTransactions = MutableLiveData(true)
     private var lastTimeBackPressed: Instant = Instant.DISTANT_PAST
-    private val repository by lazy {
-        Repository()
+    private val repository: WalletRepository by lazy {
+        RepositoryImpl()
     }
 
     private fun createNewMainItemList(walletData: WalletData) {
@@ -46,6 +48,7 @@ class MainViewModel(private val accountSharedRepository: AccountSharedRepository
             transItems.add(MainItem.Date(date))
             transItems.addAll(list)
         }
+        isThereTransactions.value = transItems.isNotEmpty()
         header.addAll(transItems)
         items.value = header
     }
@@ -63,7 +66,7 @@ class MainViewModel(private val accountSharedRepository: AccountSharedRepository
                     createNewMainItemList(it)
                 },
                 onError = {
-                    Timber.d("error ${it}")
+                    Timber.d("error $it")
                 }
             )
     }
@@ -94,13 +97,13 @@ class MainViewModel(private val accountSharedRepository: AccountSharedRepository
     private fun List<TransactionData>.toTransactionItems(): List<MainItem.Transaction> {
         return this.map {
             val transactionEnum =
-                if (it.transactionType == "INCOME")
+                if (it.transactionType == "INCOME") {
                     TransactionType.INCOME
-                else
+                } else {
                     TransactionType.OUTCOME
-
+                }
             MainItem.Transaction(
-                it.id,
+                it.id!!,
                 it.amount,
                 it.currency,
                 Category(
@@ -124,4 +127,3 @@ class MainViewModel(private val accountSharedRepository: AccountSharedRepository
         return if (this.minute > 10) "${this.hour}:${this.minute}" else "${this.hour}:0${this.minute}"
     }
 }
-

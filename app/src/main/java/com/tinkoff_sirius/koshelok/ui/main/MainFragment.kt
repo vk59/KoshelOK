@@ -21,14 +21,15 @@ import com.tinkoff_sirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 
 class MainFragment : Fragment() {
 
+    private val navController by lazy { findNavController() }
+
     private val mainRecyclerAdapter by lazy {
         MainRecyclerAdapter(
             { id -> showDeleteDialog(id) },
-            { element -> findNavController().navigate(R.id.action_mainFragment_to_setSumFragment) }
+            { element -> navController.navigate(R.id.action_mainFragment_to_setSumFragment) }
         )
     }
 
-//    private val navController = findNavController()
     private val viewModel: MainViewModel by viewModels(factoryProducer = {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -65,7 +66,7 @@ class MainFragment : Fragment() {
             onBackPressed()
         }
         binding.buttonAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_setSumFragment)
+            navController.navigate(R.id.action_mainFragment_to_setSumFragment)
         }
     }
 
@@ -94,9 +95,18 @@ class MainFragment : Fragment() {
 
         binding.textNoEntities.visibility = View.GONE
         viewModel.loadData()
-//        viewModel.items.value!!.let { mainRecyclerAdapter.setData(it) }
-
+        setIsThereTransactionsObserving()
         setItemsObserving()
+    }
+
+    private fun setIsThereTransactionsObserving() {
+        viewModel.isThereTransactions.observe(viewLifecycleOwner) { isThereTransactions ->
+            if (isThereTransactions) {
+                binding.textNoEntities.visibility = View.GONE
+            } else {
+                binding.textNoEntities.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setItemsObserving() {

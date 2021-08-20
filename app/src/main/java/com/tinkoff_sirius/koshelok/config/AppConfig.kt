@@ -23,7 +23,7 @@ object AppConfig {
             Category(
                 1,
                 TransactionType.INCOME,
-                Types.CAPITALIZATION.name,
+                Types.CAPITALIZATION.nameType,
                 R.drawable.ic_transaction_category,
                 R.color.black
             ),

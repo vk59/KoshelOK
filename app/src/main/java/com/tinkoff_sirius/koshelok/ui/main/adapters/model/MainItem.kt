@@ -14,7 +14,7 @@ sealed class MainItem {
     ) : MainItem()
 
     class Transaction(
-        val id: Long?,
+        val id: Long,
         val sum: String,
         val currency: String,
         val category: Category,

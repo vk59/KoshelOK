@@ -1,8 +1,9 @@
-package com.tinkoff_sirius.koshelok
+package com.tinkoff_sirius.koshelok.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.tinkoff_sirius.koshelok.R
 
 class MainActivity : AppCompatActivity() {
 

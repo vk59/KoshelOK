@@ -7,12 +7,12 @@ import com.tinkoff_sirius.koshelok.repository.entities.WalletData
 import com.tinkoff_sirius.koshelok.service.SampleNetworkService
 import io.reactivex.rxjava3.core.Single
 
-class Repository {
-    fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
+class RepositoryImpl : WalletRepository {
+    override fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
         return SampleNetworkService.getWalletById(id, idUser, idToken)
     }
 
-    fun deleteTransactionById(id: Long): Single<Response> {
+    override fun deleteTransactionById(id: Long): Single<Response> {
         return SampleNetworkService.deleteTransactionById(id)
     }
 
@@ -23,7 +23,6 @@ class Repository {
     ): Single<Response> {
         return SampleNetworkService.createTransaction(transactionData, idUser, idToken)
     }
-
 
     fun getCategories(
         transactionType: String,

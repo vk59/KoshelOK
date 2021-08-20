@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
-import com.tinkoff_sirius.koshelok.R
+import com.tinkoff_sirius.koshelok.databinding.ItemDateBinding
+import com.tinkoff_sirius.koshelok.databinding.ItemHomeHeaderBinding
+import com.tinkoff_sirius.koshelok.databinding.ItemTransactionBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.DateViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.HeaderViewHolder
@@ -17,6 +19,11 @@ class MainRecyclerAdapter(
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
     private val diff = AsyncListDiffer(this, TransactionsDiffUtils())
+    private val HEADER_ID = -1L
+
+    init {
+        setHasStableIds(true)
+    }
 
     fun setData(data: List<MainItem>) {
         diff.submitList(data)
@@ -26,16 +33,16 @@ class MainRecyclerAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             TYPE_TRANSACTION -> TransactionViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_transaction, parent, false),
+                ItemTransactionBinding.inflate(inflater, parent, false),
                 deleteCallback, editCallback
             )
             TYPE_HEADER -> HeaderViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_home_header, parent, false)
+                ItemHomeHeaderBinding.inflate(inflater, parent, false)
             )
-            TYPE_DATE ->  DateViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_date, parent, false)
+            TYPE_DATE -> DateViewHolder(
+                ItemDateBinding.inflate(inflater, parent, false)
             )
-            else -> throw Error("You should use Transaction and Header View Holder")
+            else -> throw @Suppress Exception("You should use Transaction and Header View Holder")
         }
     }
 
@@ -52,6 +59,18 @@ class MainRecyclerAdapter(
     }
 
     override fun getItemCount(): Int = diff.currentList.size
+
+    override fun getItemId(position: Int): Long {
+        val mainItem = diff.currentList[position]
+        return when (mainItem) {
+            is MainItem.Date -> {
+                val time = mainItem.date
+                - (time.year * 10000 + time.monthNumber * 100 + time.dayOfMonth).toLong()
+            }
+            is MainItem.Header -> HEADER_ID
+            is MainItem.Transaction -> mainItem.id
+        }
+    }
 
     companion object {
         private const val TYPE_HEADER = 0

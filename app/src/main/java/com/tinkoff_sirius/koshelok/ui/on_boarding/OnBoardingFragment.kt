@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,12 +18,10 @@ import com.tinkoff_sirius.koshelok.databinding.FragmentOnBoardingBinding
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory.Companion.ACCOUNT_DATA
-import com.tinkoff_sirius.koshelok.ui.main.MainViewModel
 import timber.log.Timber
 
 class OnBoardingFragment : Fragment() {
 
-    private val mainViewModel: MainViewModel by viewModels()
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
     private val loginResultHandler =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->

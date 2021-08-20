@@ -1,29 +1,27 @@
 package com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders
 
-import android.view.View
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.ItemTransactionBinding
 import com.tinkoff_sirius.koshelok.entities.TransactionType
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
 class TransactionViewHolder(
-    private val view: View,
+    private val binding: ItemTransactionBinding,
     private val deleteCallback: (Long) -> Unit,
     private val editCallback: (MainItem) -> Unit
-) : MainViewHolder(view) {
+) : MainViewHolder(binding.root) {
 
     private var idTransaction: Long? = null
 
-    private val binding: ItemTransactionBinding by viewBinding(ItemTransactionBinding::bind)
+//    private val binding: ItemTransactionBinding by viewBinding(ItemTransactionBinding::bind)
 
     override fun bind(data: MainItem) {
         if (data is MainItem.Transaction) {
             idTransaction = data.id
             with(binding) {
                 val type = when (data.category.typeName) {
-                    TransactionType.OUTCOME -> root.context.getString(R.string.income)
-                    TransactionType.INCOME -> root.context.getString(R.string.outcome)
+                    TransactionType.INCOME -> root.context.getString(R.string.income)
+                    TransactionType.OUTCOME -> root.context.getString(R.string.outcome)
                 }
 
                 categoryTransaction.text = data.category.categoryName

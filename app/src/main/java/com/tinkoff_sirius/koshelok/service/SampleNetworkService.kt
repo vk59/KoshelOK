@@ -51,7 +51,7 @@ object SampleNetworkService {
             )
         Timber.d(walletData.transactions.toString())
         return Single.fromCallable {
-            Response("Successfully deleted item ${id}")
+            Response("Successfully deleted item $id")
         }
     }
 }

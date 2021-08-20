@@ -1,15 +1,12 @@
 package com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders
 
 import android.view.View
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.ItemHomeHeaderBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem.Header
 
-class HeaderViewHolder(view: View) : MainViewHolder(view) {
-
-    private val binding: ItemHomeHeaderBinding by viewBinding(ItemHomeHeaderBinding::bind)
+class HeaderViewHolder(private val binding: ItemHomeHeaderBinding) : MainViewHolder(binding.root) {
 
     override fun bind(data: MainItem) {
         if (data is Header) {
@@ -34,7 +31,6 @@ class HeaderViewHolder(view: View) : MainViewHolder(view) {
 
                 cardOutcome.textMaxMoneyCard.text = "/ ${data.maxOutcome}"
             }
-
         }
     }
 }
