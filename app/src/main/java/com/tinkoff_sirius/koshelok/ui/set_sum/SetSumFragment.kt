@@ -46,7 +46,6 @@ class SetSumFragment : Fragment() {
                 Toast.makeText(requireContext(), "Введите сумму!", Toast.LENGTH_LONG).show()
             }
         }
-
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_setSumFragment_to_mainFragment)
         }
