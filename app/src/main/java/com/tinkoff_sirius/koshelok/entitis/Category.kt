@@ -1,4 +1,4 @@
-package com.tinkoff_sirius.koshelok.model
+package com.tinkoff_sirius.koshelok.entitis
 
 sealed class Category(open val type: String, open val icon: Int, open val color: Int) {
 

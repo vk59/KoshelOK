@@ -3,7 +3,7 @@ package com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders
 import android.view.View
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.databinding.ItemTransactionBinding
-import com.tinkoff_sirius.koshelok.model.Category
+import com.tinkoff_sirius.koshelok.entitis.Category
 import com.tinkoff_sirius.koshelok.ui.main.OptionsCallback
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 

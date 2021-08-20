@@ -1,9 +1,9 @@
 package com.tinkoff_sirius.koshelok.config
 
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.model.Category
-import com.tinkoff_sirius.koshelok.model.Transaction
-import com.tinkoff_sirius.koshelok.model.Types
+import com.tinkoff_sirius.koshelok.entitis.Category
+import com.tinkoff_sirius.koshelok.entitis.Transaction
+import com.tinkoff_sirius.koshelok.entitis.Types
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import kotlinx.datetime.LocalDate
 

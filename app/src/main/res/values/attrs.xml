@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="TransactionItemEditingView">
         <attr name="tie_text" format="string" />
+        <attr name="button_text" format="string"/>
     </declare-styleable>
 </resources>

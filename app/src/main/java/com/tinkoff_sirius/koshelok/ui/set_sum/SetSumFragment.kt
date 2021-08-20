@@ -1,9 +1,6 @@
 package com.tinkoff_sirius.koshelok.ui.set_sum
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +10,16 @@ import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentSetSumBinding
+import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
+import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
+import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
-
-    var pref: SharedPreferences? = null
 
     private lateinit var viewModel: SetSumViewModel
 
@@ -33,15 +34,34 @@ class SetSumFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pref = this.activity?.getSharedPreferences("CREATED_TRANSACTION" , Context.MODE_PRIVATE)
-        binding.sumText.setText(pref?.getString("sum" , ""))
+
+
         initListeners(view)
     }
 
     private fun initListeners(v: View) {
         binding.setSumButton.setOnClickListener {
-            if (!binding.sumText.text?.trim().isNullOrEmpty() && !binding.sumText.text?.toString().equals(".")){
-                saveData(binding.sumText.text.toString())
+
+
+            if (!binding.sumText.text?.trim().isNullOrEmpty() && !binding.sumText.text?.toString()
+                    .equals(".")
+            ) {
+                val s = PosedTransactionSharedRepository(
+                    SharedPreferencesFactory().create(
+                        requireContext(),
+                        SharedPreferencesFactory.TRANSACTION_DATA
+                    ),
+
+                )
+
+                s.saveTransaction(PosedTransaction(binding.sumText.text.toString(), "1", "2"))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribeBy (
+                       onComplete = {},
+                        onError = {Timber.e(it)}
+                    )
+
                 v.findNavController()
                     .navigate(R.id.action_setSumFragment_to_operationTypeFragment)
 
@@ -57,9 +77,5 @@ class SetSumFragment : Fragment() {
         }
     }
 
-    fun saveData(sum: String){
-        val editor = pref?.edit()
-        editor?.putString("sum" , sum)
-        editor?.apply()
-    }
+
 }

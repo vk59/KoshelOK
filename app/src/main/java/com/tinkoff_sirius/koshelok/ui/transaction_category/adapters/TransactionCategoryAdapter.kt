@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.model.Transaction
+import com.tinkoff_sirius.koshelok.entitis.Transaction
 
 class TransactionCategoryAdapter : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
 

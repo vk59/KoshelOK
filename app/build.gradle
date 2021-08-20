@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id("io.gitlab.arturbosch.detekt").version("1.18.0")
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -72,7 +73,16 @@ dependencies {
     // Kotlin date time
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.2.1'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // RxJava
+    implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    //Serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2"
+
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.21"
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'

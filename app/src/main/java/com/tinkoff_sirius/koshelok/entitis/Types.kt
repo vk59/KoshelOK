@@ -1,4 +1,4 @@
-package com.tinkoff_sirius.koshelok.model
+package com.tinkoff_sirius.koshelok.entitis
 
 enum class Types(val nameType: String) {
     SALARY("Зарплата"),

@@ -76,5 +76,14 @@
         <action
             android:id="@+id/action_transactionEditingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_transactionEditingFragment_to_setSumFragment"
+            app:destination="@id/setSumFragment" />
+        <action
+            android:id="@+id/action_transactionEditingFragment_to_operationTypeFragment"
+            app:destination="@id/operationTypeFragment" />
+        <action
+            android:id="@+id/action_transactionEditingFragment_to_transactionCategoryFragment2"
+            app:destination="@id/transactionCategoryFragment" />
     </fragment>
 </navigation>

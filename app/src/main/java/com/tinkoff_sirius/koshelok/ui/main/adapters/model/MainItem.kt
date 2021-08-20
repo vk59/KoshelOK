@@ -1,6 +1,6 @@
 package com.tinkoff_sirius.koshelok.ui.main.adapters.model
 
-import com.tinkoff_sirius.koshelok.model.Category
+import com.tinkoff_sirius.koshelok.entitis.Category
 
 sealed class MainItem {
 

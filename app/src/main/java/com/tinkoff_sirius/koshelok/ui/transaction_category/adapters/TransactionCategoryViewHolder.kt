@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.model.Transaction
+import com.tinkoff_sirius.koshelok.entitis.Transaction
 
 class TransactionCategoryViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
