@@ -18,10 +18,21 @@ import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.config.AppConfig.WAIT_FOR_PUSH_AGAIN
 import com.tinkoff_sirius.koshelok.databinding.FragmentMainBinding
 import com.tinkoff_sirius.koshelok.ui.main.adapters.MainRecyclerAdapter
-import com.tinkoff_sirius.koshelok.ui.main.adapters.OptionsCallback
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 
 class MainFragment : Fragment() {
+
+    private val mainRecyclerAdapter by lazy {
+        MainRecyclerAdapter(object : OptionsCallback {
+            override fun deleteItem(element: MainItem.Transaction) {
+                showDeleteDialog(element)
+            }
+
+            override fun editItem(element: MainItem.Transaction) {
+                findNavController().navigate(R.id.action_mainFragment_to_setSumFragment)
+            }
+        })
+    }
 
     private val viewModel: MainViewModel by viewModels()
     private val binding by viewBinding(FragmentMainBinding::bind)
@@ -67,15 +78,6 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val mainRecyclerAdapter = MainRecyclerAdapter(object : OptionsCallback {
-            override fun deleteItem(element: MainItem.Transaction) {
-                showDeleteDialog(element)
-            }
-
-            override fun editItem(element: MainItem.Transaction) {
-                findNavController().navigate(R.id.action_mainFragment_to_setSumFragment)
-            }
-        })
 
         recyclerView.apply {
             adapter = mainRecyclerAdapter
@@ -86,6 +88,10 @@ class MainFragment : Fragment() {
         viewModel.loadData()
         viewModel.items.value!!.let { mainRecyclerAdapter.setData(it) }
 
+        setItemsObserving()
+    }
+
+    private fun setItemsObserving() {
         viewModel.items.observe(viewLifecycleOwner) {
             mainRecyclerAdapter.setData(it)
         }
@@ -94,10 +100,10 @@ class MainFragment : Fragment() {
     private fun showDeleteDialog(element: MainItem) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage("Вы действительно хотите удалить запись?")
-            .setPositiveButton("Удалить") { dialog, id ->
+            .setPositiveButton("Удалить") { _, _ ->
                 viewModel.deleteTransaction(element)
             }
-            .setNegativeButton("Отмена") { dialog, id ->
+            .setNegativeButton("Отмена") { dialog, _ ->
                 dialog.cancel()
             }
             .create().show()

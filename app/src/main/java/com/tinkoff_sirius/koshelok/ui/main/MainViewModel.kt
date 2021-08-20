@@ -62,10 +62,12 @@ class MainViewModel : ViewModel() {
     }
 
     fun loadData() {
+        // TODO: Реализовать через обращение к серверу
         createNewMainItemList()
     }
 
     fun deleteTransaction(element: MainItem) {
+        // TODO: Реализовать через обращение к серверу
         transactions.remove(element)
         createNewMainItemList()
     }
