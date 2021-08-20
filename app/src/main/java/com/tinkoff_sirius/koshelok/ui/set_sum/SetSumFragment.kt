@@ -1,6 +1,9 @@
 package com.tinkoff_sirius.koshelok.ui.set_sum
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +13,12 @@ import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentSetSumBinding
+import timber.log.Timber
 
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
+
+    var pref: SharedPreferences? = null
 
     private lateinit var viewModel: SetSumViewModel
 
@@ -26,20 +32,34 @@ class SetSumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        pref = this.activity?.getSharedPreferences("CREATED_TRANSACTION" , Context.MODE_PRIVATE)
+        binding.sumText.setText(pref?.getString("sum" , ""))
         initListeners(view)
     }
 
-    private fun initListeners(v: View){
-        binding.setSumButton.setOnClickListener{
-            if (!binding.sumText.text?.trim().isNullOrEmpty()) {
-                v.findNavController().navigate(R.id.action_setSumFragment_to_operationTypeFragment)
+    private fun initListeners(v: View) {
+        binding.setSumButton.setOnClickListener {
+            if (!binding.sumText.text?.trim().isNullOrEmpty() && !binding.sumText.text?.toString().equals(".")){
+                saveData(binding.sumText.text.toString())
+                v.findNavController()
+                    .navigate(R.id.action_setSumFragment_to_operationTypeFragment)
+
             } else {
                 Toast.makeText(requireContext(), "Введите сумму!", Toast.LENGTH_LONG).show()
             }
         }
 
         binding.toolbar.setNavigationOnClickListener {
+
             v.findNavController().navigate(R.id.action_setSumFragment_to_mainFragment)
+
         }
+    }
+
+    fun saveData(sum: String){
+        val editor = pref?.edit()
+        editor?.putString("sum" , sum)
+        editor?.apply()
     }
 }
