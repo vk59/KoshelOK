@@ -1,6 +1,6 @@
 package com.tinkoff_sirius.koshelok.ui.main.adapters.model
 
-import com.tinkoff_sirius.koshelok.model.CategorySealed
+import com.tinkoff_sirius.koshelok.model.Category
 
 sealed class MainItem {
 
@@ -14,7 +14,7 @@ sealed class MainItem {
 
     class Transaction(
         val sum: Int,
-        val category: CategorySealed,
+        val category: Category,
         val date: String,
         val time: String
     ) : MainItem()

@@ -19,6 +19,6 @@ class TransactionCategoryViewHolder(itemView: View) :
 
     fun bind(transaction: Transaction) {
         mTransactionCategoryImage?.setBackgroundResource(transaction.category.icon)
-        mTransactionCategoryTitle?.text = transaction.category.type.nameType
+        mTransactionCategoryTitle?.text = transaction.category.type
     }
 }

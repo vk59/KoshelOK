@@ -16,7 +16,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentOnBoardingBinding
-import com.tinkoff_sirius.koshelok.repository.AccountShared.saveAccount
+import com.tinkoff_sirius.koshelok.repository.AccountShared
+import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.ui.main.MainViewModel
 import timber.log.Timber
 
@@ -24,6 +25,15 @@ class OnBoardingFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels()
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
+    private val loginResultHandler =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                result: ActivityResult? ->
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
+            val account = task.result
+
+            navigateWith(account)
+        }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -62,17 +72,8 @@ class OnBoardingFragment : Fragment() {
         }
     }
 
-    private val loginResultHandler =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
-
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
-                val account = task.result
-
-                navigateWith(account)
-            }
-
     private fun navigateWith(account: GoogleSignInAccount) {
+        AccountShared(SharedPreferencesFactory().create(requireContext())).saveAccount(account)
         findNavController().navigate(R.id.action_onBoardingFragment_to_mainFragment)
-        saveAccount(account, requireActivity().applicationContext)
     }
 }
