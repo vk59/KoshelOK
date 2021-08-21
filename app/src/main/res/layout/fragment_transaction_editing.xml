@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.transaction_editing.TransactionEditingFragment">
+    tools:context=".ui.transactionediting.TransactionEditingFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionItemEditingView
+    <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
         android:id="@+id/trans_editing_sum_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trans_editing_title"
         app:tie_text="@string/summary" />
 
-    <com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionItemEditingView
+    <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
         android:id="@+id/trans_editing_type_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         app:tie_text="@string/type" />
 
 
-    <com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionItemEditingView
+    <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
         android:id="@+id/trans_editing_category_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         app:tie_text="@string/category" />
 
 
-    <com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionItemEditingView
+    <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
         android:id="@+id/trans_editing_date_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
