@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.databinding.ItemDateBinding
 import com.tinkoff_sirius.koshelok.databinding.ItemHomeHeaderBinding
 import com.tinkoff_sirius.koshelok.databinding.ItemTransactionBinding
+import com.tinkoff_sirius.koshelok.ui.ResourceProvider
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.DateViewHolder
 import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.HeaderViewHolder
@@ -15,7 +16,8 @@ import com.tinkoff_sirius.koshelok.ui.main.adapters.view_holders.TransactionView
 
 class MainRecyclerAdapter(
     private val deleteCallback: (Long) -> Unit,
-    private val editCallback: (MainItem) -> Unit
+    private val editCallback: (MainItem) -> Unit,
+    private val resourceProvider: ResourceProvider
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
     private val diff = AsyncListDiffer(this, TransactionsDiffUtils())
@@ -34,13 +36,17 @@ class MainRecyclerAdapter(
         return when (viewType) {
             TYPE_TRANSACTION -> TransactionViewHolder(
                 ItemTransactionBinding.inflate(inflater, parent, false),
-                deleteCallback, editCallback
+                deleteCallback,
+                editCallback,
+                resourceProvider
             )
             TYPE_HEADER -> HeaderViewHolder(
-                ItemHomeHeaderBinding.inflate(inflater, parent, false)
+                ItemHomeHeaderBinding.inflate(inflater, parent, false),
+                resourceProvider
             )
             TYPE_DATE -> DateViewHolder(
-                ItemDateBinding.inflate(inflater, parent, false)
+                ItemDateBinding.inflate(inflater, parent, false),
+                resourceProvider
             )
             else -> throw @Suppress Exception("You should use Transaction and Header View Holder")
         }

@@ -23,7 +23,8 @@ class MainFragment : Fragment() {
     private val mainRecyclerAdapter by lazy {
         MainRecyclerAdapter(
             { id -> showDeleteDialog(id) },
-            { element -> navController.navigate(R.id.action_mainFragment_to_setSumFragment) }
+            { element -> navController.navigate(R.id.action_mainFragment_to_setSumFragment) },
+            Dependencies.resourceProvider
         )
     }
 

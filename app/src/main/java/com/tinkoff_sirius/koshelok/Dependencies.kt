@@ -4,6 +4,7 @@ import android.content.Context
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.repository.WalletRepository
+import com.tinkoff_sirius.koshelok.ui.ResourceProvider
 import com.tinkoff_sirius.koshelok.ui.main.MainViewModelFactory
 
 object Dependencies {
@@ -26,5 +27,9 @@ object Dependencies {
             accountRepository = accountRepository,
             repository = walletRepository
         )
+    }
+
+    val resourceProvider by lazy {
+        ResourceProvider(context!!)
     }
 }
