@@ -1,10 +1,17 @@
 package com.tinkoff_sirius.koshelok.entitis
 
-sealed class Category(open val type: String, open val icon: Int, open val color: Int) {
+import kotlinx.serialization.Serializable
 
-    class Income(override val type: String, override val icon: Int, override val color: Int)
-        : Category(type, icon, color)
+@Serializable
+class Category(
+    val id: Long?,
+    val typeName: TransactionType,
+    val categoryName: String,
+    val icon: Int,
+    val color: Int
+)
 
-    class Outcome(override val type: String, override val icon: Int, override val color: Int)
-        : Category(type, icon, color)
+enum class TransactionType {
+    INCOME, OUTCOME
 }
+

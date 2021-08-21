@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
+import com.tinkoff_sirius.koshelok.entitis.Category
 import com.tinkoff_sirius.koshelok.entitis.Transaction
 
 class TransactionCategoryViewHolder(itemView: View) :
@@ -19,8 +20,8 @@ class TransactionCategoryViewHolder(itemView: View) :
         mTransactionImage = itemView.findViewById(R.id.selected_image)
     }
 
-    fun bind(transaction: Transaction) {
-        mTransactionCategoryImage?.setBackgroundResource(transaction.category.icon)
-        mTransactionCategoryTitle?.text = transaction.category.type
+    fun bind(category: Category) {
+        mTransactionCategoryImage?.setBackgroundResource(category.icon)
+        mTransactionCategoryTitle?.text = category.type
     }
 }

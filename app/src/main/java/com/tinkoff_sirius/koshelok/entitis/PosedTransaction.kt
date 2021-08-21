@@ -3,4 +3,4 @@ package com.tinkoff_sirius.koshelok.entitis
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PosedTransaction(var sum: String, var type: String, var category: String)
+data class PosedTransaction(val sum: String, val type: String, val category: Category)

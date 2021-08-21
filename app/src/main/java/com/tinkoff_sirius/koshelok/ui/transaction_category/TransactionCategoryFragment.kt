@@ -1,13 +1,10 @@
 package com.tinkoff_sirius.koshelok.ui.transaction_category
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,16 +15,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.config.AppConfig
 import com.tinkoff_sirius.koshelok.databinding.FragmentTransactionCategoryBinding
-import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
 import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.ui.transaction_category.adapters.TransactionCategoryAdapter
 import com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionEditingViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
-import timber.log.Timber
-import kotlin.math.log
 
 class TransactionCategoryFragment : Fragment() {
 
@@ -67,16 +58,22 @@ class TransactionCategoryFragment : Fragment() {
             //Выделить сохраненый Item
         })
 
-        val recyclerAdapter = TransactionCategoryAdapter()
+        val recyclerAdapter = TransactionCategoryAdapter {
+            binding.setCategory.isClickable = false
+            viewModel.updateTransactionCategory(category = it)
+                .observe(viewLifecycleOwner, {
+                    binding.setCategory.isClickable = true
+                })
+        }
 
         recyclerView.apply {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(this@TransactionCategoryFragment.context)
         }
 
-        val mTransaction = AppConfig.transactionExample
+        val category = AppConfig.transactionExample.map { it.category }
 
-        recyclerAdapter.setData(mTransaction)
+        recyclerAdapter.setData(category)
 
         initListeners(view)
     }

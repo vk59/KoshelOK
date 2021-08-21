@@ -54,7 +54,7 @@ class TransactionEditingFragment : Fragment() {
         viewModel.transaction.observe(viewLifecycleOwner, {
             binding.transEditingSumLabel.buttonText.text = it.sum
             binding.transEditingTypeLabel.buttonText.text = it.type
-            binding.transEditingCategoryLabel.buttonText.text = it.category
+            binding.transEditingCategoryLabel.buttonText.text = it.category.type
         })
 
         initListeners(view)

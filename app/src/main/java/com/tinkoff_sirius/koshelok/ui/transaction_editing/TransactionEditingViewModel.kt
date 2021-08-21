@@ -3,6 +3,7 @@ package com.tinkoff_sirius.koshelok.ui.transaction_editing
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tinkoff_sirius.koshelok.entitis.Category
 import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
 import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -58,7 +59,7 @@ class TransactionEditingViewModel(private val transactionSharedRepository: Posed
         return ld
     }
 
-    fun updateTransactionCategory(category: String): LiveData<Unit>{
+    fun updateTransactionCategory(category: Category): LiveData<Unit>{
         val ld = MutableLiveData<Unit>()
 
         disposable += transactionSharedRepository.getTransaction()
