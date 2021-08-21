@@ -1,11 +1,15 @@
 package com.tinkoff_sirius.koshelok.ui.set_sum
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
@@ -13,6 +17,7 @@ import com.tinkoff_sirius.koshelok.databinding.FragmentSetSumBinding
 import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
 import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
+import com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionEditingViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -21,7 +26,20 @@ import timber.log.Timber
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
 
-    private lateinit var viewModel: SetSumViewModel
+    private val viewModel: TransactionEditingViewModel by viewModels(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return TransactionEditingViewModel(
+                    PosedTransactionSharedRepository(
+                        SharedPreferencesFactory().create(
+                            requireContext(),
+                            SharedPreferencesFactory.TRANSACTION_DATA
+                        )
+                    )
+                ) as T
+            }
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +52,10 @@ class SetSumFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        viewModel.transaction.observe(viewLifecycleOwner, {
+            //TODO кидает ошибку если файл не создан
+            binding.sumText.setText(it.sum)
+        })
 
         initListeners(view)
     }
@@ -46,21 +67,8 @@ class SetSumFragment : Fragment() {
             if (!binding.sumText.text?.trim().isNullOrEmpty() && !binding.sumText.text?.toString()
                     .equals(".")
             ) {
-                val s = PosedTransactionSharedRepository(
-                    SharedPreferencesFactory().create(
-                        requireContext(),
-                        SharedPreferencesFactory.TRANSACTION_DATA
-                    ),
 
-                )
-
-                s.saveTransaction(PosedTransaction(binding.sumText.text.toString(), "1", "2"))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy (
-                       onComplete = {},
-                        onError = {Timber.e(it)}
-                    )
+                viewModel.updateTransactionSum(binding.sumText.text.toString()).observe(viewLifecycleOwner, {})
 
                 v.findNavController()
                     .navigate(R.id.action_setSumFragment_to_operationTypeFragment)
@@ -75,6 +83,7 @@ class SetSumFragment : Fragment() {
             v.findNavController().navigate(R.id.action_setSumFragment_to_mainFragment)
 
         }
+
     }
 
 

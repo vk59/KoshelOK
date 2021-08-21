@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,12 +18,34 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.config.AppConfig
 import com.tinkoff_sirius.koshelok.databinding.FragmentTransactionCategoryBinding
+import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
+import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
+import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.ui.transaction_category.adapters.TransactionCategoryAdapter
+import com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionEditingViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import kotlin.math.log
 
 class TransactionCategoryFragment : Fragment() {
-    private lateinit var viewModel: TransactionCategoryViewModel
+
+    private val viewModel: TransactionEditingViewModel by viewModels(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return TransactionEditingViewModel(
+                    PosedTransactionSharedRepository(
+                        SharedPreferencesFactory().create(
+                            requireContext(),
+                            SharedPreferencesFactory.TRANSACTION_DATA
+                        )
+                    )
+                ) as T
+            }
+        }
+    })
+
 
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
 
@@ -38,6 +63,9 @@ class TransactionCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.transaction.observe(viewLifecycleOwner, {
+            //Выделить сохраненый Item
+        })
 
         val recyclerAdapter = TransactionCategoryAdapter()
 
@@ -53,14 +81,17 @@ class TransactionCategoryFragment : Fragment() {
         initListeners(view)
     }
 
-    private fun initListeners(v: View){
+    private fun initListeners(v: View) {
 
-        binding.setCategory.setOnClickListener{
-            v.findNavController().navigate(R.id.action_transactionCategoryFragment_to_transactionEditingFragment)
+        binding.setCategory.setOnClickListener {
+
+            v.findNavController()
+                .navigate(R.id.action_transactionCategoryFragment_to_transactionEditingFragment)
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            v.findNavController().navigate(R.id.action_transactionCategoryFragment_to_operationTypeFragment)
+            v.findNavController()
+                .navigate(R.id.action_transactionCategoryFragment_to_operationTypeFragment)
         }
     }
 

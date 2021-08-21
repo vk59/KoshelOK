@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -25,8 +24,9 @@ class PosedTransactionSharedRepository(private val sharedPreferences: SharedPref
         Json.decodeFromString(PosedTransaction.serializer(), data)
     }
 
+
     companion object {
-        const val TRANSACTION_DATA = "transaction_data"
+        const val TRANSACTION_DATA = "transaction"
     }
 
 }

@@ -1,5 +1,6 @@
 package com.tinkoff_sirius.koshelok.ui.transaction_editing
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,13 +10,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentTransactionEditingBinding
 import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.ui.main.MainViewModel
+import java.util.*
 
 
 class TransactionEditingFragment : Fragment() {
@@ -47,46 +51,60 @@ class TransactionEditingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         viewModel.transaction.observe(viewLifecycleOwner, {
-            //работа с полями класса
-            binding.transEditingSumLabel.buttonText.text = it.type
-
+            binding.transEditingSumLabel.buttonText.text = it.sum
+            binding.transEditingTypeLabel.buttonText.text = it.type
+            binding.transEditingCategoryLabel.buttonText.text = it.category
         })
-
-
-//        val sum = getData(CreatedTransactionShared.SUMMARY)
-//
-//        val type = getData(CreatedTransactionShared.TYPE)
-
-        //val category = getData(CreatedTransactionShared.CATEGORY)
-
-        // binding.transEditingSumLabel.buttonText.text = sum
-        ///binding.transEditingCategoryLabel.buttonText.text = category
-        //binding.transEditingTypeLabel.buttonText.text = type
 
         initListeners(view)
     }
 
     private fun initListeners(v: View) {
 
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        binding.transEditingDateLabel.buttonText.text = "$day.$month"
+
+        binding.transEditingDateLabel.setOnClickListener {
+
+            val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
+                // Display Selected date in TextView
+                binding.transEditingDateLabel.buttonText.setText("$dayOfMonth $month")
+            }, year, month, day)
+            dpd.show()
+
+        }
 
         binding.toolbar.setNavigationOnClickListener {
-            v.findNavController()
+            findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
         }
 
-    }
+        binding.transEditingSumLabel.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_transactionEditingFragment_to_setSumFragment)
+        }
 
-//    private fun getData(type: String): String {
-//        return CreatedTransactionShared(
-//            SharedPreferencesFactory().create(
-//                requireContext(),
-//                SharedPreferencesFactory.TRANSACTION_DATA
-//            )
-//        ).getTransaction(type)
-//    }
+        binding.transEditingTypeLabel.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_transactionEditingFragment_to_operationTypeFragment)
+        }
+
+        binding.transEditingCategoryLabel.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
+        }
+
+        binding.createTransactionButton.setOnClickListener{
+            findNavController()
+                .navigate(R.id.action_transactionEditingFragment_to_mainFragment)
+        }
+
+    }
 
 
 }
