@@ -32,6 +32,7 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
 
         holder.mTransactionImage?.isVisible = mPosition == position
 
+
         holder.itemView.setOnClickListener{
             mPosition = holder.absoluteAdapterPosition
             setSelected(category)
