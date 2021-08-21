@@ -1,19 +1,22 @@
 package com.tinkoff_sirius.koshelok.ui.main
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.tinkoff_sirius.koshelok.entities.Category
 import com.tinkoff_sirius.koshelok.entities.TransactionType
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID
 import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID_TOKEN
-import com.tinkoff_sirius.koshelok.repository.RepositoryImpl
 import com.tinkoff_sirius.koshelok.repository.WalletRepository
 import com.tinkoff_sirius.koshelok.repository.entities.TransactionData
 import com.tinkoff_sirius.koshelok.repository.entities.WalletData
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.datetime.*
@@ -21,17 +24,60 @@ import timber.log.Timber
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-class MainViewModel(private val accountSharedRepository: AccountSharedRepository) : ViewModel() {
-    val items: MutableLiveData<MutableList<MainItem>> = MutableLiveData(mutableListOf())
-    val exitFlag = MutableLiveData(false)
+class MainViewModel(
+    private val accountSharedRepository: AccountSharedRepository,
+    private val walletRepository: WalletRepository
+) : ViewModel() {
+
+    val items: MutableLiveData<List<MainItem>> = MutableLiveData(listOf())
+
     val isThereTransactions = MutableLiveData(true)
+
     private var lastTimeBackPressed: Instant = Instant.DISTANT_PAST
-    private val repository: WalletRepository by lazy {
-        RepositoryImpl()
+    private val disposable: CompositeDisposable = CompositeDisposable()
+
+    init {
+        disposable += updateTransactions()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(onError = Timber::e)
     }
 
-    private fun createNewMainItemList(walletData: WalletData) {
-        val header: MutableList<MainItem> = mutableListOf(
+    private fun updateTransactions(): Completable {
+        return walletRepository.getWalletById(
+            1,
+            accountSharedRepository.getAccount(ACCOUNT_ID),
+            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
+        )
+            .doOnSuccess { walletData ->
+                isThereTransactions.postValue(walletData.transactions.isNotEmpty())
+                items.postValue(createNewMainItemList(walletData))
+            }.ignoreElement()
+    }
+
+    fun deleteTransactionById(id: Long) {
+        disposable += walletRepository.deleteTransactionById(id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .flatMapCompletable { updateTransactions() }
+            .subscribeBy(
+                onError = { Timber.e(it) }
+            )
+    }
+
+    @OptIn(ExperimentalTime::class)
+    fun onBackPressed(): LiveData<Boolean> = liveData {
+        val now = Clock.System.now()
+        if (now.minus(lastTimeBackPressed) < Duration.seconds(3)) {
+            emit(true)
+        } else {
+            lastTimeBackPressed = now
+            emit(false)
+        }
+    }
+
+    private fun createNewMainItemList(walletData: WalletData): List<MainItem> {
+        val items: MutableList<MainItem> = mutableListOf(
             MainItem.Header(
                 walletData.name,
                 "${walletData.balance} ${walletData.currencyType}",
@@ -48,50 +94,8 @@ class MainViewModel(private val accountSharedRepository: AccountSharedRepository
             transItems.add(MainItem.Date(date))
             transItems.addAll(list)
         }
-        isThereTransactions.value = transItems.isNotEmpty()
-        header.addAll(transItems)
-        items.value = header
-    }
-
-    fun loadData() {
-        repository.getWalletById(
-            1,
-            accountSharedRepository.getAccount(ACCOUNT_ID),
-            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
-        )
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = {
-                    createNewMainItemList(it)
-                },
-                onError = {
-                    Timber.d("error $it")
-                }
-            )
-    }
-
-    fun deleteTransactionById(id: Long) {
-        repository.deleteTransactionById(id)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = {
-                    Log.d("DELETE", it.message)
-                    loadData()
-                },
-                onError = { Log.d("DELETE", "error") }
-            )
-    }
-
-    @OptIn(ExperimentalTime::class)
-    fun onBackPressed() {
-        val now = Clock.System.now()
-        if (now.minus(lastTimeBackPressed) < Duration.seconds(3)) {
-            exitFlag.value = true
-        } else {
-            lastTimeBackPressed = now
-        }
+        items.addAll(transItems)
+        return items
     }
 
     private fun List<TransactionData>.toTransactionItems(): List<MainItem.Transaction> {
@@ -125,5 +129,9 @@ class MainViewModel(private val accountSharedRepository: AccountSharedRepository
 
     private fun LocalDateTime.toStringTime(): String {
         return if (this.minute > 10) "${this.hour}:${this.minute}" else "${this.hour}:0${this.minute}"
+    }
+
+    override fun onCleared() {
+        disposable.dispose()
     }
 }

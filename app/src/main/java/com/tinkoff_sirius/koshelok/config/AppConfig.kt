@@ -12,7 +12,6 @@ import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
 import kotlinx.datetime.LocalDate
 
 object AppConfig {
-    const val WAIT_FOR_PUSH_AGAIN = 3000L
     val headerExample = listOf<MainItem>(
         MainItem.Header("Кошелек 1", "60 000", "170 000", "61 400", "230 000")
     )
@@ -42,40 +41,13 @@ object AppConfig {
         ),
     )
 
-//    val mainTransactionsExample = listOf(
-//        MainItem.Transaction(
-//            500000,
-//            Category(TransactionType.INCOME, Types.SALARY.nameType, R.drawable.ic_salary, R.color.green),
-//            "2021-08-20".toLocalDate(),
-//            "17:16"
-//        ),
-//        MainItem.Transaction(
-//            940,
-//            Category(TransactionType.OUTCOME, Types.FOOD.nameType, R.drawable.ic_food, R.color.red),
-//            "2021-08-18".toLocalDate(),
-//            "18:46"
-//        ),
-//        MainItem.Transaction(
-//            21000,
-//            Category(TransactionType.INCOME, Types.ENTERTAINMENT.nameType, R.drawable.ic_sport, R.color.red),
-//            "2021-08-17".toLocalDate(),
-//            "19:15"
-//        ),
-//        MainItem.Transaction(
-//            8000,
-//            Category(TransactionType.INCOME, Types.CLOTHES.nameType, R.drawable.ic_clothes, R.color.main_blue),
-//            "2021-08-17".toLocalDate(),
-//            "16:15"
-//        )
-//    )
-
     val walletExample = WalletData(
         1,
         "Мой кошелек",
         "966.21",
         "63423.32",
         "5423",
-        "4000",
+        "40000",
         "RUB",
         listOf(
             TransactionData(

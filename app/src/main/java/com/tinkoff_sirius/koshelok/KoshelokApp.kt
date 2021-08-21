@@ -9,5 +9,7 @@ class KoshelokApp : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+
+        Dependencies.context = this
     }
 }

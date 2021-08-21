@@ -13,8 +13,6 @@ class TransactionViewHolder(
 
     private var idTransaction: Long? = null
 
-//    private val binding: ItemTransactionBinding by viewBinding(ItemTransactionBinding::bind)
-
     override fun bind(data: MainItem) {
         if (data is MainItem.Transaction) {
             idTransaction = data.id

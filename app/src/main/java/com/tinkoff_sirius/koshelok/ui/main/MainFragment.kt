@@ -7,16 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
+import com.tinkoff_sirius.koshelok.Dependencies
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentMainBinding
-import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
-import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 
 class MainFragment : Fragment() {
@@ -30,20 +27,11 @@ class MainFragment : Fragment() {
         )
     }
 
-    private val viewModel: MainViewModel by viewModels(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MainViewModel(
-                    AccountSharedRepository(
-                        SharedPreferencesFactory().create(
-                            requireContext(),
-                            SharedPreferencesFactory.ACCOUNT_DATA
-                        )
-                    )
-                ) as T
-            }
+    private val viewModel: MainViewModel by viewModels(
+        factoryProducer = {
+            Dependencies.mainViewModelFactory
         }
-    })
+    )
 
     private val binding by viewBinding(FragmentMainBinding::bind)
 
@@ -71,8 +59,7 @@ class MainFragment : Fragment() {
     }
 
     private fun onBackPressed() {
-        viewModel.onBackPressed()
-        viewModel.exitFlag.observe(viewLifecycleOwner) {
+        viewModel.onBackPressed().observe(viewLifecycleOwner) {
             if (it) {
                 activity?.finish()
             } else {
@@ -94,7 +81,6 @@ class MainFragment : Fragment() {
         }
 
         binding.textNoEntities.visibility = View.GONE
-        viewModel.loadData()
         setIsThereTransactionsObserving()
         setItemsObserving()
     }
