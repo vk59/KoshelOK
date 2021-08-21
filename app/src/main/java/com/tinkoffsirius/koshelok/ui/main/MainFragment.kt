@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -14,7 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
+import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
+import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.ui.main.adapters.MainRecyclerAdapter
+import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 
 class MainFragment : Fragment() {
 
@@ -33,6 +38,21 @@ class MainFragment : Fragment() {
             Dependencies.mainViewModelFactory
         }
     )
+
+    private val viewModelTransactionEditing: TransactionEditingViewModel by viewModels(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return TransactionEditingViewModel(
+                    PosedTransactionSharedRepository(
+                        SharedPreferencesFactory().create(
+                            requireContext(),
+                            SharedPreferencesFactory.TRANSACTION_DATA
+                        )
+                    )
+                ) as T
+            }
+        }
+    })
 
     private val binding by viewBinding(FragmentMainBinding::bind)
 
@@ -55,6 +75,7 @@ class MainFragment : Fragment() {
             onBackPressed()
         }
         binding.buttonAdd.setOnClickListener {
+            viewModelTransactionEditing.removeTransaction()
             navController.navigate(R.id.action_mainFragment_to_setSumFragment)
         }
     }
