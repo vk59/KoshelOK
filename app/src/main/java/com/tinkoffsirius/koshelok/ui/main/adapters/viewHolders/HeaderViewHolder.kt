@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.view_holders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
 
 import android.view.View
 import com.tinkoffsirius.koshelok.R

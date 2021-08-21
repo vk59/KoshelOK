@@ -15,4 +15,3 @@ class Category(
 enum class TransactionType {
     INCOME, OUTCOME
 }
-
