@@ -5,15 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/onBoardingFragment">
     <fragment
-        android:id="@+id/onBoardingFragment"
-        android:name="com.tinkoff_sirius.koshelok.ui.on_boarding.OnBoardingFragment"
-        android:label="on_boarding_fragment"
-        tools:layout="@layout/fragment_on_boarding">
-        <action
-            android:id="@+id/action_onBoardingFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/mainFragment"
         android:name="com.tinkoff_sirius.koshelok.ui.main.MainFragment"
         android:label="main_fragment"
@@ -60,7 +51,10 @@
             app:destination="@id/operationTypeFragment" />
         <action
             android:id="@+id/action_transactionCategoryFragment_to_transactionEditingFragment"
-            app:destination="@id/transactionEditingFragment" />
+            app:destination="@id/transactionEditingFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/transactionEditingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -72,18 +66,34 @@
 
         <action
             android:id="@+id/action_transactionEditingFragment_to_transactionCategoryFragment"
-            app:destination="@id/transactionCategoryFragment" />
+            app:destination="@id/transactionCategoryFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_setSumFragment"
-            app:destination="@id/setSumFragment" />
+            app:destination="@id/setSumFragment"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_operationTypeFragment"
-            app:destination="@id/operationTypeFragment" />
+            app:destination="@id/operationTypeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.tinkoff_sirius.koshelok.ui.on_boarding.OnBoardingFragment"
+        android:label="fragment_on_boarding"
+        tools:layout="@layout/fragment_on_boarding" >
         <action
-            android:id="@+id/action_transactionEditingFragment_to_transactionCategoryFragment2"
-            app:destination="@id/transactionCategoryFragment" />
+            android:id="@+id/action_onBoardingFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

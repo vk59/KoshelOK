@@ -1,6 +1,7 @@
 package com.tinkoff_sirius.koshelok.ui.set_sum
 
 import android.os.Bundle
+import android.os.FileUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +15,9 @@ import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentSetSumBinding
-import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
 import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionEditingViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
-import timber.log.Timber
 
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
@@ -51,6 +47,8 @@ class SetSumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         viewModel.transaction.observe(viewLifecycleOwner, {
             //TODO кидает ошибку если файл не создан

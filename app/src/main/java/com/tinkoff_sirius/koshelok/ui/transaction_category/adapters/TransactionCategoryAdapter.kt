@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.entitis.Category
-import com.tinkoff_sirius.koshelok.entitis.Transaction
+import com.tinkoff_sirius.koshelok.entities.Category
+
 
 class TransactionCategoryAdapter(private val setSelected: (category: Category) -> Unit) : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
 
     private var list: List<Category> = listOf()
 
-    private var mPosition: Int = 0
+    private var mPosition: Int = -1
 
     fun setData(data: List<Category>) {
        list = data
@@ -31,7 +31,6 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
         val category: Category = list[position]
 
         holder.mTransactionImage?.isVisible = mPosition == position
-
 
         holder.itemView.setOnClickListener{
             mPosition = holder.absoluteAdapterPosition

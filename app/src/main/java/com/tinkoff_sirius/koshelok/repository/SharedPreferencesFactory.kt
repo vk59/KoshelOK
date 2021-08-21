@@ -34,6 +34,6 @@ class SharedPreferencesFactory {
 
     companion object {
         const val ACCOUNT_DATA = "account_data"
-        const val TRANSACTION_DATA = "transaction_data"
+        const val TRANSACTION_DATA = "transaction"
     }
 }

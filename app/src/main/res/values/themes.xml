@@ -14,8 +14,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="bottomNavigationStyle">@color/white</item>
-
-
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="Theme.Koshelok.Launcher" parent="Theme.Koshelok">

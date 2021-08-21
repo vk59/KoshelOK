@@ -3,8 +3,8 @@ package com.tinkoff_sirius.koshelok.ui.transaction_editing
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tinkoff_sirius.koshelok.entitis.Category
-import com.tinkoff_sirius.koshelok.entitis.PosedTransaction
+import com.tinkoff_sirius.koshelok.entities.Category
+import com.tinkoff_sirius.koshelok.entities.PosedTransaction
 import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -27,6 +27,10 @@ class TransactionEditingViewModel(private val transactionSharedRepository: Posed
                 onSuccess = {transaction.value = it} ,
                 onError = { Timber.e(it)}
             )
+    }
+
+    fun removeTransaction(){
+        transactionSharedRepository.removeTransaction()
     }
 
     fun updateTransactionType(type: String): LiveData<Unit> {

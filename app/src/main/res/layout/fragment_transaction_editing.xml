@@ -36,8 +36,7 @@
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans_editing_title"
-        app:tie_text="@string/summary"
-        />
+        app:tie_text="@string/summary" />
 
     <com.tinkoff_sirius.koshelok.ui.transaction_editing.TransactionItemEditingView
         android:id="@+id/trans_editing_type_label"
@@ -89,17 +88,9 @@
         android:id="@+id/create_transaction_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/black"
-        android:fontFamily="@font/roboto"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:layout_margin="@dimen/button_margin"
+        style="@style/ButtonBlack"
         android:text="@string/trans_editing_button"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -1,74 +1,130 @@
 package com.tinkoff_sirius.koshelok.ui.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tinkoff_sirius.koshelok.config.AppConfig
+import com.tinkoff_sirius.koshelok.entities.Category
+import com.tinkoff_sirius.koshelok.entities.TransactionType
+
+import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository
+import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID
+import com.tinkoff_sirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID_TOKEN
+import com.tinkoff_sirius.koshelok.repository.RepositoryImpl
+import com.tinkoff_sirius.koshelok.repository.WalletRepository
+import com.tinkoff_sirius.koshelok.repository.entities.TransactionData
+import com.tinkoff_sirius.koshelok.repository.entities.WalletData
 import com.tinkoff_sirius.koshelok.ui.main.adapters.model.MainItem
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.datetime.*
+import timber.log.Timber
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
-class MainViewModel : ViewModel() {
-    var items: MutableLiveData<MutableList<MainItem>> = MutableLiveData(mutableListOf())
-    private var transactionsItems = listOf<MainItem>()
-    private var transactions = AppConfig.mainTransactionsExample.toMutableList()
-
-    init {
-        createNewMainItemList()
+class MainViewModel(private val accountSharedRepository: AccountSharedRepository) : ViewModel() {
+    val items: MutableLiveData<MutableList<MainItem>> = MutableLiveData(mutableListOf())
+    val exitFlag = MutableLiveData(false)
+    val isThereTransactions = MutableLiveData(true)
+    private var lastTimeBackPressed: Instant = Instant.DISTANT_PAST
+    private val repository: WalletRepository by lazy {
+        RepositoryImpl()
     }
 
-    private fun createNewMainItemList() {
+    private fun createNewMainItemList(walletData: WalletData) {
+        val header: MutableList<MainItem> = mutableListOf(
+            MainItem.Header(
+                walletData.name,
+                "${walletData.balance} ${walletData.currencyType}",
+                "${walletData.income} ${walletData.currencyType}",
+                "${walletData.spending} ${walletData.currencyType}",
+                walletData.limit
+            )
+        )
+        val transactions = walletData.transactions.toTransactionItems()
+
         val transItems = mutableListOf<MainItem>()
         val transDate = transactions.groupBy { it.date }
-        val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-        val currentDate =
-            LocalDate(currentTime.year, currentTime.monthNumber, currentTime.dayOfMonth)
         transDate.forEach { (date, list) ->
-            val dateText =
-                when (currentDate.minus(date.toLocalDate())) {
-                    DatePeriod(0, 0, 0) -> "Сегодня"
-                    DatePeriod(0, 0, 1) -> "Вчера"
-                    else -> toString(date.toLocalDate())
-                }
-            transItems.add(MainItem.Date(dateText))
+            transItems.add(MainItem.Date(date))
             transItems.addAll(list)
         }
-
-        transactionsItems = transItems.toList()
-
-        val header = AppConfig.headerExample.toMutableList()
-        header.addAll(transactionsItems)
+        isThereTransactions.value = transItems.isNotEmpty()
+        header.addAll(transItems)
         items.value = header
     }
 
-    private fun toString(localDate: LocalDate): String {
-        val result = StringBuffer().append("${localDate.dayOfMonth} ")
-        result.append(
-            when (localDate.monthNumber) {
-                1 -> "января"
-                2 -> "февраля"
-                3 -> "марта"
-                4 -> "апреля"
-                5 -> "мая"
-                6 -> "июня"
-                7 -> "июля"
-                8 -> "августа"
-                9 -> "сентября"
-                10 -> "октября"
-                11 -> "ноября"
-                12 -> "декабря"
-                else -> "???"
-            }
-        )
-        return result.toString()
-    }
-
     fun loadData() {
-        // TODO: Реализовать через обращение к серверу
-        createNewMainItemList()
+        repository.getWalletById(
+            1,
+            accountSharedRepository.getAccount(ACCOUNT_ID),
+            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
+        )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = {
+                    createNewMainItemList(it)
+                },
+                onError = {
+                    Timber.d("error $it")
+                }
+            )
     }
 
-    fun deleteTransaction(element: MainItem) {
-        // TODO: Реализовать через обращение к серверу
-        transactions.remove(element)
-        createNewMainItemList()
+    fun deleteTransactionById(id: Long) {
+        repository.deleteTransactionById(id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = {
+                    Log.d("DELETE", it.message)
+                    loadData()
+                },
+                onError = { Log.d("DELETE", "error") }
+            )
+    }
+
+    @OptIn(ExperimentalTime::class)
+    fun onBackPressed() {
+        val now = Clock.System.now()
+        if (now.minus(lastTimeBackPressed) < Duration.seconds(3)) {
+            exitFlag.value = true
+        } else {
+            lastTimeBackPressed = now
+        }
+    }
+
+    private fun List<TransactionData>.toTransactionItems(): List<MainItem.Transaction> {
+        return this.map {
+            val transactionEnum =
+                if (it.transactionType == "INCOME") {
+                    TransactionType.INCOME
+                } else {
+                    TransactionType.OUTCOME
+                }
+            MainItem.Transaction(
+                it.id!!,
+                it.amount,
+                it.currency,
+                Category(
+                    it.category.id,
+                    transactionEnum,
+                    it.category.name,
+                    it.category.icon,
+                    it.category.color
+                ),
+                it.date.toLocalDateTime().toLocalDate(),
+                it.date.toLocalDateTime().toStringTime()
+            )
+        }
+    }
+
+    private fun LocalDateTime.toLocalDate(): LocalDate {
+        return LocalDate(this.year, this.monthNumber, this.dayOfMonth)
+    }
+
+    private fun LocalDateTime.toStringTime(): String {
+        return if (this.minute > 10) "${this.hour}:${this.minute}" else "${this.hour}:0${this.minute}"
     }
 }

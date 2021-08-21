@@ -40,10 +40,6 @@ class TransactionCategoryFragment : Fragment() {
 
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
 
-    private val recyclerView: RecyclerView by lazy(LazyThreadSafetyMode.NONE) {
-        binding.transactionCategoryRecycler
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,17 +52,19 @@ class TransactionCategoryFragment : Fragment() {
 
         viewModel.transaction.observe(viewLifecycleOwner, {
             //Выделить сохраненый Item
+
         })
 
+        binding.setCategory.isEnabled = false
+
         val recyclerAdapter = TransactionCategoryAdapter {
-            binding.setCategory.isClickable = false
             viewModel.updateTransactionCategory(category = it)
                 .observe(viewLifecycleOwner, {
-                    binding.setCategory.isClickable = true
+                    binding.setCategory.isEnabled = true
                 })
         }
 
-        recyclerView.apply {
+        binding.transactionCategoryRecycler.apply {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(this@TransactionCategoryFragment.context)
         }
@@ -81,7 +79,7 @@ class TransactionCategoryFragment : Fragment() {
     private fun initListeners(v: View) {
 
         binding.setCategory.setOnClickListener {
-
+            // TODO
             v.findNavController()
                 .navigate(R.id.action_transactionCategoryFragment_to_transactionEditingFragment)
         }

@@ -18,7 +18,9 @@ import com.tinkoff_sirius.koshelok.R
 import com.tinkoff_sirius.koshelok.databinding.FragmentTransactionEditingBinding
 import com.tinkoff_sirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoff_sirius.koshelok.repository.SharedPreferencesFactory
+import com.tinkoff_sirius.koshelok.ui.DateUtils
 import com.tinkoff_sirius.koshelok.ui.main.MainViewModel
+import kotlinx.datetime.LocalDate
 import java.util.*
 
 
@@ -52,9 +54,12 @@ class TransactionEditingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.transaction.observe(viewLifecycleOwner, {
+            Log.d("TAG", it.sum)
+            Log.d("TAG", it.type)
+            Log.d("TAG", it.category.categoryName)
             binding.transEditingSumLabel.buttonText.text = it.sum
             binding.transEditingTypeLabel.buttonText.text = it.type
-            binding.transEditingCategoryLabel.buttonText.text = it.category.type
+            binding.transEditingCategoryLabel.buttonText.text = it.category.categoryName
         })
 
         initListeners(view)
@@ -67,13 +72,15 @@ class TransactionEditingFragment : Fragment() {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        binding.transEditingDateLabel.buttonText.text = "$day.$month"
+        binding.transEditingDateLabel.buttonText.text =
+            DateUtils.toUIString(LocalDate(year, month, day), requireContext())
 
         binding.transEditingDateLabel.setOnClickListener {
 
             val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in TextView
-                binding.transEditingDateLabel.buttonText.setText("$dayOfMonth $month")
+                binding.transEditingDateLabel.buttonText.text =
+                    DateUtils.toUIString(LocalDate(year, monthOfYear, dayOfMonth), requireContext())
             }, year, month, day)
             dpd.show()
 
@@ -99,7 +106,7 @@ class TransactionEditingFragment : Fragment() {
                 .navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
         }
 
-        binding.createTransactionButton.setOnClickListener{
+        binding.createTransactionButton.setOnClickListener {
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_mainFragment)
         }

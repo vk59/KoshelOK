@@ -23,5 +23,21 @@
     <string name="operation_type_fragment_radio_button_1">Доход</string>
     <string name="operation_type_fragment_radio_button_2">Расход</string>
     <string name="set_sum_fragment_toolbar">Введите сумму</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+    <string name="january">января</string>
+    <string name="february">февраля</string>
+    <string name="march">марта</string>
+    <string name="april">апреля</string>
+    <string name="may">мая</string>
+    <string name="june">июня</string>
+    <string name="july">июля</string>
+    <string name="august">августа</string>
+    <string name="september">сентября</string>
+    <string name="november">ноября</string>
+    <string name="october">октября</string>
+    <string name="december">декабря</string>
+    <string name="income">Пополнение</string>
+    <string name="outcome">Траты</string>
 
 </resources>
