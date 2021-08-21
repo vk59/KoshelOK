@@ -1,5 +1,8 @@
 package com.tinkoff_sirius.koshelok.entities
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class Category(
     val id: Long?,
     val typeName: TransactionType,
@@ -8,6 +11,8 @@ class Category(
     val color: Int
 )
 
+@Serializable
 enum class TransactionType {
     INCOME, OUTCOME
 }
+

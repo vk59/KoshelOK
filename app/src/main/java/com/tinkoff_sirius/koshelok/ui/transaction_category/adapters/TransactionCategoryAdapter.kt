@@ -2,15 +2,19 @@ package com.tinkoff_sirius.koshelok.ui.transaction_category.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoff_sirius.koshelok.R
-import com.tinkoff_sirius.koshelok.entities.Transaction
+import com.tinkoff_sirius.koshelok.entities.Category
 
-class TransactionCategoryAdapter : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
 
-    private var list: MutableList<Transaction> = mutableListOf()
+class TransactionCategoryAdapter(private val setSelected: (category: Category) -> Unit) : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
 
-    fun setData(data: MutableList<Transaction>) {
+    private var list: List<Category> = listOf()
+
+    private var mPosition: Int = -1
+
+    fun setData(data: List<Category>) {
        list = data
     }
 
@@ -24,8 +28,17 @@ class TransactionCategoryAdapter : RecyclerView.Adapter<TransactionCategoryViewH
     }
 
     override fun onBindViewHolder(holder: TransactionCategoryViewHolder, position: Int) {
-        val transaction: Transaction = list[position]
-        holder.bind(transaction)
+        val category: Category = list[position]
+
+        holder.mTransactionImage?.isVisible = mPosition == position
+
+        holder.itemView.setOnClickListener{
+            mPosition = holder.absoluteAdapterPosition
+            setSelected(category)
+            notifyDataSetChanged()
+        }
+
+        holder.bind(category)
     }
 
     override fun getItemCount(): Int = list.size

@@ -1,5 +1,6 @@
 package com.tinkoff_sirius.koshelok.entities
 
+
 import kotlinx.datetime.LocalDate
 
 data class Transaction(

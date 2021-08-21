@@ -15,13 +15,15 @@ class TransactionItemEditingView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr, defStyleRef) {
 
     val header: TextView by lazy { findViewById(R.id.trans_editing_sub_title) }
+    val buttonText: TextView by lazy { findViewById(R.id.button_text) }
 
     init {
         inflate(context, R.layout.item_transaction_editing, this)
 
         val ta: TypedArray =
-            context.obtainStyledAttributes(attrs, R.styleable.TransactionItemEditingView, 0, 0)
+            context.obtainStyledAttributes(attrs, R.styleable.TransactionItemEditingView, 0, 0);
         header.text = ta.getString(R.styleable.TransactionItemEditingView_tie_text)
+        buttonText.text = ta.getString(R.styleable.TransactionItemEditingView_button_text)
         ta.recycle()
     }
 }
