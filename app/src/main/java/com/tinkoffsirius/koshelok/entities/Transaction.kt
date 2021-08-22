@@ -1,8 +1,6 @@
 package com.tinkoffsirius.koshelok.entities
 
-
 import kotlinx.datetime.LocalDate
-
 
 data class Transaction(
 //    val sum: BigDecimal,

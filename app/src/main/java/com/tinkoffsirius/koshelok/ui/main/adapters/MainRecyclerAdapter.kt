@@ -9,10 +9,10 @@ import com.tinkoffsirius.koshelok.databinding.ItemHomeHeaderBinding
 import com.tinkoffsirius.koshelok.databinding.ItemTransactionBinding
 import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
-import com.tinkoffsirius.koshelok.ui.main.adapters.view_holders.DateViewHolder
-import com.tinkoffsirius.koshelok.ui.main.adapters.view_holders.HeaderViewHolder
-import com.tinkoffsirius.koshelok.ui.main.adapters.view_holders.MainViewHolder
-import com.tinkoffsirius.koshelok.ui.main.adapters.view_holders.TransactionViewHolder
+import com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders.DateViewHolder
+import com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders.HeaderViewHolder
+import com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders.MainViewHolder
+import com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders.TransactionViewHolder
 
 class MainRecyclerAdapter(
     private val deleteCallback: (Long) -> Unit,

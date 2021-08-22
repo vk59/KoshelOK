@@ -13,7 +13,8 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
-class TransactionEditingViewModel(private val transactionSharedRepository: PosedTransactionSharedRepository) : ViewModel() {
+class TransactionEditingViewModel(private val transactionSharedRepository: PosedTransactionSharedRepository) :
+    ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
@@ -23,13 +24,13 @@ class TransactionEditingViewModel(private val transactionSharedRepository: Posed
         disposable += transactionSharedRepository.getTransaction()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribeBy (
-                onSuccess = {transaction.value = it} ,
-                onError = { Timber.e(it)}
+            .subscribeBy(
+                onSuccess = { transaction.value = it },
+                onError = { Timber.e(it) }
             )
     }
 
-    fun removeTransaction(){
+    fun removeTransaction() {
         transactionSharedRepository.removeTransaction()
     }
 
@@ -41,14 +42,14 @@ class TransactionEditingViewModel(private val transactionSharedRepository: Posed
             .doOnSuccess { transaction.value = it }
             .flatMapCompletable { transactionSharedRepository.saveTransaction(it) }
             .subscribeBy(
-                onComplete =  { ld.value = Unit },
-                onError =  Timber::e
+                onComplete = { ld.value = Unit },
+                onError = Timber::e
             )
 
         return ld
     }
 
-    fun updateTransactionSum(sum: String): LiveData<Unit>{
+    fun updateTransactionSum(sum: String): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
 
         disposable += transactionSharedRepository.getTransaction()
@@ -56,14 +57,14 @@ class TransactionEditingViewModel(private val transactionSharedRepository: Posed
             .doOnSuccess { transaction.value = it }
             .flatMapCompletable { transactionSharedRepository.saveTransaction(it) }
             .subscribeBy(
-                onComplete =  { ld.value = Unit },
-                onError =  Timber::e
+                onComplete = { ld.value = Unit },
+                onError = Timber::e
             )
 
         return ld
     }
 
-    fun updateTransactionCategory(category: Category): LiveData<Unit>{
+    fun updateTransactionCategory(category: Category): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
 
         disposable += transactionSharedRepository.getTransaction()
@@ -71,8 +72,8 @@ class TransactionEditingViewModel(private val transactionSharedRepository: Posed
             .doOnSuccess { transaction.value = it }
             .flatMapCompletable { transactionSharedRepository.saveTransaction(it) }
             .subscribeBy(
-                onComplete =  { ld.value = Unit },
-                onError =  Timber::e
+                onComplete = { ld.value = Unit },
+                onError = Timber::e
             )
 
         return ld

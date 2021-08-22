@@ -2,7 +2,6 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.ui.DateUtils
 import kotlinx.datetime.LocalDate
 import java.util.*
-
 
 class TransactionEditingFragment : Fragment() {
 
@@ -41,7 +39,8 @@ class TransactionEditingFragment : Fragment() {
     private val binding by viewBinding(FragmentTransactionEditingBinding::bind)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_transaction_editing, container, false)
@@ -51,9 +50,6 @@ class TransactionEditingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.transaction.observe(viewLifecycleOwner, {
-            Log.d("TAG", it.sum)
-            Log.d("TAG", it.type)
-            Log.d("TAG", it.category.categoryName)
             binding.transEditingSumLabel.buttonText.text = it.sum
             binding.transEditingTypeLabel.buttonText.text = it.type
             binding.transEditingCategoryLabel.buttonText.text = it.category.categoryName
@@ -80,7 +76,6 @@ class TransactionEditingFragment : Fragment() {
                     DateUtils.toUIString(LocalDate(year, monthOfYear, dayOfMonth), requireContext())
             }, year, month, day)
             dpd.show()
-
         }
 
         binding.toolbar.setNavigationOnClickListener {
@@ -107,8 +102,5 @@ class TransactionEditingFragment : Fragment() {
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_mainFragment)
         }
-
     }
-
-
 }

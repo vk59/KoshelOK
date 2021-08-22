@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.entities.Category
 
-
 class TransactionCategoryViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     private var mTransactionCategoryImage: ImageView? = null

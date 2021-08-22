@@ -21,7 +21,7 @@ class TransactionItemEditingView @JvmOverloads constructor(
         inflate(context, R.layout.item_transaction_editing, this)
 
         val ta: TypedArray =
-            context.obtainStyledAttributes(attrs, R.styleable.TransactionItemEditingView, 0, 0);
+            context.obtainStyledAttributes(attrs, R.styleable.TransactionItemEditingView, 0, 0)
         header.text = ta.getString(R.styleable.TransactionItemEditingView_tie_text)
         buttonText.text = ta.getString(R.styleable.TransactionItemEditingView_button_text)
         ta.recycle()

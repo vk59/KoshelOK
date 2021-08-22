@@ -35,7 +35,8 @@ class OnBoardingFragment : Fragment() {
     private val navController by lazy { findNavController() }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_on_boarding, container, false)
@@ -72,7 +73,12 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun navigateWith(account: GoogleSignInAccount) {
-        AccountSharedRepository(SharedPreferencesFactory().create(requireContext(), ACCOUNT_DATA)).saveAccount(account)
+        AccountSharedRepository(
+            SharedPreferencesFactory().create(
+                requireContext(),
+                ACCOUNT_DATA
+            )
+        ).saveAccount(account)
         navController.navigate(R.id.action_onBoardingFragment_to_mainFragment)
     }
 }

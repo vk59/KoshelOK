@@ -1,5 +1,7 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.view_holders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
 
+import android.view.View
+import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemHomeHeaderBinding
 import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem

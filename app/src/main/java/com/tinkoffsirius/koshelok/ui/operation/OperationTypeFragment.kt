@@ -37,7 +37,8 @@ class OperationTypeFragment : Fragment() {
     })
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_operation_type, container, false)
@@ -57,12 +58,10 @@ class OperationTypeFragment : Fragment() {
     private fun initListeners(v: View) {
 
         binding.operationTypeRadioButtonIncome.setOnClickListener {
-
             binding.setType.isClickable = false
             viewModel.updateTransactionType("Доход").observe(viewLifecycleOwner) {
                 binding.setType.isClickable = true
             }
-
         }
 
         binding.operationTypeRadioButtonExpense.setOnClickListener {
@@ -81,10 +80,8 @@ class OperationTypeFragment : Fragment() {
             }
         }
 
-
         binding.toolbar.setNavigationOnClickListener {
             v.findNavController().navigate(R.id.action_operationTypeFragment_to_setSumFragment)
         }
     }
-
 }

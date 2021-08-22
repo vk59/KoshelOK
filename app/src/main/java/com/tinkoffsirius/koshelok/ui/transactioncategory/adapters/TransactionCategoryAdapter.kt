@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.entities.Category
 
-
-class TransactionCategoryAdapter(private val setSelected: (category: Category) -> Unit) : RecyclerView.Adapter<TransactionCategoryViewHolder>() {
+class TransactionCategoryAdapter(private val setSelected: (category: Category) -> Unit) :
+    RecyclerView.Adapter<TransactionCategoryViewHolder>() {
 
     private var list: List<Category> = listOf()
 
     private var mPosition: Int = -1
 
     fun setData(data: List<Category>) {
-       list = data
+        list = data
     }
 
     override fun onCreateViewHolder(
@@ -24,7 +24,13 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
     ): TransactionCategoryViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
-        return TransactionCategoryViewHolder(inflater.inflate(R.layout.item_transaction_category, parent , false))
+        return TransactionCategoryViewHolder(
+            inflater.inflate(
+                R.layout.item_transaction_category,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: TransactionCategoryViewHolder, position: Int) {
@@ -32,7 +38,7 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
 
         holder.mTransactionImage?.isVisible = mPosition == position
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             mPosition = holder.absoluteAdapterPosition
             setSelected(category)
             notifyDataSetChanged()

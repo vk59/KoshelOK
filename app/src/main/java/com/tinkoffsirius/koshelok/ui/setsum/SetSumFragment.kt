@@ -36,7 +36,8 @@ class SetSumFragment : Fragment() {
     })
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
@@ -45,8 +46,6 @@ class SetSumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         viewModel.transaction.observe(viewLifecycleOwner, {
             //TODO кидает ошибку если файл не создан
@@ -59,7 +58,6 @@ class SetSumFragment : Fragment() {
     private fun initListeners(v: View) {
         binding.setSumButton.setOnClickListener {
 
-
             if (!binding.sumText.text?.trim().isNullOrEmpty() && !binding.sumText.text?.toString()
                     .equals(".")
             ) {
@@ -68,19 +66,13 @@ class SetSumFragment : Fragment() {
 
                 v.findNavController()
                     .navigate(R.id.action_setSumFragment_to_operationTypeFragment)
-
             } else {
                 Toast.makeText(requireContext(), "Введите сумму!", Toast.LENGTH_LONG).show()
             }
         }
 
         binding.toolbar.setNavigationOnClickListener {
-
             v.findNavController().navigate(R.id.action_setSumFragment_to_mainFragment)
-
         }
-
     }
-
-
 }

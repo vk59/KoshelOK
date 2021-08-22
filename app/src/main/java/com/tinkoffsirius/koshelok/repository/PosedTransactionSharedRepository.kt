@@ -9,15 +9,15 @@ import io.reactivex.rxjava3.core.Single
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-
 class PosedTransactionSharedRepository(private val sharedPreferences: SharedPreferences) {
 
-    fun saveTransaction(posedTransaction: PosedTransaction) : Completable = Completable.fromCallable {
-        val data = Json.encodeToString(posedTransaction)
-        sharedPreferences.edit()
-            .putString(TRANSACTION_DATA, data)
-            .apply()
-    }
+    fun saveTransaction(posedTransaction: PosedTransaction): Completable =
+        Completable.fromCallable {
+            val data = Json.encodeToString(posedTransaction)
+            sharedPreferences.edit()
+                .putString(TRANSACTION_DATA, data)
+                .apply()
+        }
 
     fun getTransaction(): Single<PosedTransaction> = Single.fromCallable {
         val data = sharedPreferences.getString(TRANSACTION_DATA, null)
@@ -28,15 +28,13 @@ class PosedTransactionSharedRepository(private val sharedPreferences: SharedPref
         }
     }
 
-    fun removeTransaction(){
+    fun removeTransaction() {
         sharedPreferences.edit()
             .clear()
             .apply()
     }
 
-
     companion object {
         const val TRANSACTION_DATA = "transaction"
     }
-
 }

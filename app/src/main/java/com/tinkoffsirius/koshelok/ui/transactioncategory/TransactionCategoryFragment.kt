@@ -36,11 +36,11 @@ class TransactionCategoryFragment : Fragment() {
         }
     })
 
-
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_transaction_category, container, false)
@@ -50,8 +50,7 @@ class TransactionCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.transaction.observe(viewLifecycleOwner, {
-            //Выделить сохраненый Item
-
+            // Выделить сохраненый Item
         })
 
         binding.setCategory.isEnabled = false
@@ -88,5 +87,4 @@ class TransactionCategoryFragment : Fragment() {
                 .navigate(R.id.action_transactionCategoryFragment_to_operationTypeFragment)
         }
     }
-
 }

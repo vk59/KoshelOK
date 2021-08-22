@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.view_holders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
 
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemDateBinding
@@ -18,7 +18,7 @@ class DateViewHolder(
         }
     }
 
-    private fun LocalDate.toUIString() : String {
+    private fun LocalDate.toUIString(): String {
         val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         val currentDate =
             LocalDate(currentTime.year, currentTime.monthNumber, currentTime.dayOfMonth)

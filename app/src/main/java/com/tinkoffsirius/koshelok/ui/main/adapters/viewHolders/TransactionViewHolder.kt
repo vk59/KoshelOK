@@ -1,6 +1,9 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.view_holders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
 
+import android.content.res.ColorStateList
+import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemTransactionBinding
+import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 
