@@ -93,10 +93,6 @@ class TransactionEditingViewModel(
         return ld
     }
 
-    override fun onCleared() {
-        disposable.dispose()
-    }
-
     fun saveTransaction(): LiveData<Response> {
         val liveData: MutableLiveData<Response> = MutableLiveData()
         val posedTransaction = transaction.value!!
@@ -132,5 +128,9 @@ class TransactionEditingViewModel(
                 )
         }
         return liveData
+    }
+
+    override fun onCleared() {
+        disposable.dispose()
     }
 }

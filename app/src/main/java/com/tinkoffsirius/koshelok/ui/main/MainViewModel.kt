@@ -79,6 +79,23 @@ class MainViewModel(
         }
     }
 
+    fun editCurrentTransaction(element: MainItem.Transaction) {
+        transactionRepository.removeTransaction()
+        transactionRepository.saveTransaction(
+            PosedTransaction(
+                element.sum,
+                element.category.typeName.name,
+                element.category,
+                element.id
+            )
+        ).observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = { Timber.d("Saved") },
+                onError = { Timber.e(it) }
+            )
+    }
+
     private fun createNewMainItemList(walletData: WalletData): List<MainItem> {
         val items: MutableList<MainItem> = mutableListOf(
             MainItem.Header(
@@ -136,22 +153,5 @@ class MainViewModel(
 
     override fun onCleared() {
         disposable.dispose()
-    }
-
-    fun editCurrentTransaction(element: MainItem.Transaction) {
-        transactionRepository.removeTransaction()
-        transactionRepository.saveTransaction(
-            PosedTransaction(
-                element.sum,
-                element.category.typeName.name,
-                element.category,
-                element.id
-            )
-        ).observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onComplete = { Timber.d("Saved") },
-                onError = { Timber.e(it) }
-            )
     }
 }
