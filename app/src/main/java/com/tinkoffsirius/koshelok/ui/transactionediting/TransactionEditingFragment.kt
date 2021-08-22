@@ -14,6 +14,7 @@ import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
 import com.tinkoffsirius.koshelok.ui.DateUtils
 import kotlinx.datetime.LocalDate
+import timber.log.Timber
 import java.util.*
 
 class TransactionEditingFragment : Fragment() {
@@ -87,7 +88,7 @@ class TransactionEditingFragment : Fragment() {
 
         binding.createTransactionButton.setOnClickListener {
             viewModel.saveTransaction().observe(viewLifecycleOwner) {
-                TODO()
+                Timber.tag("tut").d(it.message)
             }
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_mainFragment)

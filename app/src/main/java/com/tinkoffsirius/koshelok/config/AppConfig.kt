@@ -16,6 +16,27 @@ object AppConfig {
         MainItem.Header("Кошелек 1", "60 000", "170 000", "61 400", "230 000")
     )
 
+    val categoriesExample = mutableListOf(
+        CategoryData(
+            1,
+            Types.CAPITALIZATION.nameType,
+            R.drawable.ic_capitalize,
+            R.color.green
+        ),
+        CategoryData(
+            2,
+            Types.SALARY.nameType,
+            R.drawable.ic_salary,
+            R.color.red
+        ),
+        CategoryData(
+            3,
+            Types.PART_WORK_JOB.nameType,
+            R.drawable.ic_sport,
+            R.color.red
+        )
+    )
+
     val transactionExample = mutableListOf(
         Transaction(
             6000.0.toString(),
@@ -76,6 +97,4 @@ object AppConfig {
             )
         )
     )
-
-    val categoriesExample = listOf<CategoryData>()
 }

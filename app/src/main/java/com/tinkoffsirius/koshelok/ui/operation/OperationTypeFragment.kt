@@ -12,6 +12,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentOperationTypeBinding
+import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 
 class OperationTypeFragment : Fragment() {
@@ -34,9 +35,9 @@ class OperationTypeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.transaction.observe(viewLifecycleOwner, {
-            if (it.type == "Доход") binding.operationTypeRadioButtonIncome.isChecked =
-                true else if (it.type == "Расход") binding.operationTypeRadioButtonExpense.isChecked =
-                true
+            if (it.type == TransactionType.INCOME.name) binding.operationTypeRadioButtonIncome.isChecked =
+                true else if (it.type == TransactionType.OUTCOME.name)
+                    binding.operationTypeRadioButtonExpense.isChecked = true
         })
 
         initListeners(view)
@@ -46,14 +47,14 @@ class OperationTypeFragment : Fragment() {
 
         binding.operationTypeRadioButtonIncome.setOnClickListener {
             binding.setType.isClickable = false
-            viewModel.updateTransactionType("Доход").observe(viewLifecycleOwner) {
+            viewModel.updateTransactionType(TransactionType.INCOME.name).observe(viewLifecycleOwner) {
                 binding.setType.isClickable = true
             }
         }
 
         binding.operationTypeRadioButtonExpense.setOnClickListener {
             binding.setType.isClickable = false
-            viewModel.updateTransactionType("Расход").observe(viewLifecycleOwner) {
+            viewModel.updateTransactionType(TransactionType.OUTCOME.name).observe(viewLifecycleOwner) {
                 binding.setType.isClickable = true
             }
         }
