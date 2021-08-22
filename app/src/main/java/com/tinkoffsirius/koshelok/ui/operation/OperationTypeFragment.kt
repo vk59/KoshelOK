@@ -7,34 +7,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentOperationTypeBinding
-import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 
 class OperationTypeFragment : Fragment() {
 
     private val binding: FragmentOperationTypeBinding by viewBinding(FragmentOperationTypeBinding::bind)
 
-    private val viewModel: TransactionEditingViewModel by viewModels(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TransactionEditingViewModel(
-                    PosedTransactionSharedRepository(
-                        SharedPreferencesFactory().create(
-                            requireContext(),
-                            SharedPreferencesFactory.TRANSACTION_DATA
-                        )
-                    )
-                ) as T
-            }
-        }
-    })
+    private val viewModel: TransactionEditingViewModel by viewModels(
+        factoryProducer = {
+            transactionViewModelFactory
+        })
 
     override fun onCreateView(
         inflater: LayoutInflater,

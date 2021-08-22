@@ -3,9 +3,12 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
+import com.tinkoffsirius.koshelok.repository.WalletRepository
+import com.tinkoffsirius.koshelok.repository.entities.Response
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -13,8 +16,10 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
-class TransactionEditingViewModel(private val transactionSharedRepository: PosedTransactionSharedRepository) :
-    ViewModel() {
+class TransactionEditingViewModel(
+    private val transactionSharedRepository: PosedTransactionSharedRepository,
+    private val walletRepository: WalletRepository
+) : ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
@@ -81,5 +86,9 @@ class TransactionEditingViewModel(private val transactionSharedRepository: Posed
 
     override fun onCleared() {
         disposable.dispose()
+    }
+
+    fun saveTransaction(): LiveData<Response> = liveData {
+        TODO()
     }
 }
