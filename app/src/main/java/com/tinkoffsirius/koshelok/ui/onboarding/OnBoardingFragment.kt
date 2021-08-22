@@ -18,6 +18,8 @@ import com.tinkoffsirius.koshelok.databinding.FragmentOnBoardingBinding
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory.Companion.ACCOUNT_DATA
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import timber.log.Timber
 
 class OnBoardingFragment : Fragment() {
@@ -25,11 +27,13 @@ class OnBoardingFragment : Fragment() {
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
     private val loginResultHandler =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
-
             val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
-            val account = task.result
-
-            navigateWith(account)
+            Completable.fromCallable {
+                navigateWith(task.result)
+            }
+                .subscribeBy(
+                    onError = Timber::e
+                )
         }
 
     private val navController by lazy { findNavController() }
