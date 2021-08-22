@@ -98,7 +98,7 @@ class TransactionEditingViewModel(
     }
 
     fun saveTransaction(): LiveData<Response> {
-        val live: MutableLiveData<Response> = MutableLiveData()
+        val liveData: MutableLiveData<Response> = MutableLiveData()
         val posedTransaction = transaction.value
         val transactionData = CreateTransactionData(
             null,
@@ -115,9 +115,9 @@ class TransactionEditingViewModel(
         ).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = { live.value = it },
+                onSuccess = { liveData.value = it },
                 onError = { Timber.e(it) }
             )
-        return live
+        return liveData
     }
 }

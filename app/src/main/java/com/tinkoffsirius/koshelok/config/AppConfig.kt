@@ -75,7 +75,7 @@ object AppConfig {
                 1,
                 "994.00",
                 TransactionType.OUTCOME.name,
-                CategoryData(1, "Супермаркеты", R.color.green, R.drawable.ic_food),
+                CategoryData(1, "Супермаркеты", R.drawable.ic_food, R.color.green),
                 "2021-08-20T22:34",
                 "RUB"
             ),
@@ -83,7 +83,7 @@ object AppConfig {
                 2,
                 "6000.00",
                 TransactionType.OUTCOME.name,
-                CategoryData(2, "Спорт", R.color.red, R.drawable.ic_sport),
+                CategoryData(2, "Спорт", R.drawable.ic_sport, R.color.red),
                 "2021-08-19T23:59",
                 "RUB"
             ),
@@ -91,7 +91,7 @@ object AppConfig {
                 3,
                 "90000.00",
                 TransactionType.INCOME.name,
-                CategoryData(3, "Зарплата", R.color.red, R.drawable.ic_salary),
+                CategoryData(3, "Зарплата", R.drawable.ic_salary, R.color.red),
                 "2021-08-19T23:59",
                 "RUB"
             )

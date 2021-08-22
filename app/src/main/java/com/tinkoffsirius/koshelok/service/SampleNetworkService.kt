@@ -21,16 +21,17 @@ object SampleNetworkService {
         idUser: String,
         idToken: String
     ): Single<Response> {
-        val newTransactions = walletData.transactions.toMutableList()
-        val newTransactionData = TransactionData(
-            2,
-            transactionData.amount,
-            transactionData.transactionType,
-            categoriesExample.filter { it.id == transactionData.categoryId }[0],
-            transactionData.date,
-            Currency.RUB.name
+        val newTransactions = mutableListOf(
+            TransactionData(
+                2,
+                transactionData.amount,
+                transactionData.transactionType,
+                categoriesExample.filter { it.id == transactionData.categoryId }[0],
+                transactionData.date,
+                Currency.RUB.name
+            )
         )
-        newTransactions.add(newTransactionData)
+        newTransactions.addAll(walletData.transactions)
         walletData =
             WalletData(
                 1,
