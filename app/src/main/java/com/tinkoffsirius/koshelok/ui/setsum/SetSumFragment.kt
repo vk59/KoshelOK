@@ -1,10 +1,13 @@
 package com.tinkoffsirius.koshelok.ui.setsum
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -16,6 +19,10 @@ import com.tinkoffsirius.koshelok.databinding.FragmentSetSumBinding
 import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
@@ -46,6 +53,14 @@ class SetSumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.sumText.requestFocus()
+
+        if (binding.sumText.requestFocus()) {
+            (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
+                0, InputMethodManager.HIDE_IMPLICIT_ONLY
+            )
+        }
 
         viewModel.transaction.observe(viewLifecycleOwner, {
             //TODO кидает ошибку если файл не создан
