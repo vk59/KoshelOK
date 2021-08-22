@@ -39,5 +39,6 @@
     <string name="december">декабря</string>
     <string name="income">Пополнение</string>
     <string name="outcome">Траты</string>
+    <string name="time">Время операции</string>
 
 </resources>

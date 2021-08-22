@@ -1,7 +1,9 @@
 package com.tinkoffsirius.koshelok.ui.transactionediting
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,7 @@ import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.ui.DateUtils
 import kotlinx.datetime.LocalDate
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TransactionEditingFragment : Fragment() {
@@ -64,18 +67,38 @@ class TransactionEditingFragment : Fragment() {
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
+        val time = "${c.get(Calendar.HOUR_OF_DAY)} : ${c.get(Calendar.MINUTE)}"
 
         binding.transEditingDateLabel.buttonText.text =
             DateUtils.toUIString(LocalDate(year, month, day), requireContext())
 
+        binding.transEditingTimeLabel.buttonText.text = time
+
+
         binding.transEditingDateLabel.setOnClickListener {
 
             val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
-                // Display Selected date in TextView
                 binding.transEditingDateLabel.buttonText.text =
                     DateUtils.toUIString(LocalDate(year, monthOfYear, dayOfMonth), requireContext())
             }, year, month, day)
             dpd.show()
+        }
+
+        binding.transEditingTimeLabel.setOnClickListener {
+
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                c.set(Calendar.HOUR_OF_DAY, hour)
+                c.set(Calendar.MINUTE, minute)
+                binding.transEditingTimeLabel.buttonText.text =
+                    SimpleDateFormat("HH:mm").format(c.time)
+            }
+            TimePickerDialog(
+                requireContext(),
+                timeSetListener,
+                c.get(Calendar.HOUR_OF_DAY),
+                c.get(Calendar.MINUTE),
+                true
+            ).show()
         }
 
         binding.toolbar.setNavigationOnClickListener {

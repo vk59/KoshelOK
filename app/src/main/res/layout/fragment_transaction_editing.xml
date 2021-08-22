@@ -71,6 +71,16 @@
         app:tie_text="@string/date" />
 
 
+    <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
+        android:id="@+id/trans_editing_time_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trans_editing_date_label"
+        app:tie_text="@string/time" />
+
     <TextView
         android:id="@+id/trans_editing_sub_title"
         android:layout_width="wrap_content"
