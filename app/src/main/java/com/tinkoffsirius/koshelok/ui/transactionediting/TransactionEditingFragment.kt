@@ -3,41 +3,28 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
-import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.ui.DateUtils
 import kotlinx.datetime.LocalDate
 import java.text.SimpleDateFormat
+import timber.log.Timber
 import java.util.*
 
 class TransactionEditingFragment : Fragment() {
 
-    private val viewModel: TransactionEditingViewModel by viewModels(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TransactionEditingViewModel(
-                    PosedTransactionSharedRepository(
-                        SharedPreferencesFactory().create(
-                            requireContext(),
-                            SharedPreferencesFactory.TRANSACTION_DATA
-                        )
-                    )
-                ) as T
-            }
-        }
-    })
+    private val viewModel: TransactionEditingViewModel by viewModels(
+        factoryProducer = {
+            transactionViewModelFactory
+        })
 
     private val binding by viewBinding(FragmentTransactionEditingBinding::bind)
 
@@ -122,6 +109,9 @@ class TransactionEditingFragment : Fragment() {
         }
 
         binding.createTransactionButton.setOnClickListener {
+            viewModel.saveTransaction().observe(viewLifecycleOwner) {
+                Timber.tag("tut").d(it.message)
+            }
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_mainFragment)
         }

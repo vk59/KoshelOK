@@ -16,6 +16,27 @@ object AppConfig {
         MainItem.Header("Кошелек 1", "60 000", "170 000", "61 400", "230 000")
     )
 
+    val categoriesExample = mutableListOf(
+        CategoryData(
+            1,
+            Types.CAPITALIZATION.nameType,
+            R.drawable.ic_capitalize,
+            R.color.green
+        ),
+        CategoryData(
+            2,
+            Types.SALARY.nameType,
+            R.drawable.ic_salary,
+            R.color.red
+        ),
+        CategoryData(
+            3,
+            Types.PART_WORK_JOB.nameType,
+            R.drawable.ic_sport,
+            R.color.red
+        )
+    )
+
     val transactionExample = mutableListOf(
         Transaction(
             6000.0.toString(),
@@ -54,7 +75,7 @@ object AppConfig {
                 1,
                 "994.00",
                 TransactionType.OUTCOME.name,
-                CategoryData(1, "Супермаркеты", R.color.green, R.drawable.ic_food),
+                CategoryData(1, "Супермаркеты", R.drawable.ic_food, R.color.green),
                 "2021-08-20T22:34",
                 "RUB"
             ),
@@ -62,7 +83,7 @@ object AppConfig {
                 2,
                 "6000.00",
                 TransactionType.OUTCOME.name,
-                CategoryData(2, "Спорт", R.color.red, R.drawable.ic_sport),
+                CategoryData(2, "Спорт", R.drawable.ic_sport, R.color.red),
                 "2021-08-19T23:59",
                 "RUB"
             ),
@@ -70,12 +91,10 @@ object AppConfig {
                 3,
                 "90000.00",
                 TransactionType.INCOME.name,
-                CategoryData(3, "Зарплата", R.color.red, R.drawable.ic_salary),
+                CategoryData(3, "Зарплата", R.drawable.ic_salary, R.color.red),
                 "2021-08-19T23:59",
                 "RUB"
             )
         )
     )
-
-    val categoriesExample = listOf<CategoryData>()
 }

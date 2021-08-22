@@ -33,10 +33,8 @@ class TransactionViewHolder(
                 typeTransaction.text = type
                 timeTransaction.text = data.time
                 iconTransaction.setImageResource(data.category.icon)
-                iconTransactionBackground
-                    .setBackgroundTintList(
-                        ColorStateList.valueOf(resourceProvider.getColor(data.category.color))
-                    )
+                iconTransactionBackground.backgroundTintList =
+                    ColorStateList.valueOf(resourceProvider.getColor(data.category.color))
                 deleteButton.setOnClickListener {
                     deleteCallback(idTransaction!!)
                 }

@@ -10,14 +10,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentSetSumBinding
-import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 import androidx.core.content.ContextCompat.getSystemService
 
@@ -27,20 +24,10 @@ import androidx.core.content.ContextCompat.getSystemService
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
 
-    private val viewModel: TransactionEditingViewModel by viewModels(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TransactionEditingViewModel(
-                    PosedTransactionSharedRepository(
-                        SharedPreferencesFactory().create(
-                            requireContext(),
-                            SharedPreferencesFactory.TRANSACTION_DATA
-                        )
-                    )
-                ) as T
-            }
-        }
-    })
+    private val viewModel: TransactionEditingViewModel by viewModels(
+        factoryProducer = {
+            Dependencies.transactionViewModelFactory
+        })
 
     override fun onCreateView(
         inflater: LayoutInflater,
