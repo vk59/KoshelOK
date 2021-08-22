@@ -36,7 +36,7 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
     override fun onBindViewHolder(holder: TransactionCategoryViewHolder, position: Int) {
         val category: Category = list[position]
 
-        holder.mTransactionImage?.isVisible = mPosition == position
+        holder.selectionImage?.isVisible = mPosition == position
 
         holder.itemView.setOnClickListener {
             mPosition = holder.absoluteAdapterPosition

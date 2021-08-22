@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/button_color.xml" value="0.1" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/custom_constrain_backgroud.xml" value="0.2703125" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_transaction_category.xml" value="0.12360688956433637" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_transaction_editing.xml" value="0.264" />
-        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction_category.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction_category.xml" value="0.8" />
       </map>
     </option>
   </component>
