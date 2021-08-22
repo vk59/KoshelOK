@@ -32,4 +32,12 @@ class WalletRepository {
     ): Single<List<CategoryData>> {
         return SampleNetworkService.getCategories(transactionType, idUser, idToken)
     }
+
+    fun updateTransaction(
+        transactionData: CreateTransactionData,
+        idUser: String,
+        idToken: String
+    ): Single<Response> {
+        return SampleNetworkService.updateTransaction(transactionData, idUser, idToken)
+    }
 }

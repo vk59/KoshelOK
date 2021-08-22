@@ -27,6 +27,7 @@ object Dependencies {
     val mainViewModelFactory by lazy {
         MainViewModelFactory(
             accountRepository = accountRepository,
+            transactionRepository = transactionRepository,
             repository = walletRepository
         )
     }

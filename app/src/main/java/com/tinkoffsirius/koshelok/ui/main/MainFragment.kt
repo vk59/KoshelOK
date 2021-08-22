@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.Dependencies
-import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
 import com.tinkoffsirius.koshelok.ui.main.adapters.MainRecyclerAdapter
+import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 
 class MainFragment : Fragment() {
@@ -25,7 +25,12 @@ class MainFragment : Fragment() {
     private val mainRecyclerAdapter by lazy {
         MainRecyclerAdapter(
             { id -> showDeleteDialog(id) },
-            { element -> navController.navigate(R.id.action_mainFragment_to_setSumFragment) },
+            { element: MainItem ->
+                if (element is MainItem.Transaction) {
+                    viewModel.editCurrentTransaction(element)
+                    navController.navigate(R.id.action_mainFragment_to_transactionEditingFragment)
+                }
+            },
             Dependencies.resourceProvider
         )
     }
@@ -38,7 +43,7 @@ class MainFragment : Fragment() {
 
     private val viewModelTransactionEditing: TransactionEditingViewModel by viewModels(
         factoryProducer = {
-            transactionViewModelFactory
+            Dependencies.transactionViewModelFactory
         }
     )
 

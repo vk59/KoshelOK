@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_mainFragment_to_setSumFragment"
             app:destination="@id/setSumFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_transactionEditingFragment"
+            app:destination="@id/transactionEditingFragment" />
     </fragment>
 
     <fragment
