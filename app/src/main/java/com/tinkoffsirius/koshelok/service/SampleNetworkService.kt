@@ -46,7 +46,7 @@ object SampleNetworkService {
             )
         Timber.d(walletData.transactions.toString())
         return Single.fromCallable {
-            Response("Successfully created transaction ${transactionData}")
+            Response("Successfully created transaction $transactionData")
         }
     }
 
@@ -107,7 +107,7 @@ object SampleNetworkService {
             )
         Timber.d(walletData.transactions.toString())
         return Single.fromCallable {
-            Response("Successfully created transaction ${transactionData}")
+            Response("Successfully created transaction $transactionData")
         }
     }
 }

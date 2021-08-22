@@ -150,8 +150,8 @@ class MainViewModel(
         ).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onComplete = { Timber.tag("tut").d("Saved") },
-                onError = { Timber.tag("tut").e(it) }
+                onComplete = { Timber.d("Saved") },
+                onError = { Timber.e(it) }
             )
     }
 }
