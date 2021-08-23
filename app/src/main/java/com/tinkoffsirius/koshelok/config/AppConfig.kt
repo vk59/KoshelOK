@@ -48,6 +48,14 @@ object AppConfig {
             R.color.green
         ),
 
+        Category(
+            3,
+            TransactionType.INCOME,
+            Types.SALARY.nameType,
+            R.drawable.ic_salary,
+            R.color.green
+        ),
+
 
         Category(
             2,
