@@ -56,5 +56,9 @@ class SetNameWalletFragment : Fragment() {
                     navController.navigate(R.id.walletEditingFragment)
                 }
         }
+
+        binding.toolbar.setNavigationOnClickListener {
+            navController.popBackStack()
+        }
     }
 }

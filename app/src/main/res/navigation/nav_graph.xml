@@ -159,5 +159,9 @@
     <fragment
         android:id="@+id/walletListFragment"
         android:name="com.tinkoffsirius.koshelok.ui.walletlist.WalletListFragment"
-        android:label="WalletListFragment" />
+        android:label="WalletListFragment" >
+        <action
+            android:id="@+id/action_walletListFragment_to_setNameWalletFragment"
+            app:destination="@id/setNameWalletFragment" />
+    </fragment>
 </navigation>

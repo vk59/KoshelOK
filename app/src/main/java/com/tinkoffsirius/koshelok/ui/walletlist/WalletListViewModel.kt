@@ -24,7 +24,6 @@ class WalletListViewModel(
 
     val isThereWallets = MutableLiveData<Boolean>()
 
-
     private val disposable: CompositeDisposable = CompositeDisposable()
 
     init {

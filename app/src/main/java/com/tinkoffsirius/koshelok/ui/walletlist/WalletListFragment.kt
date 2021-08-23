@@ -38,6 +38,13 @@ class WalletListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAppbar()
         initRecycler()
+        initButtons()
+    }
+
+    private fun initButtons() {
+        binding.buttonAddWallet.setOnClickListener {
+            navController.navigate(R.id.action_walletListFragment_to_setNameWalletFragment)
+        }
     }
 
     private fun initRecycler() {
