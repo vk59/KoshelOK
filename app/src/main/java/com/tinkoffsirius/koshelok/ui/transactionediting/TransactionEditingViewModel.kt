@@ -131,7 +131,7 @@ class TransactionEditingViewModel(
         posedTransaction: CreateTransactionData
     ) = Singles.zip(
         accountSharedRepository.getAccount(ACCOUNT_ID),
-        accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
+        accountSharedRepository.getAccount(ACCOUNT_ID)
     ).flatMap { (accountId, accountIdToken) ->
         transactionAction(posedTransaction, accountId, accountIdToken)
     }
@@ -146,7 +146,7 @@ class TransactionEditingViewModel(
             it.sum,
             it.type,
             it.category.id!!,
-            dateTransaction.toString(),
+            defaultDataTime.toString(),
             Currency.RUB.name
         )
 
