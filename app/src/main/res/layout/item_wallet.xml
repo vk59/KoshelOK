@@ -29,7 +29,7 @@
                 android:backgroundTint="@color/main_blue" />
 
             <ImageView
-                android:id="@+id/iconTransaction"
+                android:id="@+id/iconWallet"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
@@ -112,7 +112,8 @@
             android:id="@+id/watchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center">
             <ImageView
                 android:src="@drawable/ic_options_background"
