@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
@@ -19,7 +20,9 @@ class WalletListFragment : Fragment() {
 
     private val navController by lazy { findNavController() }
 
-    private val walletListViewModel: WalletListViewModel by viewModels()
+    private val walletListViewModel: WalletListViewModel by viewModels(
+        factoryProducer = { Dependencies.walletListViewModelFactory }
+    )
 
     private val walletRecyclerAdapter by lazy { WalletRecyclerAdapter() }
 
@@ -50,11 +53,16 @@ class WalletListFragment : Fragment() {
     }
 
     private fun initAppbar() {
-        binding.cardIncome.icon.setImageResource(R.drawable.ic_green_point)
-        binding.cardIncome.typeCard.text = "Общий доход"
-        binding.cardIncome.textMoneyCard.text = "0 RUB"
-        binding.cardOutcome.icon.setImageResource(R.drawable.ic_red_point)
-        binding.cardOutcome.typeCard.text = "Общий расход"
-        binding.cardOutcome.textMoneyCard.text = "0 RUB"
+        binding.apply {
+            cardIncome.icon.setImageResource(R.drawable.ic_green_point)
+            cardIncome.typeCard.text = "Общий доход"
+            cardOutcome.icon.setImageResource(R.drawable.ic_red_point)
+            cardOutcome.typeCard.text = "Общий расход"
+            walletListViewModel.userInfoBalance.observe(viewLifecycleOwner) {
+                overallBalance.text = it.overallBalance
+                cardIncome.textMoneyCard.text = it.overallIncome
+                cardOutcome.textMoneyCard.text = it.overallOutcome
+            }
+        }
     }
 }

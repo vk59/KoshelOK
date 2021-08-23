@@ -6,6 +6,7 @@ import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModelFactory
 import com.tinkoffsirius.koshelok.ui.main.MainViewModelFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModelFactory
+import com.tinkoffsirius.koshelok.ui.walletlist.WalletsListViewModelFactory
 
 object Dependencies {
 
@@ -60,6 +61,13 @@ object Dependencies {
     val transactionViewModelFactory by lazy {
         TransactionEditingViewModelFactory(
             transactionRepository = transactionRepository,
+            accountRepository = accountRepository,
+            repository = walletRepository
+        )
+    }
+
+    val walletListViewModelFactory by lazy {
+        WalletsListViewModelFactory(
             accountRepository = accountRepository,
             repository = walletRepository
         )

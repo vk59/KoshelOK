@@ -1,9 +1,6 @@
 package com.tinkoffsirius.koshelok.repository
 
-import com.tinkoffsirius.koshelok.repository.entities.CategoryData
-import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
-import com.tinkoffsirius.koshelok.repository.entities.Response
-import com.tinkoffsirius.koshelok.repository.entities.WalletData
+import com.tinkoffsirius.koshelok.repository.entities.*
 import com.tinkoffsirius.koshelok.service.SampleNetworkService
 import io.reactivex.rxjava3.core.Single
 
@@ -43,5 +40,9 @@ class WalletRepository {
 
     fun createWallet(walletData: WalletData, idUser: String, idToken: String): Single<Response> {
         return Single.just(Response("Successfully"))
+    }
+
+    fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
+        return SampleNetworkService.getUserInfoWallets(idUser, idToken)
     }
 }
