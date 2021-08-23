@@ -85,8 +85,6 @@ class CreateWalletViewModel(
         return ld
     }
 
-
-
     fun createWallet(): LiveData<Response> {
         val liveData: MutableLiveData<Response> = MutableLiveData()
         disposable += walletSharedRepository

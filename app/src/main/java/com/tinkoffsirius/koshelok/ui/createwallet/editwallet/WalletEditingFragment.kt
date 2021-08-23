@@ -55,7 +55,7 @@ class WalletEditingFragment : Fragment() {
         }
 
         binding.currency.setOnClickListener {
-            // TODO()
+            navController.navigate(R.id.action_walletEditingFragment_to_setCurrencyFragment)
         }
 
         binding.limit.setOnClickListener {
