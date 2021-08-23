@@ -28,4 +28,10 @@
     </style>
 
     <color name="black_pressed">#686868</color>
+
+    <style name="ItemRecyclerText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
 </resources>

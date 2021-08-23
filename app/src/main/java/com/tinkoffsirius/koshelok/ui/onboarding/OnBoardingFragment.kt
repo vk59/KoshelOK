@@ -84,6 +84,6 @@ class OnBoardingFragment : Fragment() {
                 onComplete = { Timber.d("Successfully saved.") },
                 onError = Timber::e
             )
-        navController.navigate(R.id.action_onBoardingFragment_to_setNameWalletFragment)
+        navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
     }
 }

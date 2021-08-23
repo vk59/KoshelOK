@@ -48,4 +48,5 @@
     <string name="create_wallet_button">Создать кошелек</string>
     <string name="save_button">Сохранить</string>
     <string name="limit_not_stated">Лимит не установлен</string>
+    <string name="balance">Общий баланс</string>
 </resources>

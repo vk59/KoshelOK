@@ -11,6 +11,7 @@
     
     <color name="main_blue">#5833EE</color>
     <color name="black50">#80000000</color>
+    <color name="grey">#299C9C9C</color>
     <color name="edit_text_border">#1F000000</color>
     <color name="button_stroke">#1F000000</color>
     <color name="edit_text_hint">#99000000</color>
