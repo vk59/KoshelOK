@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -28,6 +27,8 @@ class TransactionCategoryFragment : Fragment() {
         })
 
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
+
+    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,13 +84,12 @@ class TransactionCategoryFragment : Fragment() {
     private fun initListeners(v: View) {
 
         binding.setCategory.setOnClickListener {
-            // TODO
-            v.findNavController()
+            navController
                 .navigate(R.id.action_transactionCategoryFragment_to_transactionEditingFragment)
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            navController.popBackStack()
         }
     }
 }

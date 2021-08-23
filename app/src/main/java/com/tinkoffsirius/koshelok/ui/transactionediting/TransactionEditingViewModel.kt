@@ -14,7 +14,9 @@ import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
 import com.tinkoffsirius.koshelok.repository.entities.Response
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -23,6 +25,8 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
+
+typealias CreateTransactionAction = (CreateTransactionData, String, String) -> Single<Response>
 
 class TransactionEditingViewModel(
     private val transactionSharedRepository: PosedTransactionSharedRepository,
@@ -106,40 +110,45 @@ class TransactionEditingViewModel(
 
     fun saveTransaction(): LiveData<Response> {
         val liveData: MutableLiveData<Response> = MutableLiveData()
-        val posedTransaction = transaction.value!!
-        val transactionData = CreateTransactionData(
-            posedTransaction.id,
-            posedTransaction.sum,
-            posedTransaction.type,
-            posedTransaction.category.id!!,
-            defaultDataTime.toString(),
-            Currency.RUB.name
-        )
-        if (posedTransaction.id == null) {
-            disposable += walletRepository.createTransaction(
-                transactionData,
-                accountSharedRepository.getAccount(ACCOUNT_ID),
-                accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
-            ).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onSuccess = { liveData.value = it },
-                    onError = { Timber.e(it) }
-                )
-        } else {
-            disposable += walletRepository.updateTransaction(
-                transactionData,
-                accountSharedRepository.getAccount(ACCOUNT_ID),
-                accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
-            ).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onSuccess = { liveData.value = it },
-                    onError = { Timber.e(it) }
-                )
-        }
+        disposable += transactionSharedRepository
+            .getTransaction()
+            .map(::createTransactionData)
+            .flatMap { posedTransaction ->
+                val transactionAction = getCreateTransactionAction(posedTransaction)
+                performCreateTransactionAction(transactionAction, posedTransaction)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { liveData.value = it },
+                onError = { Timber.e(it) }
+            )
         return liveData
     }
+
+    private fun performCreateTransactionAction(
+        transactionAction: CreateTransactionAction,
+        posedTransaction: CreateTransactionData
+    ) = Singles.zip(
+        accountSharedRepository.getAccount(ACCOUNT_ID),
+        accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
+    ).flatMap { (accountId, accountIdToken) ->
+        transactionAction(posedTransaction, accountId, accountIdToken)
+    }
+
+    private fun getCreateTransactionAction(posedTransaction: CreateTransactionData): CreateTransactionAction {
+        return if (posedTransaction.id == null) walletRepository::createTransaction else walletRepository::updateTransaction
+    }
+
+    private fun createTransactionData(it: PosedTransaction) =
+        CreateTransactionData(
+            it.id,
+            it.sum,
+            it.type,
+            it.category.id!!,
+            dateTransaction.toString(),
+            Currency.RUB.name
+        )
 
     override fun onCleared() {
         disposable.dispose()
