@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/newCategoryFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.tinkoffsirius.koshelok.ui.main.MainFragment"
@@ -112,4 +112,29 @@
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/newCategoryFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryFragment"
+        android:label="fragment_new_category"
+        tools:layout="@layout/new_category_fragment" >
+
+
+        <action
+            android:id="@+id/action_newCategoryFragment_to_categoryNameFragment"
+            app:destination="@id/categoryNameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoryNameFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.newcategory.CategoryNameFragment"
+        android:label="fragment_category_name"
+        tools:layout="@layout/category_name_fragment" >
+
+
+        <action
+            android:id="@+id/action_categoryNameFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
+    </fragment>
+
 </navigation>

@@ -50,6 +50,7 @@ detekt {
 
 dependencies {
     implementation 'ru.rambler.android:swipe-layout:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.0")
     // Navigation
