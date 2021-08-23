@@ -41,4 +41,8 @@
     <string name="outcome">Траты</string>
     <string name="set_name_wallet">Придумайте название</string>
     <string name="set_wallet_name_field">Название кошелька</string>
+    <string name="name_wallet">Название</string>
+    <string name="currency">Валюта</string>
+    <string name="limit">Лимит</string>
+    <string name="create_wallet_button">Создать кошелек</string>
 </resources>

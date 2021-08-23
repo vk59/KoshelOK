@@ -1,7 +1,7 @@
 package com.tinkoffsirius.koshelok.repository.entities
 
 class WalletData(
-    val id: Long,
+    val id: Long?,
     val name: String,
     val balance: String,
     val income: String,

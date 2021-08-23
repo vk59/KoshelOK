@@ -3,7 +3,7 @@ package com.tinkoffsirius.koshelok
 import android.content.Context
 import com.tinkoffsirius.koshelok.repository.*
 import com.tinkoffsirius.koshelok.ui.ResourceProvider
-import com.tinkoffsirius.koshelok.ui.createwallet.setname.CreateWalletViewModelFactory
+import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModelFactory
 import com.tinkoffsirius.koshelok.ui.main.MainViewModelFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModelFactory
 

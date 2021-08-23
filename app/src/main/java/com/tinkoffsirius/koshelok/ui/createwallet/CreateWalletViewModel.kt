@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.createwallet.setname
+package com.tinkoffsirius.koshelok.ui.createwallet
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,12 +9,17 @@ import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
 import com.tinkoffsirius.koshelok.repository.entities.Response
+import com.tinkoffsirius.koshelok.repository.entities.WalletData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+
+typealias CreateWalletAction = (WalletData, String, String) -> Single<Response>
 
 class CreateWalletViewModel(
     private val accountSharedRepository: AccountSharedRepository,
@@ -23,7 +28,6 @@ class CreateWalletViewModel(
 ) : ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
-
     val wallet: MutableLiveData<NewWallet> = MutableLiveData()
 
     init {
@@ -54,7 +58,7 @@ class CreateWalletViewModel(
     fun updateCurrency(currency: Currency): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
 
-        disposable +=walletSharedRepository.getWallet()
+        disposable += walletSharedRepository.getWallet()
             .map { it.copy(currencyType = currency.name) }
             .doOnSuccess { wallet.value = it }
             .flatMapCompletable { walletSharedRepository.saveWallet(it) }
@@ -69,7 +73,7 @@ class CreateWalletViewModel(
     fun updateLimit(limit: String): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
 
-        disposable +=walletSharedRepository.getWallet()
+        disposable += walletSharedRepository.getWallet()
             .map { it.copy(limit = limit) }
             .doOnSuccess { wallet.value = it }
             .flatMapCompletable { walletSharedRepository.saveWallet(it) }
@@ -81,46 +85,46 @@ class CreateWalletViewModel(
         return ld
     }
 
+
+
     fun createWallet(): LiveData<Response> {
         val liveData: MutableLiveData<Response> = MutableLiveData()
-        // TODO()
-        /*
-        val posedTransaction = transaction.value!!
-        val transactionData = CreateTransactionData(
-            posedTransaction.id,
-            posedTransaction.sum,
-            posedTransaction.type,
-            posedTransaction.category.id!!,
-            dateTransaction.toString(),
-            Currency.RUB.name
-        )
-        if (posedTransaction.id == null) {
-            disposable += walletRepository.createTransaction(
-                transactionData,
-                accountSharedRepository.getAccount(ACCOUNT_ID),
-                accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
-            ).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onSuccess = { liveData.value = it },
-                    onError = { Timber.e(it) }
-                )
-        } else {
-            disposable += walletRepository.updateTransaction(
-                transactionData,
-                accountSharedRepository.getAccount(ACCOUNT_ID),
-                accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
-            ).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onSuccess = { liveData.value = it },
-                    onError = { Timber.e(it) }
-                )
-        }
-         */
-
+        disposable += walletSharedRepository
+            .getWallet()
+            .map(::createWalletData)
+            .flatMap { wallet ->
+                performCreateTransactionAction(walletRepository::createWallet, wallet)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { liveData.value = it },
+                onError = { Timber.e(it) }
+            )
         return liveData
     }
+
+    private fun performCreateTransactionAction(
+        transactionAction: CreateWalletAction,
+        walletData: WalletData
+    ) = Singles.zip(
+        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID),
+        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID_TOKEN)
+    ).flatMap { (accountId, accountIdToken) ->
+        transactionAction(walletData, accountId, accountIdToken)
+    }
+
+    private fun createWalletData(it: NewWallet) =
+        WalletData(
+            null,
+            it.name,
+            "0.00",
+            "0.00",
+            "0.00",
+            it.limit,
+            it.currencyType,
+            listOf()
+        )
 
     override fun onCleared() {
         disposable.dispose()

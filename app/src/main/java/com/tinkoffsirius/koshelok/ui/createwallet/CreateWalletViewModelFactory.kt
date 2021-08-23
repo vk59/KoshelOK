@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.createwallet.setname
+package com.tinkoffsirius.koshelok.ui.createwallet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

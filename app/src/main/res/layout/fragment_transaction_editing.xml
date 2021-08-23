@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_sum_label"
+        android:id="@+id/transEditingSumLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -39,37 +39,25 @@
         app:tie_text="@string/summary" />
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_type_label"
+        android:id="@+id/transEditingTypeLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_sum_label"
+        app:layout_constraintTop_toBottomOf="@+id/transEditingSumLabel"
         app:tie_text="@string/type" />
 
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_category_label"
+        android:id="@+id/transEditingCategoryLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_type_label"
+        app:layout_constraintTop_toBottomOf="@+id/transEditingTypeLabel"
         app:tie_text="@string/category" />
-
-
-    <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_date_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_sub_title"
-        app:tie_text="@string/date" />
-
 
     <TextView
         android:id="@+id/trans_editing_sub_title"
@@ -82,7 +70,18 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_category_label" />
+        app:layout_constraintTop_toBottomOf="@+id/transEditingCategoryLabel" />
+
+    <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
+        android:id="@+id/trans_editing_date_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trans_editing_sub_title"
+        app:tie_text="@string/date" />
+
 
     <Button
         android:id="@+id/create_transaction_button"
