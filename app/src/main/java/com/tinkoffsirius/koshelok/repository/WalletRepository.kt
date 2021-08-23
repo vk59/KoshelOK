@@ -38,8 +38,12 @@ class WalletRepository {
         return SampleNetworkService.updateTransaction(transactionData, idUser, idToken)
     }
 
-    fun createWallet(walletData: WalletData, idUser: String, idToken: String): Single<Response> {
-        return Single.just(Response("Successfully"))
+    fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
+        return Single.just(Response("Successfully saved wallet $walletData"))
+    }
+
+    fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
+        return Single.just(Response("Successfully updated wallet $walletData"))
     }
 
     fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
