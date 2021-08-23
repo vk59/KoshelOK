@@ -9,19 +9,19 @@ import com.tinkoffsirius.koshelok.entities.Category
 
 class TransactionCategoryViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    private var mTransactionCategoryImage: ImageView? = null
-    private var mTransactionCategoryTitle: TextView? = null
+    private var transactionCategoryImage: ImageView? = null
+    private var transactionCategoryTitle: TextView? = null
     var mTransactionImage: ImageView? = null
 
     init {
         // TODO: Binding
-        mTransactionCategoryImage = itemView.findViewById(R.id.transaction_category_image)
-        mTransactionCategoryTitle = itemView.findViewById(R.id.transaction_category_title)
+        transactionCategoryImage = itemView.findViewById(R.id.transaction_category_image)
+        transactionCategoryTitle = itemView.findViewById(R.id.transaction_category_title)
         mTransactionImage = itemView.findViewById(R.id.selected_image)
     }
 
     fun bind(category: Category) {
-        mTransactionCategoryImage?.setBackgroundResource(category.icon)
-        mTransactionCategoryTitle?.text = category.categoryName
+        transactionCategoryImage?.setBackgroundResource(category.icon)
+        transactionCategoryTitle?.text = category.categoryName
     }
 }

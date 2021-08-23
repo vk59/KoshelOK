@@ -2,6 +2,7 @@ package com.tinkoffsirius.koshelok.repository
 
 import android.content.SharedPreferences
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import io.reactivex.rxjava3.core.Single
 
 class AccountSharedRepository(private val sharedPreferences: SharedPreferences) {
 
@@ -12,8 +13,8 @@ class AccountSharedRepository(private val sharedPreferences: SharedPreferences) 
             .apply()
     }
 
-    fun getAccount(name: String = ACCOUNT_ID): String {
-        return sharedPreferences.getString(ACCOUNT_ID, null)!!
+    fun getAccount(name: String = ACCOUNT_ID): Single<String> = Single.fromCallable {
+        sharedPreferences.getString(name, null)!!
     }
 
     companion object {

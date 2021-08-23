@@ -12,6 +12,7 @@ import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import kotlinx.datetime.LocalDate
 
 object AppConfig {
+
     val headerExample = listOf<MainItem>(
         MainItem.Header("Кошелек 1", "60 000", "170 000", "61 400", "230 000")
     )
