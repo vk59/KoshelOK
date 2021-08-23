@@ -18,8 +18,7 @@ import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentSetSumBinding
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 import androidx.core.content.ContextCompat.getSystemService
-
-
+import androidx.core.widget.doAfterTextChanged
 
 
 class SetSumFragment : Fragment() {
@@ -51,7 +50,6 @@ class SetSumFragment : Fragment() {
         }
 
         viewModel.transaction.observe(viewLifecycleOwner, {
-            //TODO кидает ошибку если файл не создан
             binding.sumText.setText(it.sum)
         })
 
@@ -59,18 +57,18 @@ class SetSumFragment : Fragment() {
     }
 
     private fun initListeners(v: View) {
+
         binding.setSumButton.setOnClickListener {
 
             if (!binding.sumText.text?.trim().isNullOrEmpty() && !binding.sumText.text?.toString()
                     .equals(".")
             ) {
 
-                viewModel.updateTransactionSum(binding.sumText.text.toString()).observe(viewLifecycleOwner, {})
+                viewModel.updateTransactionSum(binding.sumText.text.toString())
+                    .observe(viewLifecycleOwner, {})
 
                 v.findNavController()
                     .navigate(R.id.action_setSumFragment_to_operationTypeFragment)
-            } else {
-                Toast.makeText(requireContext(), "Введите сумму!", Toast.LENGTH_LONG).show()
             }
         }
 

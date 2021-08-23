@@ -14,6 +14,9 @@ import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionCategoryBinding
+import com.tinkoffsirius.koshelok.entities.Category
+import com.tinkoffsirius.koshelok.entities.Transaction
+import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.transactioncategory.adapters.TransactionCategoryAdapter
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 
@@ -37,10 +40,6 @@ class TransactionCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.transaction.observe(viewLifecycleOwner, {
-            // Выделить сохраненый Item
-        })
-
         binding.setCategory.isEnabled = false
 
         val recyclerAdapter = TransactionCategoryAdapter {
@@ -50,14 +49,33 @@ class TransactionCategoryFragment : Fragment() {
                 })
         }
 
+        viewModel.transaction.observe(viewLifecycleOwner, {
+//            recyclerAdapter.setPosition((it.category.id?.toInt()?.minus(1)))
+//            binding.setCategory.isEnabled = true
+
+        })
+
         binding.transactionCategoryRecycler.apply {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(this@TransactionCategoryFragment.context)
         }
 
-        val category = AppConfig.transactionExample.map { it.category }
+        viewModel.transaction.observe(viewLifecycleOwner, {
+            val list: List<Category>?
+            if (it.type == TransactionType.INCOME.name) {
+                list =
+                    AppConfig.transactionExample.filter { it.typeName.name == TransactionType.INCOME.name }
+                recyclerAdapter.setData(list)
+            } else {
+                list =
+                    AppConfig.transactionExample.filter { it.typeName.name == TransactionType.OUTCOME.name }
+            }
+            recyclerAdapter.setData(list)
 
-        recyclerAdapter.setData(category)
+        })
+
+
+        //recyclerAdapter.setData(list!!)
 
         initListeners(view)
     }

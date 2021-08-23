@@ -19,6 +19,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
@@ -32,7 +33,11 @@ class TransactionEditingViewModel(
     private val disposable: CompositeDisposable = CompositeDisposable()
 
     val transaction: MutableLiveData<PosedTransaction> = MutableLiveData()
-    val dateTransaction by lazy { Clock.System.now().toLocalDateTime(TimeZone.UTC) }
+
+    private var defaultDataTime: LocalDateTime =
+        Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+
+    val transactionDateTime: MutableLiveData<LocalDateTime> = MutableLiveData(defaultDataTime)
 
     init {
         disposable += transactionSharedRepository.getTransaction()
@@ -46,6 +51,12 @@ class TransactionEditingViewModel(
 
     fun removeTransaction() {
         transactionSharedRepository.removeTransaction()
+    }
+
+    fun updateDate(newDate: LocalDateTime) {
+
+        this.defaultDataTime = newDate
+        transactionDateTime.value = newDate
     }
 
     fun updateTransactionType(type: String): LiveData<Unit> {
@@ -101,7 +112,7 @@ class TransactionEditingViewModel(
             posedTransaction.sum,
             posedTransaction.type,
             posedTransaction.category.id!!,
-            dateTransaction.toString(),
+            defaultDataTime.toString(),
             Currency.RUB.name
         )
         if (posedTransaction.id == null) {
