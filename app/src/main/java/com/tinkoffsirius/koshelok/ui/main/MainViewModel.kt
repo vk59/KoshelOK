@@ -48,8 +48,9 @@ class MainViewModel(
 
     private fun updateTransactions(): Completable {
         return walletRepository.getWalletById(
-            1,
-            "", ""
+            1, "", ""
+//            accountSharedRepository.getAccount(ACCOUNT_ID),
+//            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
         )
             .doOnSuccess { walletData ->
                 isThereTransactions.postValue(walletData.transactions.isNotEmpty())

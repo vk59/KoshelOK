@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView">
+
+    <TextView
+        android:id="@+id/trans_editing_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/summary"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
+        android:textAllCaps="false"
+        android:textColor="#9299A2"
+        app:layout_constraintBottom_toBottomOf="@+id/trans_editing_sub_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/trans_editing_sub_title"
+        tools:text="130 000"
+        app:drawableEndCompat="@drawable/ic_right_arrow"
+        android:drawablePadding="12dp"
+        />
+
+</merge>

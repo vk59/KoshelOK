@@ -6,10 +6,11 @@ import io.reactivex.rxjava3.core.Single
 
 class AccountSharedRepository(private val sharedPreferences: SharedPreferences) {
 
+    // TODO: Rx (Single)
     fun saveAccount(account: GoogleSignInAccount) {
         sharedPreferences.edit()
             .putString(ACCOUNT_ID, account.id)
-            .putString(ACCOUNT_ID_TOKEN, account.idToken)
+            .putString(ACCOUNT_ID_TOKEN, account.idToken ?: "123")
             .apply()
     }
 

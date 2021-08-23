@@ -1,11 +1,9 @@
 package com.tinkoffsirius.koshelok
 
 import android.content.Context
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
-import com.tinkoffsirius.koshelok.repository.WalletRepository
+import com.tinkoffsirius.koshelok.repository.*
 import com.tinkoffsirius.koshelok.ui.ResourceProvider
+import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModelFactory
 import com.tinkoffsirius.koshelok.ui.main.MainViewModelFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModelFactory
 
@@ -38,6 +36,24 @@ object Dependencies {
                 context!!,
                 SharedPreferencesFactory.TRANSACTION_DATA
             )
+        )
+    }
+
+    val walletSharedRepository by lazy {
+        WalletSharedRepository(
+            SharedPreferencesFactory().create(
+                context!!,
+                SharedPreferencesFactory.WALLET_DATA
+            )
+        )
+    }
+
+
+    val createWalletViewModelFactory by lazy {
+        CreateWalletViewModelFactory(
+            walletSharedRepository = walletSharedRepository,
+            accountRepository = accountRepository,
+            repository = walletRepository
         )
     }
 

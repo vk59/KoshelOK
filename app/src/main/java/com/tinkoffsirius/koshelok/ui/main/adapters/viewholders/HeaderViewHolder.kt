@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewholders
 
 import android.view.View
 import com.tinkoffsirius.koshelok.R
@@ -28,7 +28,7 @@ class HeaderViewHolder(
 
                 cardOutcome.typeCard.text = resourceProvider.getString(R.string.card_outcome_title)
 
-                cardOutcome.icon.setImageResource(R.drawable.ic_green_point)
+                cardOutcome.icon.setImageResource(R.drawable.ic_red_point)
                 cardOutcome.textMoneyCard.text = data.outcome
 
                 cardOutcome.textMaxMoneyCard.text = "/ ${data.maxOutcome}"

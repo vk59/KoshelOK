@@ -42,4 +42,11 @@
     <string name="time">Время операции</string>
     <string name="trans_create_button">Создать категорию</string>
 
+    <string name="set_name_wallet">Придумайте название</string>
+    <string name="set_wallet_name_field">Название кошелька</string>
+    <string name="name_wallet">Название</string>
+    <string name="currency">Валюта</string>
+    <string name="limit">Лимит</string>
+    <string name="create_wallet_button">Создать кошелек</string>
+    <string name="save_button">Сохранить</string>
 </resources>

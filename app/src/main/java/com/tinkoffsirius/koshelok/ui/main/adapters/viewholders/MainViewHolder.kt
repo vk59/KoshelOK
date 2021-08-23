@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
