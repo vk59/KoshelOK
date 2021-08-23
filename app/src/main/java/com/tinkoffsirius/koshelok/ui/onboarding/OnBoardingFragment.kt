@@ -83,6 +83,6 @@ class OnBoardingFragment : Fragment() {
                 ACCOUNT_DATA
             )
         ).saveAccount(account)
-        navController.navigate(R.id.action_onBoardingFragment_to_mainFragment)
+        navController.navigate(R.id.action_onBoardingFragment_to_setNameWalletFragment)
     }
 }

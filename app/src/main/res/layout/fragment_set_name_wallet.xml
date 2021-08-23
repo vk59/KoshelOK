@@ -37,7 +37,7 @@
         tools:text="Кошелек 1">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/walletName"
+            android:id="@+id/walletNameEdit"
             android:layout_width="match_parent"
             android:focusableInTouchMode="true"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            android:inputType="textAutoComplete"/>
+            android:inputType="textCapWords"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
