@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.walletlist
+package com.tinkoffsirius.koshelok.ui.walletlist.adapters
 
 data class WalletItem(
     val id: Long?,

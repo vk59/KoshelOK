@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.walletlist
+package com.tinkoffsirius.koshelok.ui.walletlist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

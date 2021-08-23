@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
+import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable

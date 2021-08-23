@@ -13,6 +13,8 @@ import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
+import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
+import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
 
 class WalletListFragment : Fragment() {
 

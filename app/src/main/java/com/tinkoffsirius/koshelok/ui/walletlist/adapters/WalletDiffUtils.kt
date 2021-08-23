@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.walletlist
+package com.tinkoffsirius.koshelok.ui.walletlist.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 
