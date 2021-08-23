@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
@@ -77,7 +78,7 @@ class OperationTypeFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            v.findNavController().navigate(R.id.action_operationTypeFragment_to_setSumFragment)
+            findNavController().popBackStack()
         }
     }
 }

@@ -8,6 +8,7 @@ import retrofit2.http.GET
 
 
 interface Api {
+
     @GET()
     fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData>
 

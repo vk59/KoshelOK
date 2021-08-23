@@ -89,8 +89,7 @@ class TransactionEditingFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
+            findNavController().popBackStack()
         }
 
         binding.transEditingSumLabel.setOnClickListener {

@@ -93,31 +93,44 @@ class TransactionEditingViewModel(
         return ld
     }
 
-    override fun onCleared() {
-        disposable.dispose()
-    }
-
     fun saveTransaction(): LiveData<Response> {
         val liveData: MutableLiveData<Response> = MutableLiveData()
-        val posedTransaction = transaction.value
+        val posedTransaction = transaction.value!!
         val transactionData = CreateTransactionData(
-            null,
-            posedTransaction!!.sum,
+            posedTransaction.id,
+            posedTransaction.sum,
             posedTransaction.type,
             posedTransaction.category.id!!,
             dateTransaction.toString(),
             Currency.RUB.name
         )
-        disposable += walletRepository.createTransaction(
-            transactionData,
-            accountSharedRepository.getAccount(ACCOUNT_ID),
-            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
-        ).observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = { liveData.value = it },
-                onError = { Timber.e(it) }
-            )
+        if (posedTransaction.id == null) {
+            disposable += walletRepository.createTransaction(
+                transactionData,
+                accountSharedRepository.getAccount(ACCOUNT_ID),
+                accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
+            ).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onSuccess = { liveData.value = it },
+                    onError = { Timber.e(it) }
+                )
+        } else {
+            disposable += walletRepository.updateTransaction(
+                transactionData,
+                accountSharedRepository.getAccount(ACCOUNT_ID),
+                accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
+            ).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onSuccess = { liveData.value = it },
+                    onError = { Timber.e(it) }
+                )
+        }
         return liveData
+    }
+
+    override fun onCleared() {
+        disposable.dispose()
     }
 }

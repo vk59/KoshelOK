@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
@@ -74,7 +75,7 @@ class SetSumFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            v.findNavController().navigate(R.id.action_setSumFragment_to_mainFragment)
+            findNavController().popBackStack()
         }
     }
 }

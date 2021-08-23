@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.tinkoffsirius.koshelok.entities.Category
+import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID_TOKEN
+import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
@@ -26,6 +28,7 @@ import kotlin.time.ExperimentalTime
 
 class MainViewModel(
     private val accountSharedRepository: AccountSharedRepository,
+    private val transactionRepository: PosedTransactionSharedRepository,
     private val walletRepository: WalletRepository
 ) : ViewModel() {
 
@@ -74,6 +77,23 @@ class MainViewModel(
             lastTimeBackPressed = now
             emit(false)
         }
+    }
+
+    fun editCurrentTransaction(element: MainItem.Transaction) {
+        transactionRepository.removeTransaction()
+        transactionRepository.saveTransaction(
+            PosedTransaction(
+                element.sum,
+                element.category.typeName.name,
+                element.category,
+                element.id
+            )
+        ).observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = { Timber.d("Saved") },
+                onError = { Timber.e(it) }
+            )
     }
 
     private fun createNewMainItemList(walletData: WalletData): List<MainItem> {

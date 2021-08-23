@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies
@@ -70,8 +71,7 @@ class TransactionCategoryFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            v.findNavController()
-                .navigate(R.id.action_transactionCategoryFragment_to_operationTypeFragment)
+            findNavController().popBackStack()
         }
     }
 }
