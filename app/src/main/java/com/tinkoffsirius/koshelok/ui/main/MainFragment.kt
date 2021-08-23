@@ -1,6 +1,5 @@
 package com.tinkoffsirius.koshelok.ui.main
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
+import com.tinkoffsirius.koshelok.ui.DeleteDialog
 import com.tinkoffsirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
@@ -117,14 +117,13 @@ class MainFragment : Fragment() {
     }
 
     private fun showDeleteDialog(id: Long) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("Вы действительно хотите удалить запись?")
-            .setPositiveButton("Удалить") { _, _ ->
-                viewModel.deleteTransactionById(id)
-            }
-            .setNegativeButton("Отмена") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+        DeleteDialog(
+            "Вы действительно хотите удалить запись?",
+            { _, _ -> viewModel.deleteTransactionById(id) },
+            { dialog, _ -> dialog.cancel() },
+            requireContext()
+        )
+            .create()
+            .show()
     }
 }

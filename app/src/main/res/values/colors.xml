@@ -17,4 +17,5 @@
     <color name="edit_text_hint">#99000000</color>
     <color name="green">#8BC34A</color>
     <color name="red">#C34A4A</color>
+    <color name="light_blue">#428BF9</color>
 </resources>
