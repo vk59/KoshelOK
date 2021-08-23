@@ -8,8 +8,8 @@ import com.tinkoffsirius.koshelok.entities.NewWallet
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
+import com.tinkoffsirius.koshelok.repository.entities.CreateWalletData
 import com.tinkoffsirius.koshelok.repository.entities.Response
-import com.tinkoffsirius.koshelok.repository.entities.WalletData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
-typealias CreateWalletAction = (WalletData, String, String) -> Single<Response>
+typealias CreateWalletAction = (CreateWalletData, String, String) -> Single<Response>
 
 class CreateWalletViewModel(
     private val accountSharedRepository: AccountSharedRepository,
@@ -85,13 +85,14 @@ class CreateWalletViewModel(
         return ld
     }
 
-    fun createWallet(): LiveData<Response> {
+    fun saveWallet(): LiveData<Response> {
         val liveData: MutableLiveData<Response> = MutableLiveData()
         disposable += walletSharedRepository
             .getWallet()
             .map(::createWalletData)
             .flatMap { wallet ->
-                performCreateTransactionAction(walletRepository::createWallet, wallet)
+                val transactionAction = getCreateWalletAction(wallet)
+                performCreateTransactionAction(transactionAction, wallet)
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -102,9 +103,16 @@ class CreateWalletViewModel(
         return liveData
     }
 
+    private fun getCreateWalletAction(wallet: CreateWalletData): CreateWalletAction {
+        return if (wallet.id == null)
+            walletRepository::createWallet
+        else
+            walletRepository::updateWallet
+    }
+
     private fun performCreateTransactionAction(
         transactionAction: CreateWalletAction,
-        walletData: WalletData
+        walletData: CreateWalletData
     ) = Singles.zip(
         accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID),
         accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID_TOKEN)
@@ -113,15 +121,11 @@ class CreateWalletViewModel(
     }
 
     private fun createWalletData(it: NewWallet) =
-        WalletData(
-            null,
+        CreateWalletData(
+            it.id,
             it.name,
-            "0.00",
-            "0.00",
-            "0.00",
             it.limit,
-            it.currencyType,
-            listOf()
+            it.currencyType
         )
 
     override fun onCleared() {

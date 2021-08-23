@@ -12,7 +12,6 @@ import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletEditingBinding
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
-import timber.log.Timber
 
 class WalletEditingFragment : Fragment() {
 
@@ -66,8 +65,7 @@ class WalletEditingFragment : Fragment() {
         }
 
         binding.createWalletButton.setOnClickListener {
-            createViewModel.createWallet().observe(viewLifecycleOwner) {
-                Timber.tag("tut").d(it.message)
+            createViewModel.saveWallet().observe(viewLifecycleOwner) {
                 navController.navigate(R.id.action_walletEditingFragment_to_mainFragment)
             }
         }
