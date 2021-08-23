@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewholders
 
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemDateBinding

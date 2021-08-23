@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.ui.main.adapters.viewHolders
+package com.tinkoffsirius.koshelok.ui.main.adapters.viewholders
 
 import android.content.res.ColorStateList
 import com.tinkoffsirius.koshelok.R
