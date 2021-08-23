@@ -128,6 +128,9 @@
         <action
             android:id="@+id/action_walletEditingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_walletEditingFragment_to_setLimitWalletFragment"
+            app:destination="@id/setLimitWalletFragment" />
     </fragment>
     <fragment
         android:id="@+id/setCurrencyFragment"
@@ -143,6 +146,14 @@
         android:label="SetNameWalletFragment" >
         <action
             android:id="@+id/action_setNameWalletFragment_to_walletEditingFragment"
+            app:destination="@id/walletEditingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setLimitWalletFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createwallet.setlimit.SetLimitWalletFragment"
+        android:label="SetLimitWalletFragment" >
+        <action
+            android:id="@+id/action_setLimitWalletFragment_to_walletEditingFragment"
             app:destination="@id/walletEditingFragment" />
     </fragment>
 </navigation>
