@@ -48,7 +48,8 @@ object Dependencies {
         )
     }
 
-    val createWalletSharedFactory by lazy {
+
+    val createWalletViewModelFactory by lazy {
         CreateWalletViewModelFactory(
             walletSharedRepository = walletSharedRepository,
             accountRepository = accountRepository,

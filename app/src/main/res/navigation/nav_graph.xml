@@ -111,5 +111,38 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_onBoardingFragment_to_setNameWalletFragment"
+            app:destination="@id/setNameWalletFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/walletEditingFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createwallet.editwallet.WalletEditingFragment"
+        android:label="WalletEditingFragment" >
+        <action
+            android:id="@+id/action_walletEditingFragment_to_setCurrencyFragment"
+            app:destination="@id/setCurrencyFragment" />
+        <action
+            android:id="@+id/action_walletEditingFragment_to_setNameWalletFragment"
+            app:destination="@id/setNameWalletFragment" />
+        <action
+            android:id="@+id/action_walletEditingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setCurrencyFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createwallet.setcurrency.SetCurrencyFragment"
+        android:label="SetCurrencyFragment" >
+        <action
+            android:id="@+id/action_setCurrencyFragment_to_walletEditingFragment"
+            app:destination="@id/walletEditingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setNameWalletFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createwallet.setname.SetNameWalletFragment"
+        android:label="SetNameWalletFragment" >
+        <action
+            android:id="@+id/action_setNameWalletFragment_to_walletEditingFragment"
+            app:destination="@id/walletEditingFragment" />
     </fragment>
 </navigation>
