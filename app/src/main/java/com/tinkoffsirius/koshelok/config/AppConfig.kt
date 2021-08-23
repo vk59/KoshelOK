@@ -92,4 +92,6 @@ object AppConfig {
             )
         )
     )
+
+    val walletsExample = MutableList(12) { walletExample }
 }

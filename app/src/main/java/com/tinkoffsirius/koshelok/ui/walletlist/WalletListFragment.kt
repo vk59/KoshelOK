@@ -33,6 +33,7 @@ class WalletListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initAppbar()
         initRecycler()
     }
 
@@ -43,8 +44,17 @@ class WalletListFragment : Fragment() {
         }
 
         binding.textNoEntities.visibility = View.GONE
-        walletRecyclerAdapter.setData(listOf(AppConfig.walletExample).map { walletData ->
+        walletRecyclerAdapter.setData(AppConfig.walletsExample.map { walletData ->
             WalletItem(walletData.id, walletData.name, walletData.balance, walletData.currencyType)
         })
+    }
+
+    private fun initAppbar() {
+        binding.cardIncome.icon.setImageResource(R.drawable.ic_green_point)
+        binding.cardIncome.typeCard.text = "Общий доход"
+        binding.cardIncome.textMoneyCard.text = "0 RUB"
+        binding.cardOutcome.icon.setImageResource(R.drawable.ic_red_point)
+        binding.cardOutcome.typeCard.text = "Общий расход"
+        binding.cardOutcome.textMoneyCard.text = "0 RUB"
     }
 }
