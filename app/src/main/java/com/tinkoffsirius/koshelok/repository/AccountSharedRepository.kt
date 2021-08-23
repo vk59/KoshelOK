@@ -2,12 +2,12 @@ package com.tinkoffsirius.koshelok.repository
 
 import android.content.SharedPreferences
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class AccountSharedRepository(private val sharedPreferences: SharedPreferences) {
 
-    // TODO: Rx (Single)
-    fun saveAccount(account: GoogleSignInAccount) {
+    fun saveAccount(account: GoogleSignInAccount) = Completable.fromCallable {
         sharedPreferences.edit()
             .putString(ACCOUNT_ID, account.id)
             .putString(ACCOUNT_ID_TOKEN, account.idToken ?: "123")
