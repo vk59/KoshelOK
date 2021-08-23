@@ -1,27 +1,30 @@
 package com.tinkoffsirius.koshelok.ui.transactioncategory.adapters
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.tinkoffsirius.koshelok.R
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoffsirius.koshelok.Dependencies.resourceProvider
+import com.tinkoffsirius.koshelok.databinding.ItemTransactionCategoryBinding
 import com.tinkoffsirius.koshelok.entities.Category
 
 class TransactionCategoryViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    private var transactionCategoryImage: ImageView? = null
-    private var transactionCategoryTitle: TextView? = null
-    var mTransactionImage: ImageView? = null
+
+    var selectionImage: ImageView? = null
+
+    private val binding by viewBinding(ItemTransactionCategoryBinding::bind)
 
     init {
-        // TODO: Binding
-        transactionCategoryImage = itemView.findViewById(R.id.transaction_category_image)
-        transactionCategoryTitle = itemView.findViewById(R.id.transaction_category_title)
-        mTransactionImage = itemView.findViewById(R.id.selected_image)
+        selectionImage = binding.selectedImage
     }
 
     fun bind(category: Category) {
-        transactionCategoryImage?.setBackgroundResource(category.icon)
-        transactionCategoryTitle?.text = category.categoryName
+        binding.transactionCategoryImage.setImageResource(category.icon)
+        binding.transactionCategoryImageBack.backgroundTintList =
+            ColorStateList.valueOf(resourceProvider.getColor(category.color))
+
+        binding.transactionCategoryTitle.text = category.categoryName
     }
 }

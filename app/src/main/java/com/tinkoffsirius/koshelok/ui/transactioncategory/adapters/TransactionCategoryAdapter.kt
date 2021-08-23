@@ -12,10 +12,11 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
 
     private var list: List<Category> = listOf()
 
-    private var mPosition: Int = -1
+    var itemPosition: Int? = -1
 
     fun setData(data: List<Category>) {
         list = data
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -36,10 +37,10 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
     override fun onBindViewHolder(holder: TransactionCategoryViewHolder, position: Int) {
         val category: Category = list[position]
 
-        holder.mTransactionImage?.isVisible = mPosition == position
+        holder.selectionImage?.isVisible = itemPosition == position
 
         holder.itemView.setOnClickListener {
-            mPosition = holder.absoluteAdapterPosition
+            itemPosition = holder.absoluteAdapterPosition
             setSelected(category)
             notifyDataSetChanged()
         }

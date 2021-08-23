@@ -11,7 +11,9 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_setSumFragment"
-            app:destination="@id/setSumFragment" />
+            app:destination="@id/setSumFragment"
+            app:exitAnim="@anim/slide_out_left" />
+
         <action
             android:id="@+id/action_mainFragment_to_transactionEditingFragment"
             app:destination="@id/transactionEditingFragment" />
@@ -24,10 +26,12 @@
         tools:layout="@layout/fragment_set_sum">
         <action
             android:id="@+id/action_setSumFragment_to_operationTypeFragment"
-            app:destination="@id/operationTypeFragment" />
+            app:destination="@id/operationTypeFragment"
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_setSumFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:exitAnim="@anim/slide_in_right" />
     </fragment>
 
     <fragment
@@ -37,10 +41,12 @@
         tools:layout="@layout/fragment_operation_type">
         <action
             android:id="@+id/action_operationTypeFragment_to_setSumFragment"
-            app:destination="@id/setSumFragment" />
+            app:destination="@id/setSumFragment"
+            app:exitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_operationTypeFragment_to_transactionCategoryFragment"
-            app:destination="@id/transactionCategoryFragment" />
+            app:destination="@id/transactionCategoryFragment"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -51,10 +57,12 @@
 
         <action
             android:id="@+id/action_transactionCategoryFragment_to_operationTypeFragment"
-            app:destination="@id/operationTypeFragment" />
+            app:destination="@id/operationTypeFragment"
+            app:exitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_transactionCategoryFragment_to_transactionEditingFragment"
             app:destination="@id/transactionEditingFragment"
+            app:exitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
             app:popUpTo="@id/transactionEditingFragment"
             app:popUpToInclusive="true" />
@@ -70,21 +78,25 @@
         <action
             android:id="@+id/action_transactionEditingFragment_to_transactionCategoryFragment"
             app:destination="@id/transactionCategoryFragment"
+            app:exitAnim="@anim/slide_out_right"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_mainFragment"
             app:destination="@id/mainFragment"
+            app:exitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_setSumFragment"
             app:destination="@id/setSumFragment"
+            app:exitAnim="@anim/slide_out_right"
             app:launchSingleTop="false"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_operationTypeFragment"
             app:destination="@id/operationTypeFragment"
+            app:exitAnim="@anim/slide_out_right"
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
@@ -95,6 +107,7 @@
         <action
             android:id="@+id/action_onBoardingFragment_to_mainFragment"
             app:destination="@id/mainFragment"
+            app:exitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />

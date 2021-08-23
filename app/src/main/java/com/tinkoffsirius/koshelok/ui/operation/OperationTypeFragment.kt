@@ -36,9 +36,13 @@ class OperationTypeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.transaction.observe(viewLifecycleOwner, {
-            if (it.type == TransactionType.INCOME.name) binding.operationTypeRadioButtonIncome.isChecked =
-                true else if (it.type == TransactionType.OUTCOME.name)
-                    binding.operationTypeRadioButtonExpense.isChecked = true
+            when (it.type) {
+                TransactionType.INCOME.name -> binding.operationTypeRadioButtonIncome.isChecked = true
+                TransactionType.OUTCOME.name -> binding.operationTypeRadioButtonExpense.isChecked = true
+                else -> {
+                    binding.setType.isEnabled = false
+                }
+            }
         })
 
         initListeners(view)
@@ -48,24 +52,28 @@ class OperationTypeFragment : Fragment() {
 
         binding.operationTypeRadioButtonIncome.setOnClickListener {
             binding.setType.isClickable = false
-            viewModel.updateTransactionType(TransactionType.INCOME.name).observe(viewLifecycleOwner) {
-                binding.setType.isClickable = true
-            }
+            viewModel.updateTransactionType(TransactionType.INCOME.name)
+                .observe(viewLifecycleOwner) {
+                    binding.setType.isEnabled = true
+                    binding.setType.isClickable = true
+                }
         }
 
         binding.operationTypeRadioButtonExpense.setOnClickListener {
             binding.setType.isClickable = false
-            viewModel.updateTransactionType(TransactionType.OUTCOME.name).observe(viewLifecycleOwner) {
-                binding.setType.isClickable = true
-            }
+            viewModel.updateTransactionType(TransactionType.OUTCOME.name)
+                .observe(viewLifecycleOwner) {
+                    binding.setType.isEnabled = true
+                    binding.setType.isClickable = true
+                }
         }
 
         binding.setType.setOnClickListener {
+
             if (binding.operationTypeRadioButtonIncome.isChecked || binding.operationTypeRadioButtonExpense.isChecked) {
+
                 v.findNavController()
                     .navigate(R.id.action_operationTypeFragment_to_transactionCategoryFragment)
-            } else {
-                Toast.makeText(requireContext(), "Выберите категорию!", Toast.LENGTH_LONG).show()
             }
         }
 

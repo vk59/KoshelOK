@@ -39,28 +39,24 @@ object AppConfig {
     )
 
     val transactionExample = mutableListOf(
-        Transaction(
-            6000.0.toString(),
-            Category(
-                1,
-                TransactionType.INCOME,
-                Types.CAPITALIZATION.nameType,
-                R.drawable.ic_transaction_category,
-                R.color.black
-            ),
-            LocalDate(2021, 8, 18)
+
+        Category(
+            1,
+            TransactionType.INCOME,
+            Types.CAPITALIZATION.nameType,
+            R.drawable.ic_sport,
+            R.color.green
         ),
-        Transaction(
-            400.0.toString(),
-            Category(
-                2,
-                TransactionType.INCOME,
-                Types.SALARY.nameType,
-                R.drawable.ic_transaction_category,
-                R.color.black
-            ),
-            LocalDate(2021, 8, 18)
-        ),
+
+
+        Category(
+            2,
+            TransactionType.OUTCOME,
+            Types.CLOTHES.nameType,
+            R.drawable.ic_clothes,
+            R.color.red
+
+        )
     )
 
     val walletExample = WalletData(

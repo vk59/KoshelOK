@@ -1,7 +1,9 @@
 package com.tinkoffsirius.koshelok.ui.transactionediting
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +14,14 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
+import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.DateUtils
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toKotlinInstant
 import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TransactionEditingFragment : Fragment() {
@@ -39,7 +46,8 @@ class TransactionEditingFragment : Fragment() {
 
         viewModel.transaction.observe(viewLifecycleOwner, {
             binding.transEditingSumLabel.buttonText.text = it.sum
-            binding.transEditingTypeLabel.buttonText.text = it.type
+            binding.transEditingTypeLabel.buttonText.text =
+                if (it.type == TransactionType.INCOME.name) "Доход" else "Расход"
             binding.transEditingCategoryLabel.buttonText.text = it.category.categoryName
         })
 
@@ -49,21 +57,55 @@ class TransactionEditingFragment : Fragment() {
     private fun initListeners(v: View) {
 
         val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        val dateTransaction: LocalDateTime = viewModel.transactionDateTime.value!!
+        var year = dateTransaction.year
+        var month = dateTransaction.monthNumber
+        var day = dateTransaction.dayOfMonth
+        var hour = dateTransaction.hour
+        var minute = dateTransaction.minute
+        //val time = "${dateTransaction.hour}:${dateTransaction.minute}"
+        val localDate = LocalDate(year, month, day)
+        //val timeZone = TimeZone.getDefault().id
 
         binding.transEditingDateLabel.buttonText.text =
-            DateUtils.toUIString(LocalDate(year, month, day), requireContext())
+            DateUtils.toUIString(localDate, requireContext())
+        binding.transEditingTimeLabel.buttonText.text = "$hour:$minute"
 
         binding.transEditingDateLabel.setOnClickListener {
 
-            val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
-                // Display Selected date in TextView
+            val dpd = DatePickerDialog(requireContext(), { view, dYear, dMonthOfYear, dDayOfMonth ->
                 binding.transEditingDateLabel.buttonText.text =
-                    DateUtils.toUIString(LocalDate(year, monthOfYear, dayOfMonth), requireContext())
-            }, year, month, day)
+                    DateUtils.toUIString(
+                        LocalDate(dYear, dMonthOfYear + 1, dDayOfMonth),
+                        requireContext()
+                    )
+                year = dYear
+                month = dMonthOfYear + 1
+                day = dDayOfMonth
+            }, year, month - 1, day)
             dpd.show()
+
+        }
+
+        binding.transEditingTimeLabel.setOnClickListener {
+
+            Instant.fromEpochMilliseconds(c.timeInMillis)
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, pHour, pMinute ->
+                c.set(Calendar.HOUR_OF_DAY, pHour)
+                c.set(Calendar.MINUTE, pMinute)
+                binding.transEditingTimeLabel.buttonText.text =
+                    SimpleDateFormat("HH:mm").format(c.time)
+                hour = pHour
+                minute = pMinute
+            }
+            TimePickerDialog(
+                requireContext(),
+                timeSetListener,
+                c.get(Calendar.HOUR_OF_DAY),
+                c.get(Calendar.MINUTE),
+                true
+            ).show()
+
         }
 
         binding.toolbar.setNavigationOnClickListener {
@@ -86,6 +128,7 @@ class TransactionEditingFragment : Fragment() {
         }
 
         binding.createTransactionButton.setOnClickListener {
+            viewModel.updateDate(LocalDateTime(year, month, day, hour, minute, 0, 0))
             viewModel.saveTransaction().observe(viewLifecycleOwner) {
                 Timber.tag("tut").d(it.message)
             }
