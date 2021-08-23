@@ -9,10 +9,15 @@
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_transaction_editing.xml" value="0.264" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction_category.xml" value="0.8" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/drawable/ic_options_background.xml" value="0.1" />
+        <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/fragment_on_boarding.xml" value="0.1" />
+        <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/fragment_set_currency.xml" value="0.1" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/fragment_set_name_wallet.xml" value="0.1" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/fragment_set_sum.xml" value="0.1" />
+        <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/fragment_transaction_category.xml" value="0.1" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/fragment_transaction_editing.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/fragment_wallet_editing.xml" value="0.1" />
+        <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/item_currency.xml" value="0.7333333333333334" />
+        <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/item_transaction.xml" value="0.1" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/item_transaction_editing.xml" value="0.1" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/layout/item_wallet_editing.xml" value="0.1" />
       </map>
