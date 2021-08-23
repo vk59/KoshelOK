@@ -118,9 +118,13 @@ object SampleNetworkService {
                 "900000.00",
                 "430000.00",
                 AppConfig.walletsExample.map {
-                    WalletDataItem(it.id, it.name, it.balance, it.currencyType)
+                    WalletDataItem(it.id, it.name, it.balance, it.limit, it.currencyType)
                 }
             )
         )
+    }
+
+    fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response> {
+        return Single.just(Response("Successfully deleted"))
     }
 }

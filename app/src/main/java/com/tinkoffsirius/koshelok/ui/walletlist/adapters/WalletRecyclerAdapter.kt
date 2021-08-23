@@ -6,7 +6,12 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.databinding.ItemWalletBinding
 
-class WalletRecyclerAdapter : RecyclerView.Adapter<WalletViewHolder>() {
+class WalletRecyclerAdapter(
+    private val onItemClick: () -> Unit,
+    private val deleteItem: (WalletItem) -> Unit,
+    private val editItem: (WalletItem) -> Unit,
+    private val watchItem: () -> Unit
+): RecyclerView.Adapter<WalletViewHolder>() {
 
     private val diff = AsyncListDiffer(this, WalletDiffUtils())
 
@@ -20,11 +25,20 @@ class WalletRecyclerAdapter : RecyclerView.Adapter<WalletViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return WalletViewHolder(ItemWalletBinding.inflate(inflater, parent, false))
+        return WalletViewHolder(
+            ItemWalletBinding.inflate(inflater, parent, false),
+            deleteItem,
+            editItem,
+            watchItem
+        )
     }
 
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
         holder.bind(diff.currentList[position])
+        holder.itemView.setOnLongClickListener {
+            onItemClick()
+            false
+        }
     }
 
     override fun getItemViewType(position: Int): Int {

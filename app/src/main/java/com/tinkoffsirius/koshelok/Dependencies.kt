@@ -69,7 +69,8 @@ object Dependencies {
     val walletListViewModelFactory by lazy {
         WalletsListViewModelFactory(
             accountRepository = accountRepository,
-            repository = walletRepository
+            repository = walletRepository,
+            walletSharedRepository = walletSharedRepository
         )
     }
 

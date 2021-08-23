@@ -45,4 +45,8 @@ class WalletRepository {
     fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
         return SampleNetworkService.getUserInfoWallets(idUser, idToken)
     }
+
+    fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response> {
+        return SampleNetworkService.deleteWalletById(id, idUser, idToken)
+    }
 }

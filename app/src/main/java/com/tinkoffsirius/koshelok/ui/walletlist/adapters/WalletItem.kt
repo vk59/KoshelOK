@@ -4,5 +4,6 @@ data class WalletItem(
     val id: Long?,
     val name: String,
     val balance: String,
-    val currencyType: String
+    val limit: String,
+    val currencyType: String,
 )

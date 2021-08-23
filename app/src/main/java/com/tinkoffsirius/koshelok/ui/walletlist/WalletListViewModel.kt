@@ -2,8 +2,10 @@ package com.tinkoffsirius.koshelok.ui.walletlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tinkoffsirius.koshelok.entities.NewWallet
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
+import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -16,7 +18,8 @@ import timber.log.Timber
 
 class WalletListViewModel(
     private val accountSharedRepository: AccountSharedRepository,
-    private val walletRepository: WalletRepository
+    private val walletRepository: WalletRepository,
+    private val walletSharedRepository: WalletSharedRepository
 ) : ViewModel() {
 
     val items: MutableLiveData<List<WalletItem>> = MutableLiveData(listOf())
@@ -49,8 +52,36 @@ class WalletListViewModel(
         }.ignoreElement()
     }
 
+    fun deleteWallet(walletItem: WalletItem) {
+        disposable += walletRepository.deleteWalletById(walletItem.id!!, "", "")
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { Timber.d(it.message) },
+                onError = Timber::e
+            )
+    }
+
+    fun editWallet(item: WalletItem) {
+        walletSharedRepository.saveWallet(
+            with(item) {
+                NewWallet(id, name, limit, currencyType)
+            }
+        ).observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = {},
+                onError = Timber::e
+            )
+    }
+
     private fun createNewWalletItemList(walletsList: List<WalletDataItem>): List<WalletItem> {
-        return walletsList.map { WalletItem(it.id, it.name, it.balance, it.currencyType) }
+        return walletsList.map { WalletItem(it.id, it.name, it.balance, it.limit, it.currencyType) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
     }
 }
 

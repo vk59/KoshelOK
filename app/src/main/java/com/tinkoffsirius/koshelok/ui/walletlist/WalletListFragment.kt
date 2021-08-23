@@ -13,6 +13,7 @@ import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
+import com.tinkoffsirius.koshelok.ui.DeleteDialog
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
 
@@ -26,7 +27,30 @@ class WalletListFragment : Fragment() {
         factoryProducer = { Dependencies.walletListViewModelFactory }
     )
 
-    private val walletRecyclerAdapter by lazy { WalletRecyclerAdapter() }
+    private val walletRecyclerAdapter by lazy {
+        WalletRecyclerAdapter(
+            {
+                navController.navigate(R.id.action_walletListFragment_to_mainFragment)
+            },
+            { item -> showDeleteDialog(item) },
+            { item ->
+                navController.navigate(R.id.action_walletListFragment_to_walletEditingFragment)
+                walletListViewModel.editWallet(item)
+            },
+            { navController.navigate(R.id.action_walletListFragment_to_mainFragment) }
+        )
+    }
+
+    private fun showDeleteDialog(item: WalletItem) {
+        DeleteDialog(
+            "Вы действительно хотите удалить кошелек?",
+            { _, _ ->
+                walletListViewModel.deleteWallet(item)
+            },
+            { dialog, _ -> dialog.cancel() },
+            requireContext()
+        ).create().show()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +81,13 @@ class WalletListFragment : Fragment() {
 
         binding.textNoEntities.visibility = View.GONE
         walletRecyclerAdapter.setData(AppConfig.walletsExample.map { walletData ->
-            WalletItem(walletData.id, walletData.name, walletData.balance, walletData.currencyType)
+            WalletItem(
+                walletData.id,
+                walletData.name,
+                walletData.balance,
+                walletData.limit,
+                walletData.currencyType
+            )
         })
     }
 
