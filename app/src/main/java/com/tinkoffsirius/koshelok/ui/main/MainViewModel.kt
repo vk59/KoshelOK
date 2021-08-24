@@ -21,10 +21,11 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.datetime.*
 import timber.log.Timber
+import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-class MainViewModel(
+class MainViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
     private val transactionRepository: PosedTransactionSharedRepository,
     private val walletRepository: WalletRepository

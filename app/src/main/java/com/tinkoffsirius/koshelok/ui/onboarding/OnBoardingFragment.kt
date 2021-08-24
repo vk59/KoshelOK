@@ -1,5 +1,6 @@
 package com.tinkoffsirius.koshelok.ui.onboarding
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,18 +14,24 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentOnBoardingBinding
+import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 class OnBoardingFragment : Fragment() {
 
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
+
+    @Inject
+    lateinit var accountShared: AccountSharedRepository
+
     private val loginResultHandler =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
             val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
@@ -37,6 +44,11 @@ class OnBoardingFragment : Fragment() {
         }
 
     private val navController by lazy { findNavController() }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +91,7 @@ class OnBoardingFragment : Fragment() {
     private val idUser: Long = 1
 
     private fun navigateWith(account: GoogleSignInAccount) {
-        Dependencies.accountRepository.saveAccount(account)
+        accountShared.saveAccount(account)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
@@ -87,7 +99,7 @@ class OnBoardingFragment : Fragment() {
                 onError = Timber::e
             )
 
-        Dependencies.accountRepository.saveAccountId(idUser)
+        accountShared.saveAccountId(idUser)
         navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
     }
 }

@@ -70,7 +70,7 @@ object SampleNetworkService {
                 "63423.32",
                 "5423",
                 "4000",
-                "RUB",false,
+                "RUB", false,
                 walletData.transactions.filterNot { it.id == id }
             )
         Timber.d(walletData.transactions.toString())
@@ -93,7 +93,8 @@ object SampleNetworkService {
             Currency.RUB.name
         )
         val newTransactions = walletData.transactions.toMutableList()
-        val index = newTransactions.indexOf(newTransactions.find { transactionData.id!!.toInt() == it.id!!.toInt() })
+        val index =
+            newTransactions.indexOf(newTransactions.find { transactionData.id!!.toInt() == it.id!!.toInt() })
         newTransactions[index] = newTrans
         walletData =
             WalletData(

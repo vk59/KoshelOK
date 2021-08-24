@@ -10,19 +10,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentCategoryNameBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
+import javax.inject.Inject
 
 class CategoryNameFragment : Fragment() {
+
     private val binding: FragmentCategoryNameBinding by viewBinding(FragmentCategoryNameBinding::bind)
 
     private val navController by lazy { findNavController() }
 
+    @Inject
+    lateinit var newCategoryViewModelFactory: ViewModelFactory
+
     private val viewModel: NewCategoryViewModel by viewModels(
         factoryProducer = {
-            Dependencies.newCategoryViewModelFactory
-        })
+            newCategoryViewModelFactory
+        }
+    )
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

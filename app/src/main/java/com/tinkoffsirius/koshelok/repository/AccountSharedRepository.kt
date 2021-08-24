@@ -2,10 +2,15 @@ package com.tinkoffsirius.koshelok.repository
 
 import android.content.SharedPreferences
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.tinkoffsirius.koshelok.di.AccountShared
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class AccountSharedRepository(private val sharedPreferences: SharedPreferences) {
+class AccountSharedRepository @Inject constructor(
+    @AccountShared
+    private val sharedPreferences: SharedPreferences
+) {
 
     fun saveAccount(account: GoogleSignInAccount) = Completable.fromCallable {
         sharedPreferences.edit()

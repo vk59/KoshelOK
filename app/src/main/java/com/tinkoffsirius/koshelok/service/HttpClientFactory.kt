@@ -20,6 +20,7 @@ object HttpClientFactory {
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .build()
+
     private val retrofitBuilder = Retrofit.Builder()
         .client(okHttpClient)
 

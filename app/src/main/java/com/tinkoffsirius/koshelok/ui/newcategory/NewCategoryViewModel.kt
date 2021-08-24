@@ -12,8 +12,9 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
-class NewCategoryViewModel(
+class NewCategoryViewModel @Inject constructor(
     private val newCategorySharedRepository: NewCategorySharedRepository
 ) : ViewModel() {
 

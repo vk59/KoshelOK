@@ -1,16 +1,19 @@
 package com.tinkoffsirius.koshelok.repository
 
 import android.content.SharedPreferences
+import com.tinkoffsirius.koshelok.di.NewCategoryShared
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.TransactionType
-import com.tinkoffsirius.koshelok.repository.entities.CategoryData
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class NewCategorySharedRepository(private val sharedPreferences: SharedPreferences) {
+class NewCategorySharedRepository @Inject constructor(
+    @NewCategoryShared
+    private val sharedPreferences: SharedPreferences
+) {
 
     fun saveNewCategory(categoryData: Category): Completable =
         Completable.fromCallable {
@@ -21,15 +24,15 @@ class NewCategorySharedRepository(private val sharedPreferences: SharedPreferenc
         }
 
     fun getNewCategory(): Single<Category> = Single.fromCallable {
-        val data = sharedPreferences.getString(NEW_CATEGORY_DATA , null)
-        if(data!= null){
-            Json.decodeFromString(Category.serializer() , data)
-        } else{
-            Category(0 , TransactionType.OUTCOME , "" , 0 , 0)
+        val data = sharedPreferences.getString(NEW_CATEGORY_DATA, null)
+        if (data != null) {
+            Json.decodeFromString(Category.serializer(), data)
+        } else {
+            Category(0, TransactionType.OUTCOME, "", 0, 0)
         }
     }
 
-    fun removeNewCategory(){
+    fun removeNewCategory() {
         sharedPreferences.edit()
             .clear()
             .apply()

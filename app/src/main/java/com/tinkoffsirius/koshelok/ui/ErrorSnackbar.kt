@@ -8,16 +8,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.R
 
 class ErrorSnackbarFactory(
-    private val view: View,
-    private val resourceProvider: ResourceProvider
+    private val view: View
 ) {
     fun create(icon: Int, text: String): Snackbar {
         val snackbar = Snackbar.make(view, "   $text", Snackbar.LENGTH_LONG)
         val view = snackbar.view
         val sbTextView = view.findViewById<TextView>(R.id.snackbar_text)
         sbTextView.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0)
-        sbTextView.setTextColor(resourceProvider.getColor(R.color.black))
-        snackbar.setBackgroundTint(resourceProvider.getColor(R.color.white))
+        sbTextView.setTextColor(view.context.getColor(R.color.black))
+        snackbar.setBackgroundTint(view.context.getColor(R.color.white))
         val params = view.layoutParams as FrameLayout.LayoutParams
         params.gravity = Gravity.TOP
         view.layoutParams = params

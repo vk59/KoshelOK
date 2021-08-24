@@ -16,8 +16,9 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
-class WalletListViewModel(
+class WalletListViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
     private val walletRepository: WalletRepository,
     private val walletSharedRepository: WalletSharedRepository

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.databinding.ItemDateBinding
 import com.tinkoffsirius.koshelok.databinding.ItemHomeHeaderBinding
 import com.tinkoffsirius.koshelok.databinding.ItemTransactionBinding
-import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.ui.main.adapters.viewholders.DateViewHolder
 import com.tinkoffsirius.koshelok.ui.main.adapters.viewholders.HeaderViewHolder
@@ -16,8 +15,7 @@ import com.tinkoffsirius.koshelok.ui.main.adapters.viewholders.TransactionViewHo
 
 class MainRecyclerAdapter(
     private val deleteCallback: (Long) -> Unit,
-    private val editCallback: (MainItem) -> Unit,
-    private val resourceProvider: ResourceProvider
+    private val editCallback: (MainItem) -> Unit
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
     private val diff = AsyncListDiffer(this, TransactionsDiffUtils())
@@ -37,16 +35,13 @@ class MainRecyclerAdapter(
             TYPE_TRANSACTION -> TransactionViewHolder(
                 ItemTransactionBinding.inflate(inflater, parent, false),
                 deleteCallback,
-                editCallback,
-                resourceProvider
+                editCallback
             )
             TYPE_HEADER -> HeaderViewHolder(
-                ItemHomeHeaderBinding.inflate(inflater, parent, false),
-                resourceProvider
+                ItemHomeHeaderBinding.inflate(inflater, parent, false)
             )
             TYPE_DATE -> DateViewHolder(
-                ItemDateBinding.inflate(inflater, parent, false),
-                resourceProvider
+                ItemDateBinding.inflate(inflater, parent, false)
             )
             else -> throw @Suppress Exception("You should use Transaction and Header View Holder")
         }
@@ -71,7 +66,7 @@ class MainRecyclerAdapter(
         return when (mainItem) {
             is MainItem.Date -> {
                 val time = mainItem.date
-                - (time.year * 10000 + time.monthNumber * 100 + time.dayOfMonth).toLong()
+                -(time.year * 10000 + time.monthNumber * 100 + time.dayOfMonth).toLong()
             }
             is MainItem.Header -> HEADER_ID
             is MainItem.Transaction -> mainItem.id

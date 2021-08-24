@@ -1,41 +1,53 @@
 package com.tinkoffsirius.koshelok.ui.transactioncategory
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionCategoryBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.Category
-import com.tinkoffsirius.koshelok.entities.Transaction
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryViewModel
 import com.tinkoffsirius.koshelok.ui.transactioncategory.adapters.TransactionCategoryAdapter
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
+import javax.inject.Inject
 
 class TransactionCategoryFragment : Fragment() {
 
+    @Inject
+    lateinit var transactionViewModelFactory: ViewModelFactory
+
     private val viewModel: TransactionEditingViewModel by viewModels(
         factoryProducer = {
-            Dependencies.transactionViewModelFactory
+            transactionViewModelFactory
         })
+
+    @Inject
+    lateinit var newCategoryViewModelFactory: ViewModelFactory
 
     private val newCategoryViewModel: NewCategoryViewModel by viewModels(
         factoryProducer = {
-            Dependencies.newCategoryViewModelFactory
+            newCategoryViewModelFactory
         })
 
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
 
     private val navController by lazy { findNavController() }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

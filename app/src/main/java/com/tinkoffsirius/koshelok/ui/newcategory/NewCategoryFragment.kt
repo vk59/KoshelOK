@@ -1,5 +1,6 @@
 package com.tinkoffsirius.koshelok.ui.newcategory
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,25 +10,34 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.R
-import com.tinkoffsirius.koshelok.config.AppConfig
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentNewCategoryBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategorysAdapter
+import javax.inject.Inject
 
 class NewCategoryFragment : Fragment() {
 
     private val binding: FragmentNewCategoryBinding by viewBinding(FragmentNewCategoryBinding::bind)
 
+    @Inject
+    lateinit var newCategoryViewModelFactory: ViewModelFactory
+
     private val viewModel: NewCategoryViewModel by viewModels(
         factoryProducer = {
-            Dependencies.newCategoryViewModelFactory
+            newCategoryViewModelFactory
         })
 
     private val navController by lazy { findNavController() }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -4,12 +4,10 @@ import android.content.res.ColorStateList
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
-import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
 
-class NewCategoryViewHolder (itemView: View) :
+class NewCategoryViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
 
     private val binding by viewBinding(ItemNewCategoryBinding::bind)
@@ -18,7 +16,7 @@ class NewCategoryViewHolder (itemView: View) :
 
         binding.transactionCategoryImage.setImageResource(icon.imgId)
         binding.transactionCategoryImageBack.backgroundTintList =
-            ColorStateList.valueOf(Dependencies.resourceProvider.getColor(icon.colorId))
+            ColorStateList.valueOf(binding.root.context.getColor(icon.colorId))
 
     }
 }

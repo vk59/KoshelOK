@@ -1,10 +1,7 @@
 package com.tinkoffsirius.koshelok.config
 
-import com.tinkoffsirius.koshelok.IconProvider
-import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.entities.Category
-import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.entities.Types
 import com.tinkoffsirius.koshelok.repository.entities.CategoryData
@@ -30,7 +27,7 @@ object AppConfig {
             id = 2,
             name = Types.SALARY.nameType,
             color = R.color.red,
-            icon =  R.drawable.ic_salary
+            icon = R.drawable.ic_salary
         ),
         CategoryData(
             id = 3,
@@ -165,7 +162,7 @@ object AppConfig {
                     id = 1,
                     name = "Супермаркеты",
                     color = R.color.green,
-                    icon =R.drawable.ic_food
+                    icon = R.drawable.ic_food
                 ),
                 date = "2021-08-20T22:34",
                 currency = "RUB"
@@ -190,7 +187,7 @@ object AppConfig {
                 category = CategoryData(
                     id = 3,
                     name = "Зарплата",
-                    color =  R.color.red,
+                    color = R.color.red,
                     icon = R.drawable.ic_salary
                 ),
                 date = "2021-08-19T23:59",

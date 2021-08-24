@@ -11,7 +11,7 @@ class WalletRecyclerAdapter(
     private val deleteItem: (WalletItem) -> Unit,
     private val editItem: (WalletItem) -> Unit,
     private val watchItem: () -> Unit
-): RecyclerView.Adapter<WalletViewHolder>() {
+) : RecyclerView.Adapter<WalletViewHolder>() {
 
     private val diff = AsyncListDiffer(this, WalletDiffUtils())
 

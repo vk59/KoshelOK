@@ -1,11 +1,14 @@
 package com.tinkoffsirius.koshelok.ui.newcategory
 
 import androidx.lifecycle.ViewModel
-import com.tinkoffsirius.koshelok.repository.MockWalletRepository
+import com.tinkoffsirius.koshelok.di.Mocked
 import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
+import com.tinkoffsirius.koshelok.repository.WalletRepository
+import javax.inject.Inject
 
-class CategoryNameViewModel(
+class CategoryNameViewModel @Inject constructor(
     private val transactionRepository: PosedTransactionSharedRepository,
-    private val walletRepository: MockWalletRepository
+    @Mocked
+    private val walletRepositoryImpl: WalletRepository
 ) : ViewModel()
 

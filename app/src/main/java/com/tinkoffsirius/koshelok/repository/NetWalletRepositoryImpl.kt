@@ -3,8 +3,9 @@ package com.tinkoffsirius.koshelok.repository
 import com.tinkoffsirius.koshelok.repository.entities.*
 import com.tinkoffsirius.koshelok.service.HttpClientFactory
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class NetWalletRepository : WalletRepository {
+class NetWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     private val client = HttpClientFactory.walletService
 

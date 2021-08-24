@@ -24,10 +24,11 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
+import javax.inject.Inject
 
 typealias CreateTransactionAction = (CreateTransactionData, String, String) -> Single<Response>
 
-class TransactionEditingViewModel(
+class TransactionEditingViewModel @Inject constructor(
     private val transactionSharedRepository: PosedTransactionSharedRepository,
     private val accountSharedRepository: AccountSharedRepository,
     private val walletRepository: WalletRepository

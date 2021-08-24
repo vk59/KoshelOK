@@ -11,19 +11,29 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies.createWalletViewModelFactory
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentSetLimitWalletBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
 class SetLimitWalletFragment : Fragment() {
 
     private val binding by viewBinding(FragmentSetLimitWalletBinding::bind)
 
+    @Inject
+    lateinit var createWalletViewModelFactory: ViewModelFactory
+
     private val createViewModel: CreateWalletViewModel by viewModels(
         factoryProducer = { createWalletViewModelFactory }
     )
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     private val navController by lazy {
         findNavController()

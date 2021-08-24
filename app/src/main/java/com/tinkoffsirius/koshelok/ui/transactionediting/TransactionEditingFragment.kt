@@ -2,6 +2,7 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
-import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.DateUtils
 import kotlinx.datetime.Instant
@@ -21,8 +23,12 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class TransactionEditingFragment : Fragment() {
+
+    @Inject
+    lateinit var transactionViewModelFactory: ViewModelFactory
 
     private val viewModel: TransactionEditingViewModel by viewModels(
         factoryProducer = {
@@ -30,6 +36,11 @@ class TransactionEditingFragment : Fragment() {
         })
 
     private val binding by viewBinding(FragmentTransactionEditingBinding::bind)
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

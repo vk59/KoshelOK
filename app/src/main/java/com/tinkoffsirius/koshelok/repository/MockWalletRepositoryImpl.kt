@@ -3,8 +3,9 @@ package com.tinkoffsirius.koshelok.repository
 import com.tinkoffsirius.koshelok.repository.entities.*
 import com.tinkoffsirius.koshelok.service.SampleNetworkService
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class MockWalletRepository : WalletRepository {
+class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun getWalletById(id: Long, idUser: Long, idToken: String): Single<WalletData> {
         return SampleNetworkService.getWalletById(id, idUser.toString(), idToken)
@@ -38,11 +39,19 @@ class MockWalletRepository : WalletRepository {
         return SampleNetworkService.updateTransaction(transactionData, idUser, idToken)
     }
 
-    override fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
+    override fun createWallet(
+        walletData: CreateWalletData,
+        idUser: String,
+        idToken: String
+    ): Single<Response> {
         return Single.just(Response("Successfully saved wallet $walletData"))
     }
 
-    override fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
+    override fun updateWallet(
+        walletData: CreateWalletData,
+        idUser: String,
+        idToken: String
+    ): Single<Response> {
         return Single.just(Response("Successfully updated wallet $walletData"))
     }
 

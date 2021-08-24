@@ -1,5 +1,6 @@
 package com.tinkoffsirius.koshelok.ui.createwallet.editwallet
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,20 +9,30 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletEditingBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
+import javax.inject.Inject
 
 class WalletEditingFragment : Fragment() {
 
+    @Inject
+    lateinit var createWalletViewModelFactory: ViewModelFactory
+
     private val createViewModel: CreateWalletViewModel by viewModels(
-        factoryProducer = { Dependencies.createWalletViewModelFactory }
+        factoryProducer = { createWalletViewModelFactory }
     )
 
     private val binding by viewBinding(FragmentWalletEditingBinding::bind)
 
     private val navController by lazy { findNavController() }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +50,10 @@ class WalletEditingFragment : Fragment() {
             binding.currency.buttonText.text = it.currencyType
             binding.limit.buttonText.text =
                 if (it.limit == "") {
-                    Dependencies.resourceProvider.getString(R.string.limit_not_stated)
-                } else { it.limit }
+                    requireContext().getString(R.string.limit_not_stated)
+                } else {
+                    it.limit
+                }
         }
 
         initListeners()

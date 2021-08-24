@@ -27,9 +27,17 @@ interface WalletRepository {
         idToken: String
     ): Single<Response>
 
-    fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
+    fun createWallet(
+        walletData: CreateWalletData,
+        idUser: String,
+        idToken: String
+    ): Single<Response>
 
-    fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
+    fun updateWallet(
+        walletData: CreateWalletData,
+        idUser: String,
+        idToken: String
+    ): Single<Response>
 
     fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets>
 
