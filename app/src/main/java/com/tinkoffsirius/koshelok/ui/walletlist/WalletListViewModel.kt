@@ -30,8 +30,17 @@ class WalletListViewModel(
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
+    private var userId = 0L
     init {
         disposable += updateUserInfo()
+        initUserAccountData()
+    }
+
+    private fun initUserAccountData() {
+        accountSharedRepository.getAccountId()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy { userId = it.toLong() }
     }
 
     fun updateUserInfo(): Disposable {

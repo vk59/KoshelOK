@@ -14,13 +14,24 @@ class AccountSharedRepository(private val sharedPreferences: SharedPreferences) 
             .apply()
     }
 
+    fun saveAccountId(idUser: Long) = Completable.fromCallable {
+        sharedPreferences.edit()
+            .putLong(ACCOUNT_ID_USER, idUser)
+            .apply()
+    }
+
     fun getAccount(name: String = ACCOUNT_ID): Single<String> = Single.fromCallable {
         sharedPreferences.getString(name, null)!!
+    }
+
+    fun getAccountId() = Single.fromCallable {
+        sharedPreferences.getLong(ACCOUNT_ID_USER, 0)
     }
 
     companion object {
         const val ACCOUNT_EMAIL = "account_email"
         const val ACCOUNT_ID = "account_id"
         const val ACCOUNT_ID_TOKEN = "account_id_token"
+        const val ACCOUNT_ID_USER = "account_id_user"
     }
 }

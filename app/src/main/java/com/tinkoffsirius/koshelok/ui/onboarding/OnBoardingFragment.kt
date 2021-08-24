@@ -76,6 +76,8 @@ class OnBoardingFragment : Fragment() {
         }
     }
 
+    private val idUser: Long = 1
+
     private fun navigateWith(account: GoogleSignInAccount) {
         Dependencies.accountRepository.saveAccount(account)
             .observeOn(AndroidSchedulers.mainThread())
@@ -84,6 +86,8 @@ class OnBoardingFragment : Fragment() {
                 onComplete = { Timber.d("Successfully saved.") },
                 onError = Timber::e
             )
+
+        Dependencies.accountRepository.saveAccountId(idUser)
         navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
     }
 }
