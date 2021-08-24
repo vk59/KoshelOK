@@ -46,7 +46,7 @@ class MockWalletRepository : WalletRepository {
         return Single.just(Response("Successfully updated wallet $walletData"))
     }
 
-    override fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
+    override fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets> {
         return SampleNetworkService.getUserInfoWallets(idUser, idToken)
     }
 

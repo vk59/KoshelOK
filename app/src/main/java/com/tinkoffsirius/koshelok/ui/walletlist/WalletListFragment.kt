@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
-import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
 import com.tinkoffsirius.koshelok.ui.DeleteDialog
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
@@ -80,15 +79,9 @@ class WalletListFragment : Fragment() {
         }
 
         binding.textNoEntities.visibility = View.GONE
-        walletRecyclerAdapter.setData(AppConfig.walletsExample.map { walletData ->
-            WalletItem(
-                walletData.id,
-                walletData.name,
-                walletData.balance,
-                walletData.limit,
-                walletData.currencyType
-            )
-        })
+        walletListViewModel.items.observe(viewLifecycleOwner) {
+            walletRecyclerAdapter.setData(it)
+        }
     }
 
     private fun initAppbar() {

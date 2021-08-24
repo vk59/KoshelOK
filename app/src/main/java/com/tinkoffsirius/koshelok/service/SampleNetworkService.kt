@@ -111,15 +111,16 @@ object SampleNetworkService {
         }
     }
 
-    fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
+    fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets> {
         return Single.just(
             UserInfoWallets(
                 "60430.32",
                 "93235.44",
                 "430000.00",
-                AppConfig.walletsExample.map {
-                    WalletDataItem(it.id, it.name, it.balance, it.limit, it.currencyType)
-                }
+                listOf()
+//                AppConfig.walletsExample.map {
+//                    WalletDataItem(it.id, it.name, it.balance, it.limit, it.currencyType,)
+//                }
             )
         )
     }

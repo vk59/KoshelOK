@@ -1,9 +1,13 @@
 package com.tinkoffsirius.koshelok.repository
 
 import com.tinkoffsirius.koshelok.repository.entities.*
+import com.tinkoffsirius.koshelok.service.HttpClientFactory
 import io.reactivex.rxjava3.core.Single
 
 class NetWalletRepository : WalletRepository {
+
+    private val client = HttpClientFactory.walletService
+
     override fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
         TODO("Not yet implemented")
     }
@@ -52,8 +56,8 @@ class NetWalletRepository : WalletRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
-        TODO("Not yet implemented")
+    override fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets> {
+        return client.getUserInfoWallets(idUser = idUser)
     }
 
     override fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response> {

@@ -14,6 +14,8 @@ object Dependencies {
 
     val mockWalletRepository by lazy { MockWalletRepository() }
 
+    val netWalletRepository by lazy { NetWalletRepository() }
+
     val accountRepository by lazy {
         AccountSharedRepository(
             SharedPreferencesFactory().create(
@@ -69,7 +71,7 @@ object Dependencies {
     val walletListViewModelFactory by lazy {
         WalletsListViewModelFactory(
             accountRepository = accountRepository,
-            repository = mockWalletRepository,
+            repository = netWalletRepository,
             walletSharedRepository = walletSharedRepository
         )
     }

@@ -9,8 +9,8 @@ import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -24,7 +24,7 @@ class WalletListViewModel(
 
     val items: MutableLiveData<List<WalletItem>> = MutableLiveData(listOf())
 
-    val userInfoBalance = MutableLiveData(UserInfoBalance("0.00", "0.00", "0.00"))
+    val userInfoBalance = MutableLiveData(UserInfoBalance("0", "0", "0"))
 
     val isThereWallets = MutableLiveData<Boolean>()
 
@@ -32,25 +32,29 @@ class WalletListViewModel(
 
     init {
         disposable += updateUserInfo()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(onError = Timber::e)
     }
 
-    fun updateUserInfo(): Completable {
-        return walletRepository.getUserInfoWallets("", "")
-        .doOnSuccess { userInfoWallets ->
-            isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
-            items.postValue(createNewWalletItemList(userInfoWallets.wallets))
-            userInfoBalance.postValue(
-                UserInfoBalance(
-                "${userInfoWallets.overallBalance} RUB",
-                    "${userInfoWallets.overallIncome} RUB",
-                    "${userInfoWallets.overallSpending} RUB"
-                )
+    fun updateUserInfo(): Disposable {
+        return walletRepository.getUserInfoWallets(1, "")
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { userInfoWallets ->
+                    Timber.tag("tut").d(userInfoWallets.toString())
+                    isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
+                    items.postValue(createNewWalletItemList(userInfoWallets.wallets))
+                    userInfoBalance.postValue(
+                        UserInfoBalance(
+                            "${userInfoWallets.overallBalance} RUB",
+                            "${userInfoWallets.overallIncome} RUB",
+                            "${userInfoWallets.overallSpending} RUB"
+                        )
+                    )
+                },
+                onError = Timber::e
             )
-        }.ignoreElement()
     }
+
 
     fun deleteWallet(walletItem: WalletItem) {
         disposable += walletRepository.deleteWalletById(walletItem.id!!, "", "")

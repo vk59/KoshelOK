@@ -1,23 +1,32 @@
 package com.tinkoffsirius.koshelok.service
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.create
 
 object HttpClientFactory {
 
-    const val BASE_URL = "https://superservice.com"
+    const val BASE_URL = "http://34.88.29.129:9090/"
 
     private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor())
         .build()
 
     private val retrofitBuilder = Retrofit.Builder()
         .client(okHttpClient)
 
+    @OptIn(ExperimentalSerializationApi::class)
     val walletService: WalletService by lazy {
         retrofitBuilder
             .baseUrl(BASE_URL)
+            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
-            .create()
+            .create(WalletService::class.java)
     }
 }

@@ -29,7 +29,7 @@ interface WalletRepository {
     fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
     fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
 
-    fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets>
+    fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets>
 
     fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response>
 }
