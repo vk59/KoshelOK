@@ -2,21 +2,27 @@ package com.tinkoffsirius.koshelok.ui.newcategory
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentCategoryNameBinding
-import com.tinkoffsirius.koshelok.databinding.FragmentSetSumBinding
 
 class CategoryNameFragment : Fragment() {
     private val binding: FragmentCategoryNameBinding by viewBinding(FragmentCategoryNameBinding::bind)
 
-    private lateinit var viewModel: CategoryNameViewModel
+    private val navController by lazy { findNavController() }
+
+    private val viewModel: NewCategoryViewModel by viewModels(
+        factoryProducer = {
+            Dependencies.newCategoryViewModelFactory
+        })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +33,6 @@ class CategoryNameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         binding.categoryNameText.requestFocus()
 
@@ -43,18 +47,14 @@ class CategoryNameFragment : Fragment() {
 
     private fun initListeners(v: View) {
 
-        val bundle = Bundle()
-
         binding.setNewName.setOnClickListener {
-            bundle.putString("NEW_NAME" , binding.categoryNameText.text.toString())
-            findNavController().navigate(R.id.action_categoryNameFragment_to_newCategoryFragment , bundle)
+            viewModel.updateNewCategoryName(binding.categoryNameText.text.toString())
+                .observe(viewLifecycleOwner, {})
+            navController.popBackStack()
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            bundle.putString("NEW_NAME" , binding.categoryNameText.text.toString())
-            findNavController().navigate(R.id.action_categoryNameFragment_to_newCategoryFragment , bundle)
+            navController.popBackStack()
         }
     }
-
-
 }

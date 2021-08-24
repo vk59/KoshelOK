@@ -7,17 +7,18 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
 import com.tinkoffsirius.koshelok.entities.Category
+import com.tinkoffsirius.koshelok.entities.Icon
 
 class NewCategoryViewHolder (itemView: View) :
     RecyclerView.ViewHolder(itemView) {
 
     private val binding by viewBinding(ItemNewCategoryBinding::bind)
 
-    fun bind(category: Category) {
+    fun bind(icon: Icon) {
 
-        binding.transactionCategoryImage.setImageResource(category.icon)
+        binding.transactionCategoryImage.setImageResource(icon.imgId)
         binding.transactionCategoryImageBack.backgroundTintList =
-            ColorStateList.valueOf(Dependencies.resourceProvider.getColor(category.color))
+            ColorStateList.valueOf(Dependencies.resourceProvider.getColor(icon.colorId))
 
     }
 }

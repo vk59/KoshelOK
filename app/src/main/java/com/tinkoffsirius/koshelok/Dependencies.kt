@@ -5,6 +5,7 @@ import com.tinkoffsirius.koshelok.repository.*
 import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModelFactory
 import com.tinkoffsirius.koshelok.ui.main.MainViewModelFactory
+import com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryViewModelFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModelFactory
 import com.tinkoffsirius.koshelok.ui.walletlist.WalletsListViewModelFactory
 
@@ -15,6 +16,22 @@ object Dependencies {
     val mockWalletRepository by lazy { MockWalletRepository() }
 
     val netWalletRepository by lazy { NetWalletRepository() }
+
+    val newCategoryRepository by lazy {
+        NewCategorySharedRepository(
+            SharedPreferencesFactory().create(
+                context!!,
+                SharedPreferencesFactory.NEW_CATEGORY_DATA
+            )
+        )
+    }
+
+    val newCategoryViewModelFactory by lazy {
+        NewCategoryViewModelFactory(
+            newCategorySharedRepository = newCategoryRepository
+        )
+
+    }
 
     val accountRepository by lazy {
         AccountSharedRepository(
