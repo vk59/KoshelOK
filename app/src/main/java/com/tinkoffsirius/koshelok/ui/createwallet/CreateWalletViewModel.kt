@@ -118,7 +118,7 @@ class CreateWalletViewModel @Inject constructor(
         transactionAction: CreateWalletAction,
         walletData: CreateWalletData
     ) = Singles.zip(
-        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID),
+        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_GOOGLE_ID),
         accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID_TOKEN)
     ).flatMap { (accountId, accountIdToken) ->
         transactionAction(walletData, accountId, accountIdToken)

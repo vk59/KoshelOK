@@ -62,4 +62,16 @@ class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
     override fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response> {
         return SampleNetworkService.deleteWalletById(id, idUser, idToken)
     }
+
+    override fun getUserByEmail(email: String): Single<UserInfo> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserByIdToken(googleToken: String): Single<UserInfo> {
+        TODO("Not yet implemented")
+    }
+
+    override fun registerUser(userInfo: UserInfo): Single<UserInfo> {
+        TODO("Not yet implemented")
+    }
 }

@@ -7,7 +7,7 @@ import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID
+import com.tinkoffsirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_GOOGLE_ID
 import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
@@ -130,8 +130,8 @@ class TransactionEditingViewModel @Inject constructor(
         transactionAction: CreateTransactionAction,
         posedTransaction: CreateTransactionData
     ) = Singles.zip(
-        accountSharedRepository.getAccount(ACCOUNT_ID),
-        accountSharedRepository.getAccount(ACCOUNT_ID)
+        accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID),
+        accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID)
     ).flatMap { (accountId, accountIdToken) ->
         transactionAction(posedTransaction, accountId, accountIdToken)
     }

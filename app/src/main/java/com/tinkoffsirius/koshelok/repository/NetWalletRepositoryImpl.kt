@@ -64,4 +64,16 @@ class NetWalletRepositoryImpl @Inject constructor() : WalletRepository {
     override fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response> {
         TODO("Not yet implemented")
     }
+
+    override fun getUserByEmail(email: String): Single<UserInfo> {
+        return client.getUserByEmail(email)
+    }
+
+    override fun getUserByIdToken(googleToken: String): Single<UserInfo> {
+        TODO("Not yet implemented")
+    }
+
+    override fun registerUser(userInfo: UserInfo): Single<UserInfo> {
+        return client.registerUser(userInfo)
+    }
 }

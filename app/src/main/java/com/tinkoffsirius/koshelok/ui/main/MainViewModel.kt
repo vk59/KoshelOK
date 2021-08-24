@@ -43,13 +43,18 @@ class MainViewModel @Inject constructor(
 
     private var idUser: Long = -1L
 
+    private var token: String = ""
+
     init {
         updateTransactions()
-        accountSharedRepository.getAccountId()
+        accountSharedRepository.getUserInfo()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = { idUser = it },
+                onSuccess = {
+                    idUser = it.id!!
+                    token = it.googleToken
+                },
                 onError = Timber::e
             )
     }

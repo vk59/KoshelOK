@@ -32,7 +32,7 @@ class WalletListViewModel @Inject constructor(
 
     val status: MutableLiveData<Event> = MutableLiveData(Event.Success())
 
-    private var userId = 0L
+    private var userId: Long? = 0L
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
@@ -93,10 +93,10 @@ class WalletListViewModel @Inject constructor(
     }
 
     private fun initUserAccountData() {
-        accountSharedRepository.getAccountId()
+        accountSharedRepository.getUserInfo()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribeBy { userId = it.toLong() }
+            .subscribeBy { userId = it.id }
     }
 
     override fun onCleared() {

@@ -5,6 +5,7 @@ import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
 import com.tinkoffsirius.koshelok.ui.main.MainViewModel
 import com.tinkoffsirius.koshelok.ui.newcategory.CategoryNameViewModel
 import com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryViewModel
+import com.tinkoffsirius.koshelok.ui.onboarding.OnBoardingViewModel
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 import com.tinkoffsirius.koshelok.ui.walletlist.WalletListViewModel
 import dagger.Binds
@@ -36,4 +37,8 @@ interface ViewModelModule {
     @Binds
     @[IntoMap ViewModelKey(CategoryNameViewModel::class)]
     fun bindCategoryNameViewModel(categoryNameViewModel: CategoryNameViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ViewModelKey(OnBoardingViewModel::class)]
+    fun bindOnBoardingViewModel(onBoardingViewModel: OnBoardingViewModel): ViewModel
 }

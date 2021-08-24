@@ -42,4 +42,10 @@ interface WalletRepository {
     fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets>
 
     fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response>
+
+    fun getUserByEmail(email: String): Single<UserInfo>
+
+    fun getUserByIdToken(googleToken: String): Single<UserInfo>
+
+    fun registerUser(userInfo: UserInfo): Single<UserInfo>
 }
