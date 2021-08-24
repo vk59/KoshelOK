@@ -1,5 +1,7 @@
 package com.tinkoffsirius.koshelok.config
 
+import com.tinkoffsirius.koshelok.IconProvider
+import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
@@ -8,7 +10,6 @@ import com.tinkoffsirius.koshelok.entities.Types
 import com.tinkoffsirius.koshelok.repository.entities.CategoryData
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
-import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 
 object AppConfig {
@@ -174,6 +175,7 @@ object AppConfig {
         "5423",
         "40000",
         "RUB",
+        false,
         listOf(
             TransactionData(
                 id = 1,
