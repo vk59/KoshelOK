@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.create
 
-object NetworkService {
+object HttpClientFactory {
 
     const val BASE_URL = "https://superservice.com"
 
@@ -14,7 +14,7 @@ object NetworkService {
     private val retrofitBuilder = Retrofit.Builder()
         .client(okHttpClient)
 
-    val searchApi: Api by lazy {
+    val walletService: WalletService by lazy {
         retrofitBuilder
             .baseUrl(BASE_URL)
             .build()

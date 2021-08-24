@@ -4,7 +4,7 @@ import com.tinkoffsirius.koshelok.repository.entities.*
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 
-interface Api {
+interface WalletService {
 
     /*
     How to get it that user is already registered?
