@@ -9,7 +9,7 @@ class NetWalletRepository : WalletRepository {
     private val client = HttpClientFactory.walletService
 
     override fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
-        TODO("Not yet implemented")
+        return client.getWalletById(id)
     }
 
     override fun deleteTransactionById(id: Long): Single<Response> {

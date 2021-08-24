@@ -14,9 +14,12 @@ import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
 import com.tinkoffsirius.koshelok.ui.DeleteDialog
+import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
+
 
 class MainFragment : Fragment() {
 
@@ -61,6 +64,24 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initButtons()
         initRecycler()
+        observeStatus()
+    }
+
+    private fun observeStatus() {
+        viewModel.status.observe(viewLifecycleOwner) { event ->
+            with(binding.swipeLayout) {
+                when (event) {
+                    is Event.Success -> { isRefreshing = false }
+                    is Event.Loading -> { isRefreshing = true }
+                    is Event.Error -> {
+                        isRefreshing = false
+                        ErrorSnackbarFactory(binding.root, Dependencies.resourceProvider)
+                            .create(R.drawable.ic_warning, "Что-то пошло не так")
+                            .show()
+                    }
+                }
+            }
+        }
     }
 
     private fun initButtons() {

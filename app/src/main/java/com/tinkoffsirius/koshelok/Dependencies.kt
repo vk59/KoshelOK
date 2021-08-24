@@ -29,7 +29,7 @@ object Dependencies {
         MainViewModelFactory(
             accountRepository = accountRepository,
             transactionRepository = transactionRepository,
-            repository = mockWalletRepository
+            repository = netWalletRepository
         )
     }
 

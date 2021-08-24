@@ -12,6 +12,7 @@ import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
@@ -34,6 +35,8 @@ class MainViewModel(
 
     val isThereTransactions = MutableLiveData(true)
 
+    val status: MutableLiveData<Event> = MutableLiveData(Event.Loading())
+
     private var lastTimeBackPressed: Instant = Instant.DISTANT_PAST
     private val disposable: CompositeDisposable = CompositeDisposable()
 
@@ -41,7 +44,7 @@ class MainViewModel(
         disposable += updateTransactions()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribeBy(onError = Timber::e)
+            .subscribeBy(onError = { status.postValue(Event.Error(it)) })
     }
 
     private fun updateTransactions(): Completable {
@@ -51,6 +54,8 @@ class MainViewModel(
 //            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
         )
             .doOnSuccess { walletData ->
+                val mainItemList = createNewMainItemList(walletData)
+                status.postValue(Event.Success(mainItemList))
                 isThereTransactions.postValue(walletData.transactions.isNotEmpty())
                 items.postValue(createNewMainItemList(walletData))
             }.ignoreElement()

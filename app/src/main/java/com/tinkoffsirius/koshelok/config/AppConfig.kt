@@ -139,7 +139,6 @@ object AppConfig {
             Types.CLOTHES.nameType,
             R.drawable.ic_clothes,
             R.color.red
-
         )
     )
 
@@ -156,7 +155,7 @@ object AppConfig {
                 1,
                 "994.00",
                 TransactionType.OUTCOME.name,
-                CategoryData(1, "Супермаркеты", R.drawable.ic_food, R.color.green),
+                CategoryData(1, name = "Супермаркеты", icon = R.drawable.ic_food, color = R.color.green),
                 "2021-08-20T22:34",
                 "RUB"
             ),
@@ -164,7 +163,7 @@ object AppConfig {
                 2,
                 "6000.00",
                 TransactionType.OUTCOME.name,
-                CategoryData(2, "Спорт", R.drawable.ic_sport, R.color.red),
+                CategoryData(2, name = "Спорт", icon = R.drawable.ic_sport, color = R.color.red),
                 "2021-08-19T23:59",
                 "RUB"
             ),
@@ -172,7 +171,7 @@ object AppConfig {
                 3,
                 "90000.00",
                 TransactionType.INCOME.name,
-                CategoryData(3, "Зарплата", R.drawable.ic_salary, R.color.red),
+                CategoryData(3, name = "Зарплата", icon = R.drawable.ic_salary, color = R.color.red),
                 "2021-08-19T23:59",
                 "RUB"
             )
