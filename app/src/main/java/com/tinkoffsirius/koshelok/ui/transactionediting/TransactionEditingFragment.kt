@@ -3,7 +3,6 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
@@ -19,8 +19,6 @@ import com.tinkoffsirius.koshelok.ui.DateUtils
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.toKotlinInstant
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -130,7 +128,7 @@ class TransactionEditingFragment : Fragment() {
         binding.createTransactionButton.setOnClickListener {
             viewModel.updateDate(LocalDateTime(year, month, day, hour, minute, 0, 0))
             viewModel.saveTransaction().observe(viewLifecycleOwner) {
-                Timber.tag("tut").d(it.message)
+                Snackbar.make(binding.root, it.message, Snackbar.LENGTH_SHORT).show()
             }
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_mainFragment)

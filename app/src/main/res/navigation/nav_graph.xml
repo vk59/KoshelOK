@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/transactionCategoryFragment">
+    app:startDestination="@id/onBoardingFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.tinkoffsirius.koshelok.ui.main.MainFragment"
@@ -115,8 +115,8 @@
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_onBoardingFragment_to_setNameWalletFragment"
-            app:destination="@id/setNameWalletFragment" />
+            android:id="@+id/action_onBoardingFragment_to_walletListFragment"
+            app:destination="@id/walletListFragment" />
     </fragment>
     <fragment
         android:id="@+id/walletEditingFragment"
@@ -131,6 +131,9 @@
         <action
             android:id="@+id/action_walletEditingFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_walletEditingFragment_to_setLimitWalletFragment"
+            app:destination="@id/setLimitWalletFragment" />
     </fragment>
     <fragment
         android:id="@+id/setCurrencyFragment"
@@ -146,6 +149,28 @@
         android:label="SetNameWalletFragment" >
         <action
             android:id="@+id/action_setNameWalletFragment_to_walletEditingFragment"
+            app:destination="@id/walletEditingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setLimitWalletFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createwallet.setlimit.SetLimitWalletFragment"
+        android:label="SetLimitWalletFragment" >
+        <action
+            android:id="@+id/action_setLimitWalletFragment_to_walletEditingFragment"
+            app:destination="@id/walletEditingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/walletListFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.walletlist.WalletListFragment"
+        android:label="WalletListFragment" >
+        <action
+            android:id="@+id/action_walletListFragment_to_setNameWalletFragment"
+            app:destination="@id/setNameWalletFragment" />
+        <action
+            android:id="@+id/action_walletListFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_walletListFragment_to_walletEditingFragment"
             app:destination="@id/walletEditingFragment" />
     </fragment>
 

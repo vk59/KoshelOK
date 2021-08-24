@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ru.rambler.libs.swipe_layout.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:orientation="horizontal"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_swipe_enabled="true"
+        app:right_swipe_enabled="true">
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp">
+
+            <ImageView
+                android:id="@+id/iconWalletBackground"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_background"
+                android:backgroundTint="@color/main_blue" />
+
+            <ImageView
+                android:id="@+id/iconWallet"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_wallet" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/nameWallet"
+            style="@style/ItemRecyclerText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Кошелек 1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/balanceWallet"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/balanceWallet"
+            style="@style/ItemRecyclerText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="2000 RUB"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:gravity="right"
+        app:bring_to_clamp="40dp"
+        app:clamp="self"
+        app:sticky="150dp">
+
+        <FrameLayout
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:src="@drawable/ic_options_background"
+                android:layout_gravity="center"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+
+            <ImageView
+                android:src="@drawable/ic_edit"
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:src="@drawable/ic_options_background"
+                android:layout_gravity="center"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+
+            <ImageView
+                android:src="@drawable/ic_delete"
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/watchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:src="@drawable/ic_options_background"
+                android:layout_gravity="center"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+
+            <ImageView
+                android:src="@drawable/ic_watch"
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+        </FrameLayout>
+
+    </LinearLayout>
+</ru.rambler.libs.swipe_layout.SwipeLayout>

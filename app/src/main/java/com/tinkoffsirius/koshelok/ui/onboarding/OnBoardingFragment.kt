@@ -13,13 +13,13 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentOnBoardingBinding
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
-import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory.Companion.ACCOUNT_DATA
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 class OnBoardingFragment : Fragment() {
@@ -77,12 +77,13 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun navigateWith(account: GoogleSignInAccount) {
-        AccountSharedRepository(
-            SharedPreferencesFactory().create(
-                requireContext(),
-                ACCOUNT_DATA
+        Dependencies.accountRepository.saveAccount(account)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = { Timber.d("Successfully saved.") },
+                onError = Timber::e
             )
-        ).saveAccount(account)
-        navController.navigate(R.id.action_onBoardingFragment_to_setNameWalletFragment)
+        navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
     }
 }

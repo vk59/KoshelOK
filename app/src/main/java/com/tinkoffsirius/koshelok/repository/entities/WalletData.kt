@@ -1,6 +1,8 @@
 package com.tinkoffsirius.koshelok.repository.entities
 
-class WalletData(
+// TODO: Swagger
+// CreateWalletData.
+data class WalletData(
     val id: Long?,
     val name: String,
     val balance: String,

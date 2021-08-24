@@ -1,9 +1,6 @@
 package com.tinkoffsirius.koshelok.repository
 
-import com.tinkoffsirius.koshelok.repository.entities.CategoryData
-import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
-import com.tinkoffsirius.koshelok.repository.entities.Response
-import com.tinkoffsirius.koshelok.repository.entities.WalletData
+import com.tinkoffsirius.koshelok.repository.entities.*
 import com.tinkoffsirius.koshelok.service.SampleNetworkService
 import io.reactivex.rxjava3.core.Single
 
@@ -41,7 +38,19 @@ class WalletRepository {
         return SampleNetworkService.updateTransaction(transactionData, idUser, idToken)
     }
 
-    fun createWallet(walletData: WalletData, idUser: String, idToken: String): Single<Response> {
-        return Single.just(Response("Successfully"))
+    fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
+        return Single.just(Response("Successfully saved wallet $walletData"))
+    }
+
+    fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
+        return Single.just(Response("Successfully updated wallet $walletData"))
+    }
+
+    fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
+        return SampleNetworkService.getUserInfoWallets(idUser, idToken)
+    }
+
+    fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response> {
+        return SampleNetworkService.deleteWalletById(id, idUser, idToken)
     }
 }

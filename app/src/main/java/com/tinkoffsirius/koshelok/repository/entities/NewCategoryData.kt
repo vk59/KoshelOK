@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CategoryData(
+data class NewCategoryData(
     @SerialName("id")
-    val id: Long,
+    val id: Long?,
     @SerialName("name")
     val name: String,
     @SerialName("color")

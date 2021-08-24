@@ -12,7 +12,6 @@ import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletEditingBinding
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
-import timber.log.Timber
 
 class WalletEditingFragment : Fragment() {
 
@@ -38,7 +37,10 @@ class WalletEditingFragment : Fragment() {
         createViewModel.wallet.observe(viewLifecycleOwner) {
             binding.walletEditingNameLabel.buttonText.text = it.name
             binding.currency.buttonText.text = it.currencyType
-            binding.limit.buttonText.text = it.limit
+            binding.limit.buttonText.text =
+                if (it.limit == "") {
+                    Dependencies.resourceProvider.getString(R.string.limit_not_stated)
+                } else { it.limit }
         }
 
         initListeners()
@@ -59,12 +61,11 @@ class WalletEditingFragment : Fragment() {
         }
 
         binding.limit.setOnClickListener {
-            // TODO()
+            navController.navigate(R.id.action_walletEditingFragment_to_setLimitWalletFragment)
         }
 
         binding.createWalletButton.setOnClickListener {
-            createViewModel.createWallet().observe(viewLifecycleOwner) {
-                Timber.tag("tut").d(it.message)
+            createViewModel.saveWallet().observe(viewLifecycleOwner) {
                 navController.navigate(R.id.action_walletEditingFragment_to_mainFragment)
             }
         }
