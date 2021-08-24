@@ -1,56 +1,35 @@
 package com.tinkoffsirius.koshelok.repository
 
 import com.tinkoffsirius.koshelok.repository.entities.*
-import com.tinkoffsirius.koshelok.service.SampleNetworkService
 import io.reactivex.rxjava3.core.Single
 
-class WalletRepository {
+interface WalletRepository {
 
-    fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
-        return SampleNetworkService.getWalletById(id, idUser, idToken)
-    }
+    fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData>
 
-    fun deleteTransactionById(id: Long): Single<Response> {
-        return SampleNetworkService.deleteTransactionById(id)
-    }
+    fun deleteTransactionById(id: Long): Single<Response>
 
     fun createTransaction(
         transactionData: CreateTransactionData,
         idUser: String,
         idToken: String
-    ): Single<Response> {
-        return SampleNetworkService.createTransaction(transactionData, idUser, idToken)
-    }
+    ): Single<Response>
 
     fun getCategories(
         transactionType: String,
         idUser: String,
         idToken: String
-    ): Single<List<CategoryData>> {
-        return SampleNetworkService.getCategories(transactionType, idUser, idToken)
-    }
+    ): Single<List<CategoryData>>
 
     fun updateTransaction(
         transactionData: CreateTransactionData,
         idUser: String,
         idToken: String
-    ): Single<Response> {
-        return SampleNetworkService.updateTransaction(transactionData, idUser, idToken)
-    }
+    ): Single<Response>
+    fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
+    fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
 
-    fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
-        return Single.just(Response("Successfully saved wallet $walletData"))
-    }
+    fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets>
 
-    fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response> {
-        return Single.just(Response("Successfully updated wallet $walletData"))
-    }
-
-    fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
-        return SampleNetworkService.getUserInfoWallets(idUser, idToken)
-    }
-
-    fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response> {
-        return SampleNetworkService.deleteWalletById(id, idUser, idToken)
-    }
+    fun deleteWalletById(id: Long, idUser: String, idToken: String): Single<Response>
 }

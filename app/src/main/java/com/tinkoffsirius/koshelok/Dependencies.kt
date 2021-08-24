@@ -12,7 +12,7 @@ object Dependencies {
 
     var context: Context? = null
 
-    val walletRepository by lazy { WalletRepository() }
+    val mockWalletRepository by lazy { MockWalletRepository() }
 
     val accountRepository by lazy {
         AccountSharedRepository(
@@ -27,7 +27,7 @@ object Dependencies {
         MainViewModelFactory(
             accountRepository = accountRepository,
             transactionRepository = transactionRepository,
-            repository = walletRepository
+            repository = mockWalletRepository
         )
     }
 
@@ -54,7 +54,7 @@ object Dependencies {
         CreateWalletViewModelFactory(
             walletSharedRepository = walletSharedRepository,
             accountRepository = accountRepository,
-            repository = walletRepository
+            repository = mockWalletRepository
         )
     }
 
@@ -62,14 +62,14 @@ object Dependencies {
         TransactionEditingViewModelFactory(
             transactionRepository = transactionRepository,
             accountRepository = accountRepository,
-            repository = walletRepository
+            repository = mockWalletRepository
         )
     }
 
     val walletListViewModelFactory by lazy {
         WalletsListViewModelFactory(
             accountRepository = accountRepository,
-            repository = walletRepository,
+            repository = mockWalletRepository,
             walletSharedRepository = walletSharedRepository
         )
     }
