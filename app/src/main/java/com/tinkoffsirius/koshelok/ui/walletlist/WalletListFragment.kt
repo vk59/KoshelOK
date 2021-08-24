@@ -13,6 +13,7 @@ import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
 import com.tinkoffsirius.koshelok.ui.DeleteDialog
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
 
@@ -64,6 +65,7 @@ class WalletListFragment : Fragment() {
         initAppbar()
         initRecycler()
         initButtons()
+        observeStatus()
     }
 
     private fun initButtons() {
@@ -94,6 +96,19 @@ class WalletListFragment : Fragment() {
                 overallBalance.text = it.overallBalance
                 cardIncome.textMoneyCard.text = it.overallIncome
                 cardOutcome.textMoneyCard.text = it.overallOutcome
+            }
+        }
+    }
+
+    private fun observeStatus() {
+        binding.swipeLayout.setOnRefreshListener {
+            walletListViewModel.updateUserInfo()
+        }
+        walletListViewModel.status.observe(viewLifecycleOwner) { event ->
+            when(event) {
+                is Event.Success -> { binding.swipeLayout.isRefreshing = false }
+                is Event.Loading -> { binding.swipeLayout.isRefreshing = true }
+                is Event.Error -> { binding.swipeLayout.isRefreshing = false }
             }
         }
     }

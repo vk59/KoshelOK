@@ -7,6 +7,7 @@ import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -28,28 +29,25 @@ class WalletListViewModel(
 
     val isThereWallets = MutableLiveData<Boolean>()
 
-    private val disposable: CompositeDisposable = CompositeDisposable()
+    val status: MutableLiveData<Event> = MutableLiveData(Event.Success(listOf()))
 
     private var userId = 0L
+
+    private val disposable: CompositeDisposable = CompositeDisposable()
+
     init {
         disposable += updateUserInfo()
         initUserAccountData()
     }
 
-    private fun initUserAccountData() {
-        accountSharedRepository.getAccountId()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy { userId = it.toLong() }
-    }
-
     fun updateUserInfo(): Disposable {
+        status.postValue(Event.Loading())
         return walletRepository.getUserInfoWallets(1, "")
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { userInfoWallets ->
-                    Timber.tag("tut").d(userInfoWallets.toString())
+                    status.postValue(Event.Success(userInfoWallets.wallets))
                     isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
                     items.postValue(createNewWalletItemList(userInfoWallets.wallets))
                     userInfoBalance.postValue(
@@ -60,7 +58,9 @@ class WalletListViewModel(
                         )
                     )
                 },
-                onError = Timber::e
+                onError = {
+                    status.postValue(Event.Error(it))
+                }
             )
     }
 
@@ -90,6 +90,13 @@ class WalletListViewModel(
 
     private fun createNewWalletItemList(walletsList: List<WalletDataItem>): List<WalletItem> {
         return walletsList.map { WalletItem(it.id, it.name, it.balance, it.limit, it.currencyType) }
+    }
+
+    private fun initUserAccountData() {
+        accountSharedRepository.getAccountId()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy { userId = it.toLong() }
     }
 
     override fun onCleared() {
