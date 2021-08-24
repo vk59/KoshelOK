@@ -21,12 +21,16 @@
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_set_sum.xml" value="0.12360688956433637" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_transaction_category.xml" value="0.264" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_transaction_editing.xml" value="0.264" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_wallet_editing.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_home_header.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_main_card.xml" value="0.12360688956433637" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_new_category.xml" value="0.72" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction.xml" value="0.6" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction_category.xml" value="0.7982062780269058" />
-        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction_editing.xml" value="0.6" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction_editing.xml" value="0.176" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/new_category_fragment.xml" value="0.4" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/new_type_fragment.xml" value="0.11041666666666666" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/toolbar_wallet_list.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

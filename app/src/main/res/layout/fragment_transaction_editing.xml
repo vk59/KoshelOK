@@ -32,8 +32,7 @@
         android:id="@+id/trans_sum_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans_editing_title"
         app:tie_text="@string/summary" />
@@ -42,8 +41,6 @@
         android:id="@+id/trans_type_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans_sum_label"
         app:tie_text="@string/type" />
@@ -53,8 +50,6 @@
         android:id="@+id/trans_category_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans_type_label"
         app:tie_text="@string/category" />
@@ -62,10 +57,9 @@
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
         android:id="@+id/trans_editing_date_label"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans_editing_sub_title"
         app:tie_text="@string/date" />
@@ -75,8 +69,6 @@
         android:id="@+id/trans_editing_time_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans_editing_date_label"
         app:tie_text="@string/time" />
