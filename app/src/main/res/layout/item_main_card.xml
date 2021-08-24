@@ -4,12 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardPayment"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:elevation="0dp"
     app:cardElevation="0dp"
     app:cardBackgroundColor="@color/main_blue"
-    app:cardCornerRadius="@dimen/radius_card_payment">
+    app:cardCornerRadius="@dimen/radius_card_payment"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -8,6 +8,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemTransactionEditingBinding
+import android.util.TypedValue
+
+
+
 
 class TransactionItemEditingView @JvmOverloads constructor(
     context: Context,
@@ -29,5 +33,9 @@ class TransactionItemEditingView @JvmOverloads constructor(
             ta.getString(R.styleable.TransactionItemEditingView_tie_text)
         buttonText.text = ta.getString(R.styleable.TransactionItemEditingView_button_text)
         ta.recycle()
+
+        val outValue = TypedValue()
+        getContext().theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+        setBackgroundResource(outValue.resourceId)
     }
 }

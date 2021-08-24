@@ -31,7 +31,7 @@
         <action
             android:id="@+id/action_setSumFragment_to_mainFragment"
             app:destination="@id/mainFragment"
-            app:exitAnim="@anim/slide_in_right" />
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -68,7 +68,8 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_transactionCategoryFragment_to_newCategoryFragment"
-            app:destination="@id/newCategoryFragment" />
+            app:destination="@id/newCategoryFragment"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -181,10 +182,12 @@
         tools:layout="@layout/fragment_new_category" >
         <action
             android:id="@+id/action_newCategoryFragment_to_categoryNameFragment2"
-            app:destination="@id/categoryNameFragment" />
+            app:destination="@id/categoryNameFragment"
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_newCategoryFragment_to_newTypeFragment"
-            app:destination="@id/newTypeFragment" />
+            app:destination="@id/newTypeFragment"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -195,7 +198,8 @@
 
         <action
             android:id="@+id/action_categoryNameFragment_to_newCategoryFragment"
-            app:destination="@id/newCategoryFragment" />
+            app:destination="@id/newCategoryFragment"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/newTypeFragment"
@@ -203,7 +207,8 @@
         android:label="NewTypeFragment" >
         <action
             android:id="@+id/action_newTypeFragment_to_newCategoryFragment"
-            app:destination="@id/newCategoryFragment" />
+            app:destination="@id/newCategoryFragment"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
 </navigation>

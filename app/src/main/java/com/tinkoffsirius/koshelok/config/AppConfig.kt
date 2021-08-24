@@ -18,26 +18,6 @@ object AppConfig {
         MainItem.Header("Кошелек 1", "60 000", "170 000", "61 400", "230 000")
     )
 
-    val iconList = listOf(
-        Icon(
-            IconProvider.getDrawableInt(Icons.BALL.id),
-            colorId = R.color.green
-        ),
-        Icon(
-            IconProvider.getDrawableInt(Icons.BALL.id),
-            colorId = R.color.green
-        ),
-        Icon(
-            IconProvider.getDrawableInt(Icons.BALL.id),
-            colorId = R.color.green
-        ),
-        Icon(
-            IconProvider.getDrawableInt(Icons.BALL.id),
-            colorId = R.color.green
-        )
-
-
-    )
 
     val categoriesExample = mutableListOf(
         CategoryData(

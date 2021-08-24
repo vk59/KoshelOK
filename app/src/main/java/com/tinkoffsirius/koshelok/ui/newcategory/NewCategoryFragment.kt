@@ -10,9 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.Dependencies
+import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentNewCategoryBinding
+import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategorysAdapter
 
@@ -54,7 +56,8 @@ class NewCategoryFragment : Fragment() {
             layoutManager = GridLayoutManager(this@NewCategoryFragment.context, 6)
         }
 
-        val list = AppConfig.iconList
+        //val list = AppConfig.iconList
+        val list = Icons.values().toList().map { Icon(it.drawableId, R.color.main_blue) }
 
         recyclerAdapter.setData(list)
 
