@@ -49,11 +49,12 @@ class TransactionEditingFragment : Fragment() {
             binding.transCategoryLabel.buttonText.text = it.category.categoryName
         })
 
-        initListeners(view)
+        initListeners()
     }
 
-    private fun initListeners(v: View) {
+    private val navController by lazy { findNavController() }
 
+    private fun initListeners() {
         val c = Calendar.getInstance()
         val dateTransaction: LocalDateTime = viewModel.transactionDateTime.value!!
         var year = dateTransaction.year
@@ -82,7 +83,6 @@ class TransactionEditingFragment : Fragment() {
                 day = dDayOfMonth
             }, year, month - 1, day)
             dpd.show()
-
         }
 
         binding.transEditingTimeLabel.setOnClickListener {
@@ -103,26 +103,22 @@ class TransactionEditingFragment : Fragment() {
                 c.get(Calendar.MINUTE),
                 true
             ).show()
-
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            navController.popBackStack()
         }
 
         binding.transSumLabel.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_setSumFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_setSumFragment)
         }
 
         binding.transTypeLabel.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_operationTypeFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_operationTypeFragment)
         }
 
         binding.transCategoryLabel.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
         }
 
         binding.createTransactionButton.setOnClickListener {
@@ -130,8 +126,7 @@ class TransactionEditingFragment : Fragment() {
             viewModel.saveTransaction().observe(viewLifecycleOwner) {
                 Snackbar.make(binding.root, it.message, Snackbar.LENGTH_SHORT).show()
             }
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_mainFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_mainFragment)
         }
     }
 }

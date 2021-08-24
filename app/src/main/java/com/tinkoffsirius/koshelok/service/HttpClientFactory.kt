@@ -8,7 +8,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-//import com.facebook.stetho.okhttp3.StethoInterceptor
 
 object HttpClientFactory {
 
@@ -20,7 +19,6 @@ object HttpClientFactory {
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
-//        .addNetworkInterceptor(StethoInterceptor())
         .build()
     private val retrofitBuilder = Retrofit.Builder()
         .client(okHttpClient)

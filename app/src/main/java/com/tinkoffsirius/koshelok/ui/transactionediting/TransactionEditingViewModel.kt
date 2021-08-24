@@ -136,7 +136,11 @@ class TransactionEditingViewModel(
     }
 
     private fun getCreateTransactionAction(posedTransaction: CreateTransactionData): CreateTransactionAction {
-        return if (posedTransaction.id == null) walletRepository::createTransaction else walletRepository::updateTransaction
+        return if (posedTransaction.id == null) {
+            walletRepository::createTransaction
+        } else {
+            walletRepository::updateTransaction
+        }
     }
 
     private fun createTransactionData(it: PosedTransaction) =

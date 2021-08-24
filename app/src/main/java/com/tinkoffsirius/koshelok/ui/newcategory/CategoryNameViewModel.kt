@@ -7,6 +7,5 @@ import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 class CategoryNameViewModel(
     private val transactionRepository: PosedTransactionSharedRepository,
     private val walletRepository: MockWalletRepository
-) : ViewModel() {
+) : ViewModel()
 
-}

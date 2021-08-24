@@ -104,10 +104,11 @@ class CreateWalletViewModel(
     }
 
     private fun getCreateWalletAction(wallet: CreateWalletData): CreateWalletAction {
-        return if (wallet.id == null)
+        return if (wallet.id == null) {
             walletRepository::createWallet
-        else
+        } else {
             walletRepository::updateWallet
+        }
     }
 
     private fun performCreateTransactionAction(

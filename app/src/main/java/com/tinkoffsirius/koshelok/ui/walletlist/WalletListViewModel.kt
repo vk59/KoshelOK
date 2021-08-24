@@ -29,7 +29,7 @@ class WalletListViewModel(
 
     val isThereWallets = MutableLiveData<Boolean>()
 
-    val status: MutableLiveData<Event> = MutableLiveData(Event.Success(listOf()))
+    val status: MutableLiveData<Event> = MutableLiveData(Event.Success())
 
     private var userId = 0L
 
@@ -47,7 +47,7 @@ class WalletListViewModel(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { userInfoWallets ->
-                    status.postValue(Event.Success(userInfoWallets.wallets))
+                    status.postValue(Event.Success())
                     isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
                     items.postValue(createNewWalletItemList(userInfoWallets.wallets))
                     userInfoBalance.postValue(
@@ -63,7 +63,6 @@ class WalletListViewModel(
                 }
             )
     }
-
 
     fun deleteWallet(walletItem: WalletItem) {
         disposable += walletRepository.deleteWalletById(walletItem.id!!, "", "")

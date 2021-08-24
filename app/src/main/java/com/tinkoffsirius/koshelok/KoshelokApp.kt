@@ -1,7 +1,6 @@
 package com.tinkoffsirius.koshelok
 
 import android.app.Application
-//import com.facebook.stetho.Stetho
 import timber.log.Timber
 
 class KoshelokApp : Application() {
@@ -13,7 +12,5 @@ class KoshelokApp : Application() {
         }
 
         Dependencies.context = this
-
-//        Stetho.initializeWithDefaults(this);
     }
 }

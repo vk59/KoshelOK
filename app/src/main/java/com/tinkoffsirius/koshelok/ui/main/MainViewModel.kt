@@ -64,7 +64,7 @@ class MainViewModel(
             .subscribeOn(Schedulers.io())
             .subscribeBy(onSuccess = { walletData ->
                 val mainItemList = createNewMainItemList(walletData)
-                status.postValue(Event.Success(mainItemList))
+                status.postValue(Event.Success())
                 isThereTransactions.postValue(walletData.transactions.isNotEmpty())
                 items.postValue(createNewMainItemList(walletData))
             },
