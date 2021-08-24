@@ -15,7 +15,6 @@ import com.tinkoffsirius.koshelok.repository.entities.WalletData
 import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -38,37 +37,50 @@ class MainViewModel(
     val status: MutableLiveData<Event> = MutableLiveData(Event.Loading())
 
     private var lastTimeBackPressed: Instant = Instant.DISTANT_PAST
+
     private val disposable: CompositeDisposable = CompositeDisposable()
 
+    private var idUser: Long = -1L
+
     init {
-        disposable += updateTransactions()
+        updateTransactions()
+        accountSharedRepository.getAccountId()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribeBy(onError = { status.postValue(Event.Error(it)) })
+            .subscribeBy(
+                onSuccess = { idUser = it },
+                onError = Timber::e
+            )
     }
 
-    private fun updateTransactions(): Completable {
-        return walletRepository.getWalletById(
-            1, "", ""
+    fun updateTransactions() {
+        status.postValue(Event.Loading())
+        disposable += walletRepository.getWalletById(
+            1, idUser, ""
 //            accountSharedRepository.getAccount(ACCOUNT_ID),
 //            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
         )
-            .doOnSuccess { walletData ->
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(onSuccess = { walletData ->
                 val mainItemList = createNewMainItemList(walletData)
                 status.postValue(Event.Success(mainItemList))
                 isThereTransactions.postValue(walletData.transactions.isNotEmpty())
                 items.postValue(createNewMainItemList(walletData))
-            }.ignoreElement()
+            },
+                onError = { status.postValue(Event.Error(it)) }
+            )
+
     }
 
     fun deleteTransactionById(id: Long) {
         disposable += walletRepository.deleteTransactionById(id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .flatMapCompletable { updateTransactions() }
             .subscribeBy(
                 onError = { Timber.e(it) }
             )
+        updateTransactions()
     }
 
     @OptIn(ExperimentalTime::class)

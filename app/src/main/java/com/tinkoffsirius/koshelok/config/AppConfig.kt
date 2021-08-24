@@ -150,6 +150,7 @@ object AppConfig {
         "5423",
         "40000",
         "RUB",
+        false,
         listOf(
             TransactionData(
                 1,

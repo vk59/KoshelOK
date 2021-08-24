@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface WalletRepository {
 
-    fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData>
+    fun getWalletById(id: Long, idUser: Long, idToken: String): Single<WalletData>
 
     fun deleteTransactionById(id: Long): Single<Response>
 
@@ -26,7 +26,9 @@ interface WalletRepository {
         idUser: String,
         idToken: String
     ): Single<Response>
+
     fun createWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
+
     fun updateWallet(walletData: CreateWalletData, idUser: String, idToken: String): Single<Response>
 
     fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets>

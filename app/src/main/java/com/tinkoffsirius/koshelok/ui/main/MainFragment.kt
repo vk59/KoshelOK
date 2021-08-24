@@ -82,6 +82,10 @@ class MainFragment : Fragment() {
                 }
             }
         }
+
+        binding.swipeLayout.setOnRefreshListener {
+            viewModel.updateTransactions()
+        }
     }
 
     private fun initButtons() {

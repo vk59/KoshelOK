@@ -8,7 +8,7 @@ class NetWalletRepository : WalletRepository {
 
     private val client = HttpClientFactory.walletService
 
-    override fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
+    override fun getWalletById(id: Long, idUser: Long, idToken: String): Single<WalletData> {
         return client.getWalletById(id)
     }
 

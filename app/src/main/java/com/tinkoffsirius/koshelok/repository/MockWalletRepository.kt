@@ -6,8 +6,8 @@ import io.reactivex.rxjava3.core.Single
 
 class MockWalletRepository : WalletRepository {
 
-    override fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
-        return SampleNetworkService.getWalletById(id, idUser, idToken)
+    override fun getWalletById(id: Long, idUser: Long, idToken: String): Single<WalletData> {
+        return SampleNetworkService.getWalletById(id, idUser.toString(), idToken)
     }
 
     override fun deleteTransactionById(id: Long): Single<Response> {

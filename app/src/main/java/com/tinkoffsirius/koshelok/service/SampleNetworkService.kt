@@ -42,6 +42,7 @@ object SampleNetworkService {
                 "5423",
                 "4000",
                 "RUB",
+                false,
                 newTransactions
             )
         Timber.d(walletData.transactions.toString())
@@ -69,7 +70,7 @@ object SampleNetworkService {
                 "63423.32",
                 "5423",
                 "4000",
-                "RUB",
+                "RUB",false,
                 walletData.transactions.filterNot { it.id == id }
             )
         Timber.d(walletData.transactions.toString())
@@ -103,6 +104,7 @@ object SampleNetworkService {
                 "5423",
                 "4000",
                 "RUB",
+                false,
                 newTransactions
             )
         Timber.d(walletData.transactions.toString())
