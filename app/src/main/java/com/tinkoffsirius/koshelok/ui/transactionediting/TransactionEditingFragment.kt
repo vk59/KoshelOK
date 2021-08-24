@@ -45,10 +45,10 @@ class TransactionEditingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.transaction.observe(viewLifecycleOwner, {
-            binding.transEditingSumLabel.buttonText.text = it.sum
-            binding.transEditingTypeLabel.buttonText.text =
+            binding.transSumLabel.buttonText.text = it.sum
+            binding.transTypeLabel.buttonText.text =
                 if (it.type == TransactionType.INCOME.name) "Доход" else "Расход"
-            binding.transEditingCategoryLabel.buttonText.text = it.category.categoryName
+            binding.transCategoryLabel.buttonText.text = it.category.categoryName
         })
 
         initListeners(view)
@@ -112,17 +112,17 @@ class TransactionEditingFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.transEditingSumLabel.setOnClickListener {
+        binding.transSumLabel.setOnClickListener {
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_setSumFragment)
         }
 
-        binding.transEditingTypeLabel.setOnClickListener {
+        binding.transTypeLabel.setOnClickListener {
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_operationTypeFragment)
         }
 
-        binding.transEditingCategoryLabel.setOnClickListener {
+        binding.transCategoryLabel.setOnClickListener {
             findNavController()
                 .navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
         }

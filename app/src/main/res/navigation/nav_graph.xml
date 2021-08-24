@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/newCategoryFragment">
+    app:startDestination="@id/transactionCategoryFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.tinkoffsirius.koshelok.ui.main.MainFragment"
@@ -66,6 +66,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/transactionEditingFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_transactionCategoryFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
     </fragment>
 
     <fragment
@@ -150,23 +153,31 @@
         android:id="@+id/newCategoryFragment"
         android:name="com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryFragment"
         android:label="fragment_new_category"
-        tools:layout="@layout/new_category_fragment" >
-
-
+        tools:layout="@layout/fragment_new_category" >
         <action
-            android:id="@+id/action_newCategoryFragment_to_categoryNameFragment"
+            android:id="@+id/action_newCategoryFragment_to_categoryNameFragment2"
             app:destination="@id/categoryNameFragment" />
+        <action
+            android:id="@+id/action_newCategoryFragment_to_newTypeFragment"
+            app:destination="@id/newTypeFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/categoryNameFragment"
         android:name="com.tinkoffsirius.koshelok.ui.newcategory.CategoryNameFragment"
         android:label="fragment_category_name"
-        tools:layout="@layout/category_name_fragment" >
-
+        tools:layout="@layout/fragment_category_name" >
 
         <action
             android:id="@+id/action_categoryNameFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTypeFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.newcategory.NewTypeFragment"
+        android:label="NewTypeFragment" >
+        <action
+            android:id="@+id/action_newTypeFragment_to_newCategoryFragment"
             app:destination="@id/newCategoryFragment" />
     </fragment>
 

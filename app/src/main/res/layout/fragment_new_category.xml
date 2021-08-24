@@ -16,7 +16,7 @@
         app:title="Новая категорию" />
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_sum_label"
+        android:id="@+id/trans_name_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -26,33 +26,44 @@
         app:tie_text="Название" />
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_type_label"
+        android:id="@+id/trans_type_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_sum_label"
+        app:layout_constraintTop_toBottomOf="@+id/trans_name_label"
         app:tie_text="@string/type" />
 
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_category_label"
+        android:id="@+id/trans_category_icon_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_type_label"
+        app:layout_constraintTop_toBottomOf="@+id/trans_type_label"
         app:tie_text="Иконка" />
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trans_category_icon_label" />
+
     <Button
         android:id="@+id/create_transaction_button"
+        style="@style/ButtonBlack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/button_margin"
-        style="@style/ButtonBlack"
         android:text="@string/trans_create_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

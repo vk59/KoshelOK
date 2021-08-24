@@ -27,7 +27,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="12dp"
-        android:hint="@string/set_sum_fragment_edit_text_hint"
+        android:hint="Придумайте название"
         app:boxStrokeColor="@color/edit_text_border"
         app:hintTextColor="@color/edit_text_hint"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
         tools:text="130 000">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/sum_text"
+            android:id="@+id/category_name_text"
             android:layout_width="match_parent"
             android:focusableInTouchMode="true"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/setSumButton"
+        android:id="@+id/setNewName"
         style="@style/ButtonBlack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

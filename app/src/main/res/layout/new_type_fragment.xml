@@ -4,47 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.transactioncategory.TransactionCategoryFragment">
+    tools:context=".ui.operation.OperationTypeFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-        app:title="Выберите категорию" />
+        app:title="Выберите тип операции" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/transaction_category_recycler"
+    <RadioGroup
+        android:id="@+id/operation_type_radio_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:overScrollMode="never"
-        android:padding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <TextView
-        android:id="@+id/trans_category_create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto"
-        android:text="Создать категорию"
-        android:textColor="#5833EE"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transaction_category_recycler" />
+        <RadioButton
+            android:id="@+id/operation_type_radio_button_income"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:button="@drawable/ic_selected_arrow"
+            android:layoutDirection="rtl"
+            android:text="@string/operation_type_fragment_radio_button_1" />
+
+        <RadioButton
+            android:id="@+id/operation_type_radio_button_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:button="@drawable/ic_selected_arrow"
+            android:layoutDirection="rtl"
+            android:text="@string/operation_type_fragment_radio_button_2" />
+
+
+    </RadioGroup>
 
     <Button
-        android:id="@+id/set_category"
+        android:id="@+id/set_type"
         style="@style/ButtonBlack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,6 +58,8 @@
         android:text="@string/trans_category_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

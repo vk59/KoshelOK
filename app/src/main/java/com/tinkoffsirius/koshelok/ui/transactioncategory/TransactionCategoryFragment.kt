@@ -68,11 +68,9 @@ class TransactionCategoryFragment : Fragment() {
                 list =
                     AppConfig.transactionExample.filter { it.typeName.name == TransactionType.INCOME.name }
                 recyclerAdapter.setData(list)
-                binding.transCategoryCreate.isVisible = false
             } else {
                 list =
                     AppConfig.transactionExample.filter { it.typeName.name == TransactionType.OUTCOME.name }
-                binding.transCategoryCreate.isVisible = true
             }
             recyclerAdapter.setData(list)
 
@@ -94,5 +92,17 @@ class TransactionCategoryFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener {
             navController.popBackStack()
         }
+
+        binding.transCategoryCreate.setOnClickListener {
+            navController
+                .navigate(R.id.action_transactionCategoryFragment_to_newCategoryFragment)
+        }
+
+        binding.transCategoryCreate.setOnClickListener {
+            navController
+                .navigate(R.id.action_transactionCategoryFragment_to_newCategoryFragment)
+        }
+
+
     }
 }

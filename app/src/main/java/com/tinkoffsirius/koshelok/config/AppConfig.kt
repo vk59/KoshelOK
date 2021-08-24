@@ -64,6 +64,84 @@ object AppConfig {
             R.drawable.ic_clothes,
             R.color.red
 
+        ),
+
+        Category(
+            1,
+            TransactionType.INCOME,
+            Types.CAPITALIZATION.nameType,
+            R.drawable.ic_sport,
+            R.color.green
+        ),
+
+        Category(
+            3,
+            TransactionType.INCOME,
+            Types.SALARY.nameType,
+            R.drawable.ic_salary,
+            R.color.green
+        ),
+
+
+        Category(
+            2,
+            TransactionType.OUTCOME,
+            Types.CLOTHES.nameType,
+            R.drawable.ic_clothes,
+            R.color.red
+
+        ),
+
+        Category(
+            1,
+            TransactionType.INCOME,
+            Types.CAPITALIZATION.nameType,
+            R.drawable.ic_sport,
+            R.color.green
+        ),
+
+        Category(
+            3,
+            TransactionType.INCOME,
+            Types.SALARY.nameType,
+            R.drawable.ic_salary,
+            R.color.green
+        ),
+
+
+        Category(
+            2,
+            TransactionType.OUTCOME,
+            Types.CLOTHES.nameType,
+            R.drawable.ic_clothes,
+            R.color.red
+
+        ),
+
+        Category(
+            1,
+            TransactionType.INCOME,
+            Types.CAPITALIZATION.nameType,
+            R.drawable.ic_sport,
+            R.color.green
+        ),
+
+        Category(
+            3,
+            TransactionType.INCOME,
+            Types.SALARY.nameType,
+            R.drawable.ic_salary,
+            R.color.green
+        ),
+
+
+        Category(
+            2,
+            TransactionType.OUTCOME,
+            Types.CLOTHES.nameType,
+            R.drawable.ic_clothes,
+            R.color.red
+
         )
     )
 

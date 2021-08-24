@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-        app:title="Выберите категорию" />
+        app:title="Новая операция" />
 
     <TextView
         android:id="@+id/trans_editing_title"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_sum_label"
+        android:id="@+id/trans_sum_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -39,24 +39,24 @@
         app:tie_text="@string/summary" />
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_type_label"
+        android:id="@+id/trans_type_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_sum_label"
+        app:layout_constraintTop_toBottomOf="@+id/trans_sum_label"
         app:tie_text="@string/type" />
 
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
-        android:id="@+id/trans_editing_category_label"
+        android:id="@+id/trans_category_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_type_label"
+        app:layout_constraintTop_toBottomOf="@+id/trans_type_label"
         app:tie_text="@string/category" />
 
 
@@ -92,7 +92,7 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trans_editing_category_label" />
+        app:layout_constraintTop_toBottomOf="@+id/trans_category_label" />
 
     <Button
         android:id="@+id/create_transaction_button"
