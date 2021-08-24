@@ -36,5 +36,6 @@ class SharedPreferencesFactory {
         const val ACCOUNT_DATA = "account_data"
         const val TRANSACTION_DATA = "transaction"
         const val WALLET_DATA = "wallet_data"
+        const val NEW_CATEGORY_DATA = "new_category"
     }
 }

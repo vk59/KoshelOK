@@ -17,6 +17,7 @@ import com.tinkoffsirius.koshelok.databinding.FragmentTransactionCategoryBinding
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Transaction
 import com.tinkoffsirius.koshelok.entities.TransactionType
+import com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryViewModel
 import com.tinkoffsirius.koshelok.ui.transactioncategory.adapters.TransactionCategoryAdapter
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 
@@ -25,6 +26,11 @@ class TransactionCategoryFragment : Fragment() {
     private val viewModel: TransactionEditingViewModel by viewModels(
         factoryProducer = {
             Dependencies.transactionViewModelFactory
+        })
+
+    private val newCategoryViewModel: NewCategoryViewModel by viewModels(
+        factoryProducer = {
+            Dependencies.newCategoryViewModelFactory
         })
 
     private val binding by viewBinding(FragmentTransactionCategoryBinding::bind)
@@ -76,9 +82,6 @@ class TransactionCategoryFragment : Fragment() {
 
         })
 
-
-        //recyclerAdapter.setData(list!!)
-
         initListeners(view)
     }
 
@@ -94,15 +97,10 @@ class TransactionCategoryFragment : Fragment() {
         }
 
         binding.transCategoryCreate.setOnClickListener {
+            newCategoryViewModel.removeTransaction()
             navController
                 .navigate(R.id.action_transactionCategoryFragment_to_newCategoryFragment)
         }
-
-        binding.transCategoryCreate.setOnClickListener {
-            navController
-                .navigate(R.id.action_transactionCategoryFragment_to_newCategoryFragment)
-        }
-
 
     }
 }

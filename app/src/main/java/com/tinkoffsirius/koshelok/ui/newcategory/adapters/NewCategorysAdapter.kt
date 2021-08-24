@@ -11,13 +11,14 @@ import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
 import com.tinkoffsirius.koshelok.databinding.ItemTransactionCategoryBinding
 import com.tinkoffsirius.koshelok.entities.Category
+import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.ui.transactioncategory.adapters.TransactionCategoryViewHolder
 
 class NewCategorysAdapter() : RecyclerView.Adapter<NewCategoryViewHolder>() {
 
-    private var list: List<Category> = listOf()
+    private var list: List<Icon> = listOf()
 
-    fun setData(data: List<Category>) {
+    fun setData(data: List<Icon>) {
         list = data
         notifyDataSetChanged()
     }
@@ -34,8 +35,8 @@ class NewCategorysAdapter() : RecyclerView.Adapter<NewCategoryViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: NewCategoryViewHolder, position: Int) {
-        val category: Category = list[position]
-        holder.bind(category)
+        val icon: Icon = list[position]
+        holder.bind(icon)
     }
 
     override fun getItemCount(): Int = list.size

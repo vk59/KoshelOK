@@ -3,7 +3,7 @@ package com.tinkoffsirius.koshelok.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-class Category(
+data class Category(
     val id: Long?,
     val typeName: TransactionType,
     val categoryName: String,
