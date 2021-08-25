@@ -2,11 +2,13 @@ package com.tinkoffsirius.koshelok.ui.newcategory.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
 
-class NewCategoriesAdapter() :
+class NewCategoriesAdapter(private val setSelected: (icon: Icon) -> Unit) :
     RecyclerView.Adapter<NewCategoryViewHolder>() {
 
     private var list: List<Icon> = listOf()
@@ -22,7 +24,7 @@ class NewCategoriesAdapter() :
         val inflater = LayoutInflater.from(parent.context)
         return NewCategoryViewHolder(
             inflater.inflate(
-                R.layout.item_transaction_category,
+                R.layout.item_new_category,
                 parent,
                 false
             )
@@ -32,8 +34,11 @@ class NewCategoriesAdapter() :
     override fun onBindViewHolder(holder: NewCategoryViewHolder, position: Int) {
         val icon: Icon = list[position]
 
+        holder.selectionImage?.isVisible = itemPosition == position
+
         holder.itemView.setOnClickListener {
-            //itemPosition = holder.absoluteAdapterPosition
+            itemPosition = holder.absoluteAdapterPosition
+            setSelected(icon)
             notifyDataSetChanged()
         }
 

@@ -47,6 +47,21 @@ class NewCategoryViewModel @Inject constructor(
         newCategorySharedRepository.removeNewCategory()
     }
 
+    fun updateNewCategoryIcon(iconId: Int): LiveData<Unit> {
+        val ld = MutableLiveData<Unit>()
+
+        disposable += newCategorySharedRepository.getNewCategory()
+            .map { it.copy(icon = iconId) }
+            .doOnSuccess { newCategory.value = it }
+            .flatMapCompletable { newCategorySharedRepository.saveNewCategory(it) }
+            .subscribeBy(
+                onComplete = { ld.value = Unit },
+                onError = Timber::e
+            )
+
+        return ld
+    }
+
     fun updateNewCategoryType(type: TransactionType): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
 

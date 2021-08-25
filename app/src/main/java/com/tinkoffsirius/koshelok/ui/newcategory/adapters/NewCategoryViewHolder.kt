@@ -2,6 +2,7 @@ package com.tinkoffsirius.koshelok.ui.newcategory.adapters
 
 import android.content.res.ColorStateList
 import android.view.View
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
@@ -13,11 +14,11 @@ class NewCategoryViewHolder (itemView: View) :
 
     val binding by viewBinding(ItemNewCategoryBinding::bind)
 
-   // var imgBack: ImageView? = null
+    var selectionImage: ImageView? = null
 
-//    init {
-//        imgBack = binding.transactionCategoryImageBack
-//    }
+    init {
+        selectionImage = binding.imageIcon
+    }
 
     fun bind(icon: Icon) {
         binding.transactionCategoryImage.setImageResource(icon.imgId)

@@ -59,7 +59,12 @@ class NewCategoryFragment : Fragment() {
                 }
         })
 
-        val recyclerAdapter = NewCategoriesAdapter()
+        val recyclerAdapter = NewCategoriesAdapter{
+            viewModel.updateNewCategoryIcon(iconId = it.imgId)
+                .observe(viewLifecycleOwner, {
+
+                })
+        }
 
         binding.categoryRecycleView.apply {
             adapter = recyclerAdapter
