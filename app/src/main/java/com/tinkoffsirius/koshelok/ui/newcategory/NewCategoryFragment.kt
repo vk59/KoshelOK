@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +20,7 @@ import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategoriesAdapter
+import dev.sasikanth.colorsheet.ColorSheet
 import javax.inject.Inject
 
 class NewCategoryFragment : Fragment() {
@@ -89,6 +91,16 @@ class NewCategoryFragment : Fragment() {
 
         binding.transTypeLabel.setOnClickListener {
             navController.navigate(R.id.action_newCategoryFragment_to_newTypeFragment)
+        }
+
+        binding.transCategoryIconLabel.setOnClickListener {
+//            ColorSheet().colorPicker(
+//                colors = intArrayOf(R.color.black , R.color.main_blue),
+//                listener = { color ->
+//                    // Handle color
+//                })
+//                .show(requireFragmentManager())
+
         }
     }
 

@@ -47,7 +47,7 @@ class NewCategoriesAdapter() :
 
         if (itemPosition == position) {
             holder.imgBack?.backgroundTintList =
-                ColorStateList.valueOf(holder.binding.root.context.getColor(R.color.black))
+                ColorStateList.valueOf(holder.binding.root.context.getColor(R.color.selected_blue))
 
         } else {
             holder.imgBack?.backgroundTintList =
