@@ -45,4 +45,7 @@ interface WalletService {
 
     @POST("category/")
     fun createCategory(@Body categoryData: CategoryData): Completable
+
+    @DELETE("wallet/")
+    fun deleteWalletById(@Header("id") idWallet: Long): Completable
 }

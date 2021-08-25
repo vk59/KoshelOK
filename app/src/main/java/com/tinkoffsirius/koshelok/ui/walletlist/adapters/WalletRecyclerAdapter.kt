@@ -33,6 +33,11 @@ class WalletRecyclerAdapter(
         )
     }
 
+    override fun onViewRecycled(holder: WalletViewHolder) {
+        super.onViewRecycled(holder)
+        holder.reset()
+    }
+
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
         val walletItem = diff.currentList[position]
         holder.bind(walletItem)

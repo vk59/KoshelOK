@@ -56,6 +56,8 @@ class WalletListViewModel @Inject constructor(
                 onComplete = { Timber.tag("tut").d("Successfully deleted") },
                 onError = Timber::e
             )
+        status.value = Event.Loading()
+        updateUserInfo()
     }
 
     fun editWallet(item: WalletItem) {

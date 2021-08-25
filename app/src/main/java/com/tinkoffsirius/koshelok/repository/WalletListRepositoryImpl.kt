@@ -12,7 +12,7 @@ class WalletListRepositoryImpl @Inject constructor() : WalletListRepository {
     lateinit var walletService: WalletService
 
     override fun deleteWalletById(idWallet: Long): Completable {
-        TODO("Not yet implemented")
+        return walletService.deleteWalletById(idWallet)
     }
 
     override fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets> {

@@ -14,13 +14,20 @@ class WalletViewHolder(
         binding.balanceWallet.text = "${walletItem.balance} ${walletItem.currencyType}"
         binding.nameWallet.text = walletItem.name
         binding.deleteButton.setOnClickListener {
+            binding.root.reset()
             deleteItem(walletItem)
         }
         binding.editButton.setOnClickListener {
+            binding.root.reset()
             editItem(walletItem)
         }
         binding.watchButton.setOnClickListener {
+            binding.root.reset()
             watchItem()
         }
+    }
+
+    fun reset() {
+        binding.root.reset()
     }
 }
