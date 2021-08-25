@@ -1,9 +1,6 @@
 package com.tinkoffsirius.koshelok.di
 
-import com.tinkoffsirius.koshelok.repository.CreateWalletRepository
-import com.tinkoffsirius.koshelok.repository.CreateWalletRepositoryImpl
-import com.tinkoffsirius.koshelok.repository.MainRepository
-import com.tinkoffsirius.koshelok.repository.MainRepositoryImpl
+import com.tinkoffsirius.koshelok.repository.*
 import com.tinkoffsirius.koshelok.repository.main.MockWalletRepositoryImpl
 import com.tinkoffsirius.koshelok.repository.main.NetWalletRepositoryImpl
 import com.tinkoffsirius.koshelok.repository.main.WalletRepository
@@ -18,9 +15,15 @@ interface BindsRepositoryModule {
     @Binds
     fun bindCreateWalletRepository(createWalletRepositoryImpl: CreateWalletRepositoryImpl): CreateWalletRepository
 
+    @Binds
+    fun bindTransactionEditingRepository(transactionEditingRepositoryImpl: TransactionEditingRepositoryImpl): TransactionEditingRepository
 
     @Binds
     fun bindMainRepository(mainRepositoryImpl: MainRepositoryImpl): MainRepository
+
+
+    @Binds
+    fun bindWalletListRepository(walletListRepositoryImpl: WalletListRepositoryImpl): WalletListRepository
 
     @Mocked
     @Binds

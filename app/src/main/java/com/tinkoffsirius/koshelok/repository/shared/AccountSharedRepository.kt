@@ -41,7 +41,7 @@ class AccountSharedRepository @Inject constructor(
     }
 
     fun getCurrentWalletId() = Single.fromCallable {
-        sharedPreferences.getLong(USER_INFO, 0)
+        sharedPreferences.getLong(ID_WALLET, 1)!!
     }
 
     companion object {

@@ -44,7 +44,7 @@ class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
         idToken: String
     ): Single<CreateWalletData> {
         return Single.fromCallable {
-            CreateWalletData(0,0,"","","","","", "",false)
+            CreateWalletData(0,0,"","","", "",false)
         }
     }
 
@@ -52,7 +52,7 @@ class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
         walletData: CreateWalletData,
         idToken: String
     ): Single<CreateWalletData> {
-        return Single.just(CreateWalletData(0, 0, "", "", "", "", "", "", false))
+        return Single.just(CreateWalletData(0, 0, "", "", "", "", false))
     }
 
     override fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets> {

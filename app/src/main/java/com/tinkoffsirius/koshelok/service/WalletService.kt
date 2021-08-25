@@ -1,9 +1,6 @@
 package com.tinkoffsirius.koshelok.service
 
-import com.tinkoffsirius.koshelok.repository.entities.CreateWalletData
-import com.tinkoffsirius.koshelok.repository.entities.UserInfo
-import com.tinkoffsirius.koshelok.repository.entities.UserInfoWallets
-import com.tinkoffsirius.koshelok.repository.entities.WalletData
+import com.tinkoffsirius.koshelok.repository.entities.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
@@ -13,7 +10,7 @@ interface WalletService {
     @GET("user/info/")
     fun getUserInfoWallets(@Header("id") idUser: Long): Single<UserInfoWallets>
 
-    @GET("wallet/")
+    @GET("wallet/details/")
     fun getWalletById(@Header("id") id: Long): Single<WalletData>
 
     @DELETE("transaction/")
@@ -33,4 +30,19 @@ interface WalletService {
 
     @PUT("wallet/")
     fun updateWallet(@Body createWalletData: CreateWalletData): Single<CreateWalletData>
+
+    @POST("transaction/")
+    fun createTransaction(@Body transactionData: CreateTransactionData): Completable
+
+    @PUT("transaction/")
+    fun updateTransaction(transactionData: CreateTransactionData): Completable
+
+    @GET("category/income/")
+    fun getIncomeCategories(@Header("id") idUser: Long): Single<List<CategoryData>>
+
+    @GET("category/spending/")
+    fun getSpendingCategories(@Header("id") idUser: Long): Single<List<CategoryData>>
+
+    @POST("category/")
+    fun createCategory(@Body categoryData: CategoryData): Completable
 }

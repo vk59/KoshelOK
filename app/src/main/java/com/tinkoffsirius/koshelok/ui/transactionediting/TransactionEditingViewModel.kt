@@ -3,16 +3,18 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tinkoffsirius.koshelok.config.toCategory
+import com.tinkoffsirius.koshelok.config.toCreateTransactionData
 import com.tinkoffsirius.koshelok.entities.Category
-import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
+import com.tinkoffsirius.koshelok.entities.TransactionType
+import com.tinkoffsirius.koshelok.repository.TransactionEditingRepository
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
 import com.tinkoffsirius.koshelok.repository.entities.Response
-import com.tinkoffsirius.koshelok.repository.main.WalletRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository.Companion.ACCOUNT_GOOGLE_ID
 import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.Singles
@@ -26,17 +28,19 @@ import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
 import javax.inject.Inject
 
-typealias CreateTransactionAction = (CreateTransactionData, Long, String) -> Single<Response>
+typealias CreateTransactionAction = (CreateTransactionData) -> Completable
 
 class TransactionEditingViewModel @Inject constructor(
     private val transactionSharedRepository: PosedTransactionSharedRepository,
     private val accountSharedRepository: AccountSharedRepository,
-    private val walletRepository: WalletRepository
+    private val transactionEditingRepository: TransactionEditingRepository
 ) : ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
     val transaction: MutableLiveData<PosedTransaction> = MutableLiveData()
+
+    val categories = MutableLiveData<List<Category>>()
 
     private var defaultDataTime: LocalDateTime =
         Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
@@ -104,55 +108,69 @@ class TransactionEditingViewModel @Inject constructor(
                 onComplete = { ld.value = Unit },
                 onError = Timber::e
             )
-
         return ld
     }
 
     fun saveTransaction(): LiveData<Response> {
         val liveData: MutableLiveData<Response> = MutableLiveData()
-        disposable += transactionSharedRepository
-            .getTransaction()
-            .map(::createTransactionData)
-            .flatMap { posedTransaction ->
-                val transactionAction = getCreateTransactionAction(posedTransaction)
-                performCreateTransactionAction(transactionAction, posedTransaction)
+        disposable += Singles.zip(
+            getWalletId(), transactionSharedRepository.getTransaction()
+        )
+            .map { (walletId, posedTransaction) ->
+                posedTransaction.toCreateTransactionData(walletId, defaultDataTime)
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = { liveData.value = it },
+                onSuccess = { createTransactionData ->
+                    val transactionAction = getCreateTransactionAction(createTransactionData)
+                    performCreateTransactionAction(transactionAction, createTransactionData)
+                },
                 onError = { Timber.e(it) }
             )
         return liveData
     }
 
+    private fun getWalletId(): Single<Long> {
+        return accountSharedRepository.getCurrentWalletId()
+    }
+
+    fun getCategories(type: TransactionType) {
+        val getCategoriesAction = when(type) {
+            TransactionType.INCOME -> transactionEditingRepository::getIncomeCategories
+            TransactionType.OUTCOME -> transactionEditingRepository::getOutcomeCategories
+        }
+        accountSharedRepository.getUserInfo()
+            .flatMap { userInfo -> getCategoriesAction(userInfo.id!!) }
+            .map { categoryData -> categoryData.map { it.toCategory() }}
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { categories.postValue(it) },
+                onError = Timber::e
+            )
+    }
+
     private fun performCreateTransactionAction(
         transactionAction: CreateTransactionAction,
         posedTransaction: CreateTransactionData
-    ) = Singles.zip(
-        accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID),
-        accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID)
-    ).flatMap { (accountId, accountIdToken) ->
-        transactionAction(posedTransaction, accountId.toLong(), accountIdToken)
+    ) {
+        transactionAction(posedTransaction)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = { },
+                onError = Timber::e
+            )
     }
 
-    private fun getCreateTransactionAction(posedTransaction: CreateTransactionData): CreateTransactionAction {
-        return if (posedTransaction.id == null) {
-            walletRepository::createTransaction
+    private fun getCreateTransactionAction(createTransactionData: CreateTransactionData): CreateTransactionAction {
+        return if (createTransactionData.id == null) {
+            transactionEditingRepository::createTransaction
         } else {
-            walletRepository::updateTransaction
+            transactionEditingRepository::updateTransaction
         }
     }
-
-    private fun createTransactionData(it: PosedTransaction) =
-        CreateTransactionData(
-            it.id,
-            it.sum,
-            it.type,
-            it.category.id!!,
-            defaultDataTime.toString(),
-            Currency.RUB.name
-        )
 
     override fun onCleared() {
         disposable.dispose()

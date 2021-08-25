@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 data class CreateTransactionData(
     @SerialName("id")
     val id: Long?,
+    @SerialName("walletId")
+    val walletId: Long,
     @SerialName("amount")
     val amount: String,
     @SerialName("transactionType")

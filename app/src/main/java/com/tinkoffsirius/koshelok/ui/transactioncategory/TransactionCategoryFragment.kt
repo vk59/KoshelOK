@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
-import com.tinkoffsirius.koshelok.config.AppConfig
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionCategoryBinding
 import com.tinkoffsirius.koshelok.di.ViewModelFactory
-import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryViewModel
 import com.tinkoffsirius.koshelok.ui.transactioncategory.adapters.TransactionCategoryAdapter
@@ -72,7 +70,6 @@ class TransactionCategoryFragment : Fragment() {
         viewModel.transaction.observe(viewLifecycleOwner, {
 //            recyclerAdapter.setPosition((it.category.id?.toInt()?.minus(1)))
 //            binding.setCategory.isEnabled = true
-
         })
 
         binding.transactionCategoryRecycler.apply {
@@ -80,19 +77,13 @@ class TransactionCategoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(this@TransactionCategoryFragment.context)
         }
 
-        viewModel.transaction.observe(viewLifecycleOwner, {
-            val list: List<Category>?
-            if (it.type == TransactionType.INCOME.name) {
-                list =
-                    AppConfig.transactionExample.filter { it.typeName.name == TransactionType.INCOME.name }
-                recyclerAdapter.setData(list)
-            } else {
-                list =
-                    AppConfig.transactionExample.filter { it.typeName.name == TransactionType.OUTCOME.name }
-            }
-            recyclerAdapter.setData(list)
-
+        viewModel.transaction.observe(viewLifecycleOwner, { posedTransaction ->
+            viewModel.getCategories(TransactionType.valueOf(posedTransaction.type))
         })
+
+        viewModel.categories.observe(viewLifecycleOwner) { list ->
+            recyclerAdapter.setData(list)
+        }
 
         initListeners(view)
     }

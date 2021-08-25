@@ -3,9 +3,9 @@ package com.tinkoffsirius.koshelok.ui.walletlist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.entities.NewWallet
+import com.tinkoffsirius.koshelok.repository.WalletListRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
-import com.tinkoffsirius.koshelok.repository.main.WalletRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.WalletSharedRepository
 import com.tinkoffsirius.koshelok.ui.Event
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class WalletListViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
-    private val walletRepository: WalletRepository,
+    private val walletRepository: WalletListRepository,
     private val walletSharedRepository: WalletSharedRepository
 ) : ViewModel() {
 
@@ -48,36 +48,12 @@ class WalletListViewModel @Inject constructor(
         updateUserInfo(currentUserInfo.id!!, currentUserInfo.googleToken)
     }
 
-    private fun updateUserInfo(userId: Long, token: String): Disposable {
-        status.postValue(Event.Loading())
-        return walletRepository.getUserInfoWallets(idUser = userId, idToken = token)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = { userInfoWallets ->
-                    status.postValue(Event.Success())
-                    isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
-                    items.postValue(createNewWalletItemList(userInfoWallets.wallets))
-                    userInfoBalance.postValue(
-                        UserInfoBalance(
-                            "${userInfoWallets.overallBalance} RUB",
-                            "${userInfoWallets.overallIncome} RUB",
-                            "${userInfoWallets.overallSpending} RUB"
-                        )
-                    )
-                },
-                onError = {
-                    status.postValue(Event.Error(it))
-                }
-            )
-    }
-
     fun deleteWallet(walletItem: WalletItem) {
-        disposable += walletRepository.deleteWalletById(walletItem.id!!, "", "")
+        disposable += walletRepository.deleteWalletById(walletItem.id!!)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = { Timber.d(it.message) },
+                onComplete = { Timber.tag("tut").d("Successfully deleted") },
                 onError = Timber::e
             )
     }
@@ -95,8 +71,38 @@ class WalletListViewModel @Inject constructor(
             )
     }
 
+    fun showWallet(walletItem: WalletItem): Completable {
+        return accountSharedRepository.saveCurrentWalletId(walletItem.id!!)
+    }
+
     private fun createNewWalletItemList(walletsList: List<WalletDataItem>): List<WalletItem> {
         return walletsList.map { WalletItem(it.id, it.name, it.balance, it.limit, it.currencyType) }
+    }
+
+    private fun updateUserInfo(userId: Long, token: String): Disposable {
+        status.postValue(Event.Loading())
+        return walletRepository.getUserInfoWallets(idUser = userId, idToken = token)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { userInfoWallets ->
+                    status.postValue(Event.Success())
+                    isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
+                    Timber.tag("tut").d(userInfoWallets.wallets.toString())
+                    Timber.tag("tut").d(createNewWalletItemList(userInfoWallets.wallets).toString())
+                    items.postValue(createNewWalletItemList(userInfoWallets.wallets))
+                    userInfoBalance.postValue(
+                        UserInfoBalance(
+                            "${userInfoWallets.overallBalance} RUB",
+                            "${userInfoWallets.overallIncome} RUB",
+                            "${userInfoWallets.overallSpending} RUB"
+                        )
+                    )
+                },
+                onError = {
+                    status.postValue(Event.Error(it))
+                }
+            )
     }
 
     private fun initUserAccountData() {
@@ -112,10 +118,6 @@ class WalletListViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         disposable.dispose()
-    }
-
-    fun updateCurrentWallet(walletItem: WalletItem): Completable {
-        return accountSharedRepository.saveCurrentWalletId(walletItem.id!!)
     }
 }
 

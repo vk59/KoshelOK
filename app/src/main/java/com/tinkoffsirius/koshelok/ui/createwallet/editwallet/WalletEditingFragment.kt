@@ -88,7 +88,7 @@ class WalletEditingFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .subscribeBy(
                     onComplete = {
-                        navController.navigate(R.id.action_walletEditingFragment_to_mainFragment)
+                        navController.navigate(R.id.action_walletEditingFragment_to_walletListFragment)
                     },
                     onError = Timber::e
                 )

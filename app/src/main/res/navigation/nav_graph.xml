@@ -130,11 +130,11 @@
             android:id="@+id/action_walletEditingFragment_to_setNameWalletFragment"
             app:destination="@id/setNameWalletFragment" />
         <action
-            android:id="@+id/action_walletEditingFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
             android:id="@+id/action_walletEditingFragment_to_setLimitWalletFragment"
             app:destination="@id/setLimitWalletFragment" />
+        <action
+            android:id="@+id/action_walletEditingFragment_to_walletListFragment"
+            app:destination="@id/walletListFragment" />
     </fragment>
     <fragment
         android:id="@+id/setCurrencyFragment"

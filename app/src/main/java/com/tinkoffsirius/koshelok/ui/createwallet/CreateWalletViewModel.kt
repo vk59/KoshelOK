@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.NewWallet
+import com.tinkoffsirius.koshelok.repository.CreateWalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.CreateWalletData
-import com.tinkoffsirius.koshelok.repository.main.WalletRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.WalletSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -25,7 +25,7 @@ typealias CreateWalletAction = (CreateWalletData, String) -> Single<CreateWallet
 class CreateWalletViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
     private val walletSharedRepository: WalletSharedRepository,
-    private val walletRepository: WalletRepository
+    private val walletRepository: CreateWalletRepository
 ) : ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
@@ -138,8 +138,6 @@ class CreateWalletViewModel @Inject constructor(
             userId = userId,
             name = it.name,
             balance = "0",
-            income = "0",
-            spending = "0",
             limit = it.limit,
             currencyType = it.currencyType,
             hidden = false

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 data class CategoryData(
     @SerialName("id")
-    val id: Long,
+    val id: Long?,
     @SerialName("name")
     val name: String,
     @SerialName("color")
@@ -19,5 +19,5 @@ data class CategoryData(
     @SerialName("categoryType")
     val categoryType: String,
     @SerialName("userId")
-    val userId: Long
+    val userId: Long?
 )

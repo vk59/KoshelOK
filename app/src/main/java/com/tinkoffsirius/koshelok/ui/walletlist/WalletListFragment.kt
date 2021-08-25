@@ -40,7 +40,7 @@ class WalletListFragment : Fragment() {
     private val walletRecyclerAdapter by lazy {
         WalletRecyclerAdapter(
             { walletItem ->
-                walletListViewModel.updateCurrentWallet(walletItem)
+                walletListViewModel.showWallet(walletItem)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribeBy(
@@ -52,8 +52,8 @@ class WalletListFragment : Fragment() {
             },
             { item -> showDeleteDialog(item) },
             { item ->
-                navController.navigate(R.id.action_walletListFragment_to_walletEditingFragment)
                 walletListViewModel.editWallet(item)
+                navController.navigate(R.id.action_walletListFragment_to_walletEditingFragment)
             }
         ) { navController.navigate(R.id.action_walletListFragment_to_mainFragment) }
     }
