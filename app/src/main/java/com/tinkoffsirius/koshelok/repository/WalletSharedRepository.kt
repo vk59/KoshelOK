@@ -1,14 +1,19 @@
 package com.tinkoffsirius.koshelok.repository
 
 import android.content.SharedPreferences
+import com.tinkoffsirius.koshelok.di.WalletShared
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.NewWallet
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class WalletSharedRepository(private val sharedPreferences: SharedPreferences) {
+class WalletSharedRepository @Inject constructor(
+    @WalletShared
+    private val sharedPreferences: SharedPreferences
+) {
 
     fun saveWallet(newWallet: NewWallet): Completable =
         Completable.fromCallable {

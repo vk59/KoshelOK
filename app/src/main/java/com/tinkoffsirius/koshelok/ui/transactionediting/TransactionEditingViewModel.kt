@@ -7,7 +7,7 @@ import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_ID
+import com.tinkoffsirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_GOOGLE_ID
 import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
@@ -24,10 +24,11 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
+import javax.inject.Inject
 
 typealias CreateTransactionAction = (CreateTransactionData, String, String) -> Single<Response>
 
-class TransactionEditingViewModel(
+class TransactionEditingViewModel @Inject constructor(
     private val transactionSharedRepository: PosedTransactionSharedRepository,
     private val accountSharedRepository: AccountSharedRepository,
     private val walletRepository: WalletRepository
@@ -129,14 +130,18 @@ class TransactionEditingViewModel(
         transactionAction: CreateTransactionAction,
         posedTransaction: CreateTransactionData
     ) = Singles.zip(
-        accountSharedRepository.getAccount(ACCOUNT_ID),
-        accountSharedRepository.getAccount(ACCOUNT_ID)
+        accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID),
+        accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID)
     ).flatMap { (accountId, accountIdToken) ->
         transactionAction(posedTransaction, accountId, accountIdToken)
     }
 
     private fun getCreateTransactionAction(posedTransaction: CreateTransactionData): CreateTransactionAction {
-        return if (posedTransaction.id == null) walletRepository::createTransaction else walletRepository::updateTransaction
+        return if (posedTransaction.id == null) {
+            walletRepository::createTransaction
+        } else {
+            walletRepository::updateTransaction
+        }
     }
 
     private fun createTransactionData(it: PosedTransaction) =

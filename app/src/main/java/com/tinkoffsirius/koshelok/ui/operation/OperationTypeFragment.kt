@@ -1,29 +1,39 @@
 package com.tinkoffsirius.koshelok.ui.operation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentOperationTypeBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
+import javax.inject.Inject
 
 class OperationTypeFragment : Fragment() {
 
     private val binding: FragmentOperationTypeBinding by viewBinding(FragmentOperationTypeBinding::bind)
 
+    @Inject
+    lateinit var transactionViewModelFactory: ViewModelFactory
+
     private val viewModel: TransactionEditingViewModel by viewModels(
         factoryProducer = {
             transactionViewModelFactory
         })
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +47,10 @@ class OperationTypeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.transaction.observe(viewLifecycleOwner, {
             when (it.type) {
-                TransactionType.INCOME.name -> binding.operationTypeRadioButtonIncome.isChecked = true
-                TransactionType.OUTCOME.name -> binding.operationTypeRadioButtonExpense.isChecked = true
+                TransactionType.INCOME.name -> binding.operationTypeRadioButtonIncome.isChecked =
+                    true
+                TransactionType.OUTCOME.name -> binding.operationTypeRadioButtonExpense.isChecked =
+                    true
                 else -> {
                     binding.setType.isEnabled = false
                 }

@@ -1,8 +1,10 @@
 package com.tinkoffsirius.koshelok.repository.entities
 
-// TODO: Swagger
-// CreateWalletData.
-data class WalletData(
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class WalletDataItemList(
     @SerialName("id")
     val id: Long?,
     @SerialName("name")
@@ -17,8 +19,6 @@ data class WalletData(
     val limit: String,
     @SerialName("currencyType")
     val currencyType: String,
-    @SerialName("hidden")
-    val hidden: Boolean,
-    @SerialName("transactions")
-    val transactions: List<TransactionData>
+    @SerialName("isHidden")
+    val isHidden: Boolean
 )

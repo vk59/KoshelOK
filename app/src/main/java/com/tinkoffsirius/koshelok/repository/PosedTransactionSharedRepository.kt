@@ -1,6 +1,7 @@
 package com.tinkoffsirius.koshelok.repository
 
 import android.content.SharedPreferences
+import com.tinkoffsirius.koshelok.di.TransShared
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.entities.TransactionType
@@ -8,8 +9,12 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class PosedTransactionSharedRepository(private val sharedPreferences: SharedPreferences) {
+class PosedTransactionSharedRepository @Inject constructor(
+    @TransShared
+    private val sharedPreferences: SharedPreferences
+) {
 
     fun saveTransaction(posedTransaction: PosedTransaction): Completable =
         Completable.fromCallable {

@@ -2,6 +2,7 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
-import com.tinkoffsirius.koshelok.Dependencies.transactionViewModelFactory
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.DateUtils
 import kotlinx.datetime.Instant
@@ -21,8 +23,12 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class TransactionEditingFragment : Fragment() {
+
+    @Inject
+    lateinit var transactionViewModelFactory: ViewModelFactory
 
     private val viewModel: TransactionEditingViewModel by viewModels(
         factoryProducer = {
@@ -30,6 +36,11 @@ class TransactionEditingFragment : Fragment() {
         })
 
     private val binding by viewBinding(FragmentTransactionEditingBinding::bind)
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,11 +60,12 @@ class TransactionEditingFragment : Fragment() {
             binding.transCategoryLabel.buttonText.text = it.category.categoryName
         })
 
-        initListeners(view)
+        initListeners()
     }
 
-    private fun initListeners(v: View) {
+    private val navController by lazy { findNavController() }
 
+    private fun initListeners() {
         val c = Calendar.getInstance()
         val dateTransaction: LocalDateTime = viewModel.transactionDateTime.value!!
         var year = dateTransaction.year
@@ -82,7 +94,6 @@ class TransactionEditingFragment : Fragment() {
                 day = dDayOfMonth
             }, year, month - 1, day)
             dpd.show()
-
         }
 
         binding.transEditingTimeLabel.setOnClickListener {
@@ -103,26 +114,22 @@ class TransactionEditingFragment : Fragment() {
                 c.get(Calendar.MINUTE),
                 true
             ).show()
-
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            navController.popBackStack()
         }
 
         binding.transSumLabel.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_setSumFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_setSumFragment)
         }
 
         binding.transTypeLabel.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_operationTypeFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_operationTypeFragment)
         }
 
         binding.transCategoryLabel.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
         }
 
         binding.createTransactionButton.setOnClickListener {
@@ -130,8 +137,7 @@ class TransactionEditingFragment : Fragment() {
             viewModel.saveTransaction().observe(viewLifecycleOwner) {
                 Snackbar.make(binding.root, it.message, Snackbar.LENGTH_SHORT).show()
             }
-            findNavController()
-                .navigate(R.id.action_transactionEditingFragment_to_mainFragment)
+            navController.navigate(R.id.action_transactionEditingFragment_to_mainFragment)
         }
     }
 }

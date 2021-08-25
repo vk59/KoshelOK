@@ -4,14 +4,12 @@ import android.content.res.ColorStateList
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemTransactionBinding
 import com.tinkoffsirius.koshelok.entities.TransactionType
-import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 
 class TransactionViewHolder(
     private val binding: ItemTransactionBinding,
     private val deleteCallback: (Long) -> Unit,
-    private val editCallback: (MainItem) -> Unit,
-    private val resourceProvider: ResourceProvider
+    private val editCallback: (MainItem) -> Unit
 ) : MainViewHolder(binding.root) {
 
     private var idTransaction: Long? = null
@@ -21,8 +19,8 @@ class TransactionViewHolder(
             idTransaction = data.id
             with(binding) {
                 val type = when (data.category.typeName) {
-                    TransactionType.INCOME -> resourceProvider.getString(R.string.income)
-                    TransactionType.OUTCOME -> resourceProvider.getString(R.string.outcome)
+                    TransactionType.INCOME -> root.context.getString(R.string.income)
+                    TransactionType.OUTCOME -> root.context.getString(R.string.outcome)
                 }
 
                 categoryTransaction.text = data.category.categoryName
@@ -34,7 +32,7 @@ class TransactionViewHolder(
                 timeTransaction.text = data.time
                 iconTransaction.setImageResource(data.category.icon)
                 iconTransactionBackground.backgroundTintList =
-                    ColorStateList.valueOf(resourceProvider.getColor(data.category.color))
+                    ColorStateList.valueOf(root.context.getColor(data.category.color))
                 deleteButton.setOnClickListener {
                     deleteCallback(idTransaction!!)
                 }

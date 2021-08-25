@@ -1,9 +1,15 @@
 package com.tinkoffsirius.koshelok
 
 import android.app.Application
+import android.content.Context
+import com.tinkoffsirius.koshelok.di.AppComponent
+import com.tinkoffsirius.koshelok.di.DaggerAppComponent
 import timber.log.Timber
 
 class KoshelokApp : Application() {
+
+    lateinit var appComponent: AppComponent
+        private set
 
     override fun onCreate() {
         super.onCreate()
@@ -11,6 +17,14 @@ class KoshelokApp : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        Dependencies.context = this
+        appComponent = DaggerAppComponent.builder()
+            .context(this)
+            .build()
     }
 }
+
+val Context.appComponent: AppComponent
+    get() = when (this) {
+        is KoshelokApp -> appComponent
+        else -> applicationContext.appComponent
+    }

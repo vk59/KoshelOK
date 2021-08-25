@@ -3,13 +3,11 @@ package com.tinkoffsirius.koshelok.ui.main.adapters.viewholders
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemDateBinding
 import com.tinkoffsirius.koshelok.ui.DateUtils
-import com.tinkoffsirius.koshelok.ui.ResourceProvider
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import kotlinx.datetime.*
 
 class DateViewHolder(
-    private val binding: ItemDateBinding,
-    private val resourceProvider: ResourceProvider
+    private val binding: ItemDateBinding
 ) : MainViewHolder(binding.root) {
 
     override fun bind(data: MainItem) {
@@ -24,9 +22,9 @@ class DateViewHolder(
             LocalDate(currentTime.year, currentTime.monthNumber, currentTime.dayOfMonth)
         return when (currentDate.minus(this)) {
             DatePeriod(0, 0, 0) ->
-                resourceProvider.getString(R.string.today)
+                binding.root.context.getString(R.string.today)
             DatePeriod(0, 0, 1) ->
-                resourceProvider.getString(R.string.yesterday)
+                binding.root.context.getString(R.string.yesterday)
             else -> DateUtils.toUIString(this, binding.root.context)
         }
     }

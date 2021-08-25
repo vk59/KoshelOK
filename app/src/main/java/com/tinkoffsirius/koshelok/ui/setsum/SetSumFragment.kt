@@ -6,28 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentSetSumBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.widget.doAfterTextChanged
+import javax.inject.Inject
 
 
 class SetSumFragment : Fragment() {
     private val binding: FragmentSetSumBinding by viewBinding(FragmentSetSumBinding::bind)
 
+    @Inject
+    lateinit var transactionEditingViewModelFactory: ViewModelFactory
+
     private val viewModel: TransactionEditingViewModel by viewModels(
         factoryProducer = {
-            Dependencies.transactionViewModelFactory
+            transactionEditingViewModelFactory
         })
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

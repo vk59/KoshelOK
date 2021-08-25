@@ -1,5 +1,6 @@
 package com.tinkoffsirius.koshelok.ui.createwallet.setcurrency
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,21 +10,31 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentSetCurrencyBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
+import javax.inject.Inject
 
 class SetCurrencyFragment : Fragment() {
 
     private val binding by viewBinding(FragmentSetCurrencyBinding::bind)
 
+    @Inject
+    lateinit var createWalletViewModelFactory: ViewModelFactory
+
     private val createViewModel: CreateWalletViewModel by viewModels(
-        factoryProducer = { Dependencies.createWalletViewModelFactory }
+        factoryProducer = { createWalletViewModelFactory }
     )
 
     private val navController by lazy { findNavController() }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

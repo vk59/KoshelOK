@@ -11,17 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies.createWalletViewModelFactory
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentSetNameWalletBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
 class SetNameWalletFragment : Fragment() {
 
-    private val binding by viewBinding(
-        FragmentSetNameWalletBinding::bind
-    )
+    @Inject
+    lateinit var createWalletViewModelFactory: ViewModelFactory
 
     private val createViewModel: CreateWalletViewModel by viewModels(
         factoryProducer = { createWalletViewModelFactory }
@@ -29,6 +30,15 @@ class SetNameWalletFragment : Fragment() {
 
     private val navController by lazy {
         findNavController()
+    }
+
+    private val binding by viewBinding(
+        FragmentSetNameWalletBinding::bind
+    )
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
     }
 
     override fun onCreateView(

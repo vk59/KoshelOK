@@ -1,5 +1,6 @@
 package com.tinkoffsirius.koshelok.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.DeleteDialog
+import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
+import javax.inject.Inject
 
 class MainFragment : Fragment() {
 
@@ -30,24 +35,34 @@ class MainFragment : Fragment() {
                     viewModel.editCurrentTransaction(element)
                     navController.navigate(R.id.action_mainFragment_to_transactionEditingFragment)
                 }
-            },
-            Dependencies.resourceProvider
+            }
         )
     }
 
+    @Inject
+    lateinit var mainViewModelFactory: ViewModelFactory
+
     private val viewModel: MainViewModel by viewModels(
         factoryProducer = {
-            Dependencies.mainViewModelFactory
+            mainViewModelFactory
         }
     )
 
+    @Inject
+    lateinit var transactionViewModelFactory: ViewModelFactory
+
     private val viewModelTransactionEditing: TransactionEditingViewModel by viewModels(
         factoryProducer = {
-            Dependencies.transactionViewModelFactory
+            transactionViewModelFactory
         }
     )
 
     private val binding by viewBinding(FragmentMainBinding::bind)
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +76,32 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initButtons()
         initRecycler()
+        observeStatus()
+    }
+
+    private fun observeStatus() {
+        viewModel.status.observe(viewLifecycleOwner) { event ->
+            with(binding.swipeLayout) {
+                when (event) {
+                    is Event.Success -> {
+                        isRefreshing = false
+                    }
+                    is Event.Loading -> {
+                        isRefreshing = true
+                    }
+                    is Event.Error -> {
+                        isRefreshing = false
+                        ErrorSnackbarFactory(binding.root)
+                            .create(R.drawable.ic_warning, "Что-то пошло не так")
+                            .show()
+                    }
+                }
+            }
+        }
+
+        binding.swipeLayout.setOnRefreshListener {
+            viewModel.updateTransactions()
+        }
     }
 
     private fun initButtons() {

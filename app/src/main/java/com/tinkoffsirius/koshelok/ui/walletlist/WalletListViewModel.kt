@@ -7,16 +7,18 @@ import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
-class WalletListViewModel(
+class WalletListViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
     private val walletRepository: WalletRepository,
     private val walletSharedRepository: WalletSharedRepository
@@ -24,32 +26,43 @@ class WalletListViewModel(
 
     val items: MutableLiveData<List<WalletItem>> = MutableLiveData(listOf())
 
-    val userInfoBalance = MutableLiveData(UserInfoBalance("0.00", "0.00", "0.00"))
+    val userInfoBalance = MutableLiveData(UserInfoBalance("0", "0", "0"))
 
     val isThereWallets = MutableLiveData<Boolean>()
+
+    val status: MutableLiveData<Event> = MutableLiveData(Event.Success())
+
+    private var userId: Long? = 0L
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
     init {
         disposable += updateUserInfo()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(onError = Timber::e)
+        initUserAccountData()
     }
 
-    fun updateUserInfo(): Completable {
-        return walletRepository.getUserInfoWallets("", "")
-        .doOnSuccess { userInfoWallets ->
-            isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
-            items.postValue(createNewWalletItemList(userInfoWallets.wallets))
-            userInfoBalance.postValue(
-                UserInfoBalance(
-                "${userInfoWallets.overallBalance} RUB",
-                    "${userInfoWallets.overallIncome} RUB",
-                    "${userInfoWallets.overallSpending} RUB"
-                )
+    fun updateUserInfo(): Disposable {
+        status.postValue(Event.Loading())
+        return walletRepository.getUserInfoWallets(1, "")
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { userInfoWallets ->
+                    status.postValue(Event.Success())
+                    isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
+                    items.postValue(createNewWalletItemList(userInfoWallets.wallets))
+                    userInfoBalance.postValue(
+                        UserInfoBalance(
+                            "${userInfoWallets.overallBalance} RUB",
+                            "${userInfoWallets.overallIncome} RUB",
+                            "${userInfoWallets.overallSpending} RUB"
+                        )
+                    )
+                },
+                onError = {
+                    status.postValue(Event.Error(it))
+                }
             )
-        }.ignoreElement()
     }
 
     fun deleteWallet(walletItem: WalletItem) {
@@ -77,6 +90,13 @@ class WalletListViewModel(
 
     private fun createNewWalletItemList(walletsList: List<WalletDataItem>): List<WalletItem> {
         return walletsList.map { WalletItem(it.id, it.name, it.balance, it.limit, it.currencyType) }
+    }
+
+    private fun initUserAccountData() {
+        accountSharedRepository.getUserInfo()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy { userId = it.id }
     }
 
     override fun onCleared() {

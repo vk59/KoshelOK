@@ -1,5 +1,6 @@
 package com.tinkoffsirius.koshelok.ui.walletlist
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
-import com.tinkoffsirius.koshelok.config.AppConfig
+import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
+import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.DeleteDialog
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
+import javax.inject.Inject
 
 class WalletListFragment : Fragment() {
 
@@ -23,8 +26,11 @@ class WalletListFragment : Fragment() {
 
     private val navController by lazy { findNavController() }
 
+    @Inject
+    lateinit var walletListViewModelFactory: ViewModelFactory
+
     private val walletListViewModel: WalletListViewModel by viewModels(
-        factoryProducer = { Dependencies.walletListViewModelFactory }
+        factoryProducer = { walletListViewModelFactory }
     )
 
     private val walletRecyclerAdapter by lazy {
@@ -41,15 +47,9 @@ class WalletListFragment : Fragment() {
         )
     }
 
-    private fun showDeleteDialog(item: WalletItem) {
-        DeleteDialog(
-            "Вы действительно хотите удалить кошелек?",
-            { _, _ ->
-                walletListViewModel.deleteWallet(item)
-            },
-            { dialog, _ -> dialog.cancel() },
-            requireContext()
-        ).create().show()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -65,6 +65,7 @@ class WalletListFragment : Fragment() {
         initAppbar()
         initRecycler()
         initButtons()
+        observeStatus()
     }
 
     private fun initButtons() {
@@ -80,15 +81,9 @@ class WalletListFragment : Fragment() {
         }
 
         binding.textNoEntities.visibility = View.GONE
-        walletRecyclerAdapter.setData(AppConfig.walletsExample.map { walletData ->
-            WalletItem(
-                walletData.id,
-                walletData.name,
-                walletData.balance,
-                walletData.limit,
-                walletData.currencyType
-            )
-        })
+        walletListViewModel.items.observe(viewLifecycleOwner) {
+            walletRecyclerAdapter.setData(it)
+        }
     }
 
     private fun initAppbar() {
@@ -103,5 +98,35 @@ class WalletListFragment : Fragment() {
                 cardOutcome.textMoneyCard.text = it.overallOutcome
             }
         }
+    }
+
+    private fun observeStatus() {
+        binding.swipeLayout.setOnRefreshListener {
+            walletListViewModel.updateUserInfo()
+        }
+        walletListViewModel.status.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is Event.Success -> {
+                    binding.swipeLayout.isRefreshing = false
+                }
+                is Event.Loading -> {
+                    binding.swipeLayout.isRefreshing = true
+                }
+                is Event.Error -> {
+                    binding.swipeLayout.isRefreshing = false
+                }
+            }
+        }
+    }
+
+    private fun showDeleteDialog(item: WalletItem) {
+        DeleteDialog(
+            "Вы действительно хотите удалить кошелек?",
+            { _, _ ->
+                walletListViewModel.deleteWallet(item)
+            },
+            { dialog, _ -> dialog.cancel() },
+            requireContext()
+        ).create().show()
     }
 }

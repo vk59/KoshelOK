@@ -42,6 +42,7 @@ object SampleNetworkService {
                 "5423",
                 "4000",
                 "RUB",
+                false,
                 newTransactions
             )
         Timber.d(walletData.transactions.toString())
@@ -69,7 +70,7 @@ object SampleNetworkService {
                 "63423.32",
                 "5423",
                 "4000",
-                "RUB",
+                "RUB", false,
                 walletData.transactions.filterNot { it.id == id }
             )
         Timber.d(walletData.transactions.toString())
@@ -92,7 +93,8 @@ object SampleNetworkService {
             Currency.RUB.name
         )
         val newTransactions = walletData.transactions.toMutableList()
-        val index = newTransactions.indexOf(newTransactions.find { transactionData.id!!.toInt() == it.id!!.toInt() })
+        val index =
+            newTransactions.indexOf(newTransactions.find { transactionData.id!!.toInt() == it.id!!.toInt() })
         newTransactions[index] = newTrans
         walletData =
             WalletData(
@@ -103,6 +105,7 @@ object SampleNetworkService {
                 "5423",
                 "4000",
                 "RUB",
+                false,
                 newTransactions
             )
         Timber.d(walletData.transactions.toString())
@@ -111,15 +114,16 @@ object SampleNetworkService {
         }
     }
 
-    fun getUserInfoWallets(idUser: String, idToken: String): Single<UserInfoWallets> {
+    fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets> {
         return Single.just(
             UserInfoWallets(
                 "60430.32",
                 "93235.44",
                 "430000.00",
-                AppConfig.walletsExample.map {
-                    WalletDataItem(it.id, it.name, it.balance, it.limit, it.currencyType)
-                }
+                listOf()
+//                AppConfig.walletsExample.map {
+//                    WalletDataItem(it.id, it.name, it.balance, it.limit, it.currencyType,)
+//                }
             )
         )
     }

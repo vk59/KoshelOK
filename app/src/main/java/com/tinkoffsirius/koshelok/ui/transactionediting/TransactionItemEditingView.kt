@@ -3,15 +3,12 @@ package com.tinkoffsirius.koshelok.ui.transactionediting
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemTransactionEditingBinding
-import android.util.TypedValue
-
-
-
 
 class TransactionItemEditingView @JvmOverloads constructor(
     context: Context,

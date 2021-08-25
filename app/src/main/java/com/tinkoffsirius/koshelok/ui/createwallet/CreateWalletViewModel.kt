@@ -3,6 +3,7 @@ package com.tinkoffsirius.koshelok.ui.createwallet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tinkoffsirius.koshelok.di.Mocked
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.NewWallet
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
@@ -18,12 +19,14 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 typealias CreateWalletAction = (CreateWalletData, String, String) -> Single<Response>
 
-class CreateWalletViewModel(
+class CreateWalletViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
     private val walletSharedRepository: WalletSharedRepository,
+    @Mocked
     private val walletRepository: WalletRepository
 ) : ViewModel() {
 
@@ -104,17 +107,18 @@ class CreateWalletViewModel(
     }
 
     private fun getCreateWalletAction(wallet: CreateWalletData): CreateWalletAction {
-        return if (wallet.id == null)
+        return if (wallet.id == null) {
             walletRepository::createWallet
-        else
+        } else {
             walletRepository::updateWallet
+        }
     }
 
     private fun performCreateTransactionAction(
         transactionAction: CreateWalletAction,
         walletData: CreateWalletData
     ) = Singles.zip(
-        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID),
+        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_GOOGLE_ID),
         accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID_TOKEN)
     ).flatMap { (accountId, accountIdToken) ->
         transactionAction(walletData, accountId, accountIdToken)
