@@ -6,10 +6,12 @@ import com.tinkoffsirius.koshelok.entities.NewWallet
 import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
+import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
 import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -36,14 +38,19 @@ class WalletListViewModel @Inject constructor(
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
+    private var currentUserInfo = UserInfo(0, "","","","")
+
     init {
-        disposable += updateUserInfo()
         initUserAccountData()
     }
 
-    fun updateUserInfo(): Disposable {
+    fun updateUserInfo() {
+        updateUserInfo(currentUserInfo.id!!, currentUserInfo.googleToken)
+    }
+
+    private fun updateUserInfo(userId: Long, token: String): Disposable {
         status.postValue(Event.Loading())
-        return walletRepository.getUserInfoWallets(1, "")
+        return walletRepository.getUserInfoWallets(idUser = userId, idToken = token)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
@@ -96,12 +103,19 @@ class WalletListViewModel @Inject constructor(
         accountSharedRepository.getUserInfo()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribeBy { userId = it.id }
+            .subscribeBy {
+                currentUserInfo = it
+                disposable += updateUserInfo(it.id!!, it.googleToken)
+            }
     }
 
     override fun onCleared() {
         super.onCleared()
         disposable.dispose()
+    }
+
+    fun updateCurrentWallet(walletItem: WalletItem): Completable {
+        return accountSharedRepository.saveCurrentWalletId(walletItem.id!!)
     }
 }
 

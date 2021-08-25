@@ -45,6 +45,8 @@ class MainViewModel @Inject constructor(
 
     private var token: String = ""
 
+    private var idWallet: Long = -1L
+
     init {
         updateTransactions()
         accountSharedRepository.getUserInfo()
@@ -52,29 +54,42 @@ class MainViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
-                    idUser = it.id!!
+                    idUser = it.id ?: -1
                     token = it.googleToken
                 },
                 onError = Timber::e
             )
+        accountSharedRepository.getCurrentWalletId()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = {
+                    idWallet = it
+                },
+                onError = Timber::e
+            )
+
     }
 
     fun updateTransactions() {
         status.postValue(Event.Loading())
         disposable += walletRepository.getWalletById(
-            1, idUser, ""
+            // idWallet
+            2, idUser, token
 //            accountSharedRepository.getAccount(ACCOUNT_ID),
 //            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
         )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(onSuccess = { walletData ->
-                val mainItemList = createNewMainItemList(walletData)
+//                val mainItemList = createNewMainItemList(walletData)
                 status.postValue(Event.Success())
                 isThereTransactions.postValue(walletData.transactions.isNotEmpty())
                 items.postValue(createNewMainItemList(walletData))
             },
-                onError = { status.postValue(Event.Error(it)) }
+                onError = { status.postValue(Event.Error(it))
+                Timber.e(it)
+                }
             )
 
     }

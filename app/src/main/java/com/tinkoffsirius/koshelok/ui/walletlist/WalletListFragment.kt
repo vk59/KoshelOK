@@ -18,6 +18,10 @@ import com.tinkoffsirius.koshelok.ui.DeleteDialog
 import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class WalletListFragment : Fragment() {
@@ -35,16 +39,23 @@ class WalletListFragment : Fragment() {
 
     private val walletRecyclerAdapter by lazy {
         WalletRecyclerAdapter(
-            {
-                navController.navigate(R.id.action_walletListFragment_to_mainFragment)
+            { walletItem ->
+                walletListViewModel.updateCurrentWallet(walletItem)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribeBy(
+                        onComplete = {
+                            navController.navigate(R.id.action_walletListFragment_to_mainFragment)
+                        },
+                        onError = Timber::e
+                    )
             },
             { item -> showDeleteDialog(item) },
             { item ->
                 navController.navigate(R.id.action_walletListFragment_to_walletEditingFragment)
                 walletListViewModel.editWallet(item)
-            },
-            { navController.navigate(R.id.action_walletListFragment_to_mainFragment) }
-        )
+            }
+        ) { navController.navigate(R.id.action_walletListFragment_to_mainFragment) }
     }
 
     override fun onAttach(context: Context) {
