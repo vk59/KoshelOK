@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,10 +15,12 @@ import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentNewCategoryBinding
+import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
 import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategoriesAdapter
+import dev.sasikanth.colorsheet.ColorSheet
 import javax.inject.Inject
 
 class NewCategoryFragment : Fragment() {
@@ -66,7 +69,6 @@ class NewCategoryFragment : Fragment() {
             layoutManager = GridLayoutManager(this@NewCategoryFragment.context, 6)
         }
 
-        //val list = AppConfig.iconList
         val list = Icons.values().toList().map { Icon(it.drawableId, R.color.main_blue) }
 
         recyclerAdapter.setData(list)
@@ -89,6 +91,16 @@ class NewCategoryFragment : Fragment() {
 
         binding.transTypeLabel.setOnClickListener {
             navController.navigate(R.id.action_newCategoryFragment_to_newTypeFragment)
+        }
+
+        binding.transCategoryIconLabel.setOnClickListener {
+//            ColorSheet().colorPicker(
+//                colors = intArrayOf(R.color.black , R.color.main_blue),
+//                listener = { color ->
+//                    // Handle color
+//                })
+//                .show(requireFragmentManager())
+
         }
     }
 
