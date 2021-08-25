@@ -16,6 +16,8 @@ import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentNewCategoryBinding
 import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
+import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
+import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategoriesAdapter
 import dev.sasikanth.colorsheet.ColorSheet
 import javax.inject.Inject
@@ -59,7 +61,7 @@ class NewCategoryFragment : Fragment() {
                 }
         })
 
-        val recyclerAdapter = NewCategoriesAdapter{
+        val recyclerAdapter = NewCategoriesAdapter {
             viewModel.updateNewCategoryIcon(iconId = it.imgId)
                 .observe(viewLifecycleOwner, {
 
@@ -70,8 +72,6 @@ class NewCategoryFragment : Fragment() {
             adapter = recyclerAdapter
             layoutManager = GridLayoutManager(this@NewCategoryFragment.context, 6)
         }
-
-
 
         binding.transCategoryIconLabel.setOnClickListener {
             ColorSheet().colorPicker(
@@ -91,16 +91,40 @@ class NewCategoryFragment : Fragment() {
         viewModel.icons.observe(viewLifecycleOwner) {
             recyclerAdapter.setData(it)
         }
-        initListeners(view)
+
+        observeStatus()
+
+        initListeners()
     }
 
+    private fun observeStatus() {
+        viewModel.status.observe(viewLifecycleOwner) {
+            when (it) {
+                is Event.Success -> {
+                    navController.navigateUp()
+                    binding.swipeLayout.isRefreshing = false
+                }
+                is Event.Error -> {
+                    binding.swipeLayout.isRefreshing = false
+                    ErrorSnackbarFactory(binding.root).create(
+                        R.drawable.ic_warning, "Что-то пошло не так"
+                    )
+                }
+                is Event.Loading -> binding.swipeLayout.isRefreshing = true
+            }
+        }
+    }
 
-    private fun initListeners(v: View) {
+    private fun initListeners() {
 
         binding.createTransactionButton.setOnClickListener {}
 
         binding.toolbar.setNavigationOnClickListener {
             navController.popBackStack()
+        }
+
+        binding.createTransactionButton.setOnClickListener {
+            viewModel.createCategory()
         }
 
         binding.transNameLabel.setOnClickListener {

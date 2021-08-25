@@ -5,20 +5,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.Icons
+import com.tinkoffsirius.koshelok.config.toCategoryData
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
+import com.tinkoffsirius.koshelok.repository.NewCategoryRepository
+import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.NewCategorySharedRepository
+import com.tinkoffsirius.koshelok.ui.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
 import javax.inject.Inject
 
 class NewCategoryViewModel @Inject constructor(
-    private val newCategorySharedRepository: NewCategorySharedRepository
+    private val accountSharedRepository: AccountSharedRepository,
+    private val newCategorySharedRepository: NewCategorySharedRepository,
+    private val newCategoryRepository: NewCategoryRepository
 ) : ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
@@ -26,6 +36,8 @@ class NewCategoryViewModel @Inject constructor(
     val newCategory: MutableLiveData<Category> = MutableLiveData()
 
     val icons: MutableLiveData<List<Icon>> = MutableLiveData(emptyList())
+
+    val status: MutableLiveData<Event?> = MutableLiveData(null)
 
     init {
         updateState()
@@ -103,5 +115,31 @@ class NewCategoryViewModel @Inject constructor(
             )
 
         return ld
+    }
+
+    fun createCategory() {
+        status.postValue(Event.Loading())
+        Singles.zip(
+            newCategorySharedRepository.getNewCategory(),
+            accountSharedRepository.getUserInfo()
+        )
+            .flatMapCompletable { (newCategory, userInfo) ->
+                newCategoryRepository.createNewCategory(
+                    categoryData = newCategory.toCategoryData(
+                        Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+                        userId = userInfo.id!!,
+                        colorIsFromDrawable = false
+                    )
+                )
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = { status.postValue(Event.Success()) },
+                onError = {
+                    Timber.e(it)
+                    status.postValue(Event.Error(it))
+                }
+            )
     }
 }

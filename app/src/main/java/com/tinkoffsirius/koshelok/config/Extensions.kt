@@ -30,21 +30,31 @@ fun PosedTransaction.toCreateTransactionData(
 }
 
 fun CategoryData.toCategory(): Category {
-    return Category(id, TransactionType.valueOf(categoryType), name,
+    return Category(
+        id, TransactionType.valueOf(categoryType), name,
         Icons.values().first { icon == it.id }.drawableId,
         Colors.values().first { color == it.id }.res
     )
 }
 
-fun Category.toCategoryData(creationDate: LocalDateTime, userId: Long): CategoryData {
+fun Category.toCategoryData(
+    creationDate: LocalDateTime,
+    userId: Long,
+    colorIsFromDrawable: Boolean = true
+): CategoryData {
+    val colorInt = if (colorIsFromDrawable) {
+        Colors.values().first { color == it.res }.id
+    } else {
+        Colors.values().first { color == it.rgb }.id
+    }
     return CategoryData(
-        id,
-        categoryName,
-        Colors.values().first { color == it.res }.id,
-        Icons.values().first { icon == it.drawableId }.id,
-        creationDate.toString(),
-        typeName.name,
-        userId
+        id = id,
+        name = categoryName,
+        color = colorInt,
+        icon = Icons.values().first { icon == it.drawableId }.id,
+        creationDate = creationDate.toString(),
+        categoryType = typeName.name,
+        userId = userId
     )
 }
 

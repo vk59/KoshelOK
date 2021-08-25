@@ -21,9 +21,11 @@ interface BindsRepositoryModule {
     @Binds
     fun bindMainRepository(mainRepositoryImpl: MainRepositoryImpl): MainRepository
 
-
     @Binds
     fun bindWalletListRepository(walletListRepositoryImpl: WalletListRepositoryImpl): WalletListRepository
+
+    @Binds
+    fun bindNewCategoryRepository(newCategoryRepositoryImpl: NewCategoryRepositoryImpl): NewCategoryRepository
 
     @Mocked
     @Binds
