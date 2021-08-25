@@ -1,5 +1,6 @@
 package com.tinkoffsirius.koshelok.service
 
+import com.tinkoffsirius.koshelok.repository.entities.CreateWalletData
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.UserInfoWallets
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
@@ -25,4 +26,7 @@ interface WalletService {
 
     @POST("user/")
     fun registerUser(@Body userInfo: UserInfo): Single<UserInfo>
+
+    @POST("wallet/")
+    fun createWallet(@Body createWalletData: CreateWalletData): Single<CreateWalletData>
 }

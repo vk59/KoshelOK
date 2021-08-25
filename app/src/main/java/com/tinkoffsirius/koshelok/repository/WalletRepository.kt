@@ -31,13 +31,13 @@ interface WalletRepository {
         walletData: CreateWalletData,
         idUser: String,
         idToken: String
-    ): Single<Response>
+    ): Single<CreateWalletData>
 
     fun updateWallet(
         walletData: CreateWalletData,
         idUser: String,
         idToken: String
-    ): Single<Response>
+    ): Single<CreateWalletData>
 
     fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets>
 

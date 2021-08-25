@@ -43,16 +43,18 @@ class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
         walletData: CreateWalletData,
         idUser: String,
         idToken: String
-    ): Single<Response> {
-        return Single.just(Response("Successfully saved wallet $walletData"))
+    ): Single<CreateWalletData> {
+        return Single.fromCallable {
+            CreateWalletData(0,0,"","","","","", "",false)
+        }
     }
 
     override fun updateWallet(
         walletData: CreateWalletData,
         idUser: String,
         idToken: String
-    ): Single<Response> {
-        return Single.just(Response("Successfully updated wallet $walletData"))
+    ): Single<CreateWalletData> {
+        return Single.just(CreateWalletData(0, 0, "", "", "", "", "", "", false))
     }
 
     override fun getUserInfoWallets(idUser: Long, idToken: String): Single<UserInfoWallets> {

@@ -8,6 +8,7 @@ import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.ui.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -29,29 +30,33 @@ class OnBoardingViewModel @Inject constructor(
             UserInfo(2, "1", "hello@gmail.com", "", "")
         )
 
-
     fun authorize(account: GoogleSignInAccount) {
         val email = account.email
         val googleId = account.id
         disposable += repository.getUserByEmail(email!!)
+            .flatMapCompletable { registerOrSaveUser(it, email, googleId!!) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = {
-                    if (it.id == null) {
-                        registerUser(email, googleId)
-                    } else {
-                        saveUser(it)
-                    }
-                },
-                onError = {
-                    registerUser(email, googleId)
-                }
+                onComplete = { status.value = Event.Success() },
+                onError = { status.value = Event.Error(it) }
             )
     }
 
-    private fun registerUser(email: String, googleId: String) {
-        disposable += repository.registerUser(
+    private fun registerOrSaveUser(
+        it: UserInfo,
+        email: String,
+        googleId: String
+    ): Completable {
+        return if (it.id == null) {
+            registerUser(email, googleId)
+        } else {
+            saveUser(it)
+        }
+    }
+
+    private fun registerUser(email: String, googleId: String): Completable {
+        return repository.registerUser(
             UserInfo(
                 null,
                 googleId,
@@ -59,31 +64,12 @@ class OnBoardingViewModel @Inject constructor(
                 "2021-08-24T22:05:22.161Z",
                 "2021-08-24T22:05:22.161Z"
             )
-        )
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = {
-                    saveUser(it)
-                },
-                onError = { status.postValue(Event.Error(it)) }
-            )
+        ).flatMapCompletable { saveUser(it) }
     }
 
-    private fun saveUser(userInfo: UserInfo) {
+    private fun saveUser(userInfo: UserInfo): Completable {
         Timber.tag("tut").d(userInfo.toString())
-        accountSharedRepository.saveUserInfo(userInfo)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onComplete = {
-                    status.postValue(Event.Success())
-                },
-                onError = {
-                    status.postValue(Event.Error(it))
-                    Timber.e(it)
-                }
-            )
+        return accountSharedRepository.saveUserInfo(userInfo)
     }
 
     override fun onCleared() {

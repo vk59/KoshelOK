@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class NewWallet(
     val id: Long?,
     val name: String,
-    val limit: String,
+    val limit: String?,
     val currencyType: String
 )

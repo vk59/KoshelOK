@@ -14,6 +14,11 @@ import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletEditingBinding
 import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
+import timber.log.Timber
+import timber.log.Timber.Forest.e
 import javax.inject.Inject
 
 class WalletEditingFragment : Fragment() {
@@ -78,9 +83,16 @@ class WalletEditingFragment : Fragment() {
         }
 
         binding.createWalletButton.setOnClickListener {
-            createViewModel.saveWallet().observe(viewLifecycleOwner) {
-                navController.navigate(R.id.action_walletEditingFragment_to_mainFragment)
-            }
+            createViewModel.saveWallet()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onComplete = {
+                        navController.navigate(R.id.action_walletEditingFragment_to_mainFragment)
+                    },
+                    onError = Timber::e
+                )
+
         }
     }
 }

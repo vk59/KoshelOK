@@ -45,15 +45,15 @@ class NetWalletRepositoryImpl @Inject constructor() : WalletRepository {
         walletData: CreateWalletData,
         idUser: String,
         idToken: String
-    ): Single<Response> {
-        TODO("Not yet implemented")
+    ): Single<CreateWalletData> {
+       return client.createWallet(walletData)
     }
 
     override fun updateWallet(
         walletData: CreateWalletData,
         idUser: String,
         idToken: String
-    ): Single<Response> {
+    ): Single<CreateWalletData> {
         TODO("Not yet implemented")
     }
 

@@ -11,11 +11,14 @@ import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
+import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
 import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -41,67 +44,55 @@ class MainViewModel @Inject constructor(
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    private var idUser: Long = -1L
-
-    private var token: String = ""
-
-    private var idWallet: Long = -1L
-
     init {
-        updateTransactions()
-        accountSharedRepository.getUserInfo()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = {
-                    idUser = it.id ?: -1
-                    token = it.googleToken
-                },
-                onError = Timber::e
-            )
-        accountSharedRepository.getCurrentWalletId()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = {
-                    idWallet = it
-                },
-                onError = Timber::e
-            )
-
+        status.postValue(Event.Loading())
+        disposable += loadData()
     }
 
-    fun updateTransactions() {
-        status.postValue(Event.Loading())
-        disposable += walletRepository.getWalletById(
-            // idWallet
-            2, idUser, token
-//            accountSharedRepository.getAccount(ACCOUNT_ID),
-//            accountSharedRepository.getAccount(ACCOUNT_ID_TOKEN)
-        )
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(onSuccess = { walletData ->
-//                val mainItemList = createNewMainItemList(walletData)
+    private fun loadData() = getUserInfo()
+        .flatMap { (userInfo, walletId) -> updateTransactions(userInfo, walletId) }
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .subscribeBy(
+            onSuccess = { walletData ->
                 status.postValue(Event.Success())
                 isThereTransactions.postValue(walletData.transactions.isNotEmpty())
                 items.postValue(createNewMainItemList(walletData))
             },
-                onError = { status.postValue(Event.Error(it))
+            onError = {
+                status.postValue(Event.Error(it))
                 Timber.e(it)
-                }
-            )
+            }
+        )
 
+    private fun getUserInfo() = Singles.zip(
+        accountSharedRepository.getUserInfo(),
+        accountSharedRepository.getCurrentWalletId()
+    )
+
+    fun updateTransactions() {
+        loadData()
+    }
+
+    private fun updateTransactions(userInfo: UserInfo, walletId: Long): Single<WalletData> {
+        return walletRepository.getWalletById(
+            walletId, userInfo.id!!, userInfo.googleToken
+        )
     }
 
     fun deleteTransactionById(id: Long) {
         disposable += walletRepository.deleteTransactionById(id)
+            .flatMap {
+                getUserInfo().flatMap { (userInfo, walletId) ->
+                    updateTransactions(userInfo, walletId)
+                }
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
+            .ignoreElement()
             .subscribeBy(
                 onError = { Timber.e(it) }
             )
-        updateTransactions()
     }
 
     @OptIn(ExperimentalTime::class)
