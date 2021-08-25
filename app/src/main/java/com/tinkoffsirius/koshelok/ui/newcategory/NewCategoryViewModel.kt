@@ -1,9 +1,12 @@
 package com.tinkoffsirius.koshelok.ui.newcategory
 
+import androidx.annotation.ColorInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.entities.Category
+import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.repository.shared.NewCategorySharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -22,8 +25,12 @@ class NewCategoryViewModel @Inject constructor(
 
     val newCategory: MutableLiveData<Category> = MutableLiveData()
 
+    val icons: MutableLiveData<List<Icon>> = MutableLiveData(emptyList())
+
     init {
         updateState()
+
+        icons.value = Icons.values().map { Icon(it.drawableId, -10996754) }
     }
 
     fun updateState() {
@@ -40,6 +47,21 @@ class NewCategoryViewModel @Inject constructor(
         newCategorySharedRepository.removeNewCategory()
     }
 
+    fun updateNewCategoryIcon(iconId: Int): LiveData<Unit> {
+        val ld = MutableLiveData<Unit>()
+
+        disposable += newCategorySharedRepository.getNewCategory()
+            .map { it.copy(icon = iconId) }
+            .doOnSuccess { newCategory.value = it }
+            .flatMapCompletable { newCategorySharedRepository.saveNewCategory(it) }
+            .subscribeBy(
+                onComplete = { ld.value = Unit },
+                onError = Timber::e
+            )
+
+        return ld
+    }
+
     fun updateNewCategoryType(type: TransactionType): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
 
@@ -53,6 +75,19 @@ class NewCategoryViewModel @Inject constructor(
             )
 
         return ld
+    }
+
+    fun updateNewCategoryColor(@ColorInt color: Int) {
+        disposable += newCategorySharedRepository.getNewCategory()
+            .map { it.copy(color = color) }
+            .doOnSuccess { newCategory.value = it }
+            .flatMapCompletable { newCategorySharedRepository.saveNewCategory(it) }
+            .subscribeBy(
+                onComplete = {
+                    icons.value = Icons.values().map { Icon(it.drawableId, color) }
+                },
+                onError = Timber::e
+            )
     }
 
     fun updateNewCategoryName(name: String): LiveData<Unit> {

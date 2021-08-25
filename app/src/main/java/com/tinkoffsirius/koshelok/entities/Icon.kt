@@ -1,3 +1,5 @@
 package com.tinkoffsirius.koshelok.entities
 
-data class Icon(val imgId: Int, val colorId: Int)
+import androidx.annotation.ColorInt
+
+data class Icon(val imgId: Int, @ColorInt val color: Int)

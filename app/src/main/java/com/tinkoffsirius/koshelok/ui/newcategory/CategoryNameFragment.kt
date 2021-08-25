@@ -53,7 +53,6 @@ class CategoryNameFragment : Fragment() {
                 0, InputMethodManager.HIDE_IMPLICIT_ONLY
             )
         }
-
         initListeners(view)
     }
 
@@ -66,6 +65,8 @@ class CategoryNameFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
+            viewModel.updateNewCategoryName(binding.categoryNameText.text.toString())
+                .observe(viewLifecycleOwner, {})
             navController.popBackStack()
         }
     }
