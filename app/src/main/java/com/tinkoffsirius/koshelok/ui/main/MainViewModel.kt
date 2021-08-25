@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.tinkoffsirius.koshelok.entities.Category
+import com.tinkoffsirius.koshelok.config.toMainItemTransaction
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
-import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.repository.MainRepository
-import com.tinkoffsirius.koshelok.repository.entities.TransactionData
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
@@ -22,7 +20,8 @@ import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.datetime.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.time.Duration
@@ -124,16 +123,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun createNewMainItemList(walletData: WalletData): List<MainItem> {
-        val items: MutableList<MainItem> = mutableListOf(
-            MainItem.Header(
-                walletData.name,
-                "${walletData.balance} ${walletData.currencyType}",
-                "${walletData.income} ${walletData.currencyType}",
-                "${walletData.spending} ${walletData.currencyType}",
-                walletData.limit
-            )
-        )
-        val transactions = walletData.transactions.toTransactionItems()
+        val items: MutableList<MainItem> = createHeaderInList(walletData)
+        val transactions = walletData.transactions.map { it.toMainItemTransaction() }
 
         val transItems = mutableListOf<MainItem>()
         val transDate = transactions.groupBy { it.date }
@@ -145,38 +136,16 @@ class MainViewModel @Inject constructor(
         return items
     }
 
-    private fun List<TransactionData>.toTransactionItems(): List<MainItem.Transaction> {
-        return this.map {
-            val transactionEnum =
-                if (it.transactionType == "INCOME") {
-                    TransactionType.INCOME
-                } else {
-                    TransactionType.OUTCOME
-                }
-            MainItem.Transaction(
-                it.id!!,
-                it.amount,
-                it.currency,
-                Category(
-                    it.category.id,
-                    transactionEnum,
-                    it.category.name,
-                    it.category.icon,
-                    it.category.color
-                ),
-                it.date.toLocalDateTime().toLocalDate(),
-                it.date.toLocalDateTime().toStringTime()
+    private fun createHeaderInList(walletData: WalletData): MutableList<MainItem> =
+        mutableListOf(
+            MainItem.Header(
+                walletData.name,
+                "${walletData.balance} ${walletData.currencyType}",
+                "${walletData.income} ${walletData.currencyType}",
+                "${walletData.spending} ${walletData.currencyType}",
+                walletData.limit
             )
-        }
-    }
-
-    private fun LocalDateTime.toLocalDate(): LocalDate {
-        return LocalDate(this.year, this.monthNumber, this.dayOfMonth)
-    }
-
-    private fun LocalDateTime.toStringTime(): String {
-        return if (this.minute > 10) "${this.hour}:${this.minute}" else "${this.hour}:0${this.minute}"
-    }
+        )
 
     override fun onCleared() {
         disposable.dispose()

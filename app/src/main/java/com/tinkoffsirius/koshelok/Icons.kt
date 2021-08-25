@@ -30,5 +30,9 @@ enum class Icons(val id: Int, val drawableId: Int) {
     TRAIN(26, R.drawable.ic_train),
     TV(27, R.drawable.ic_tv),
     WALLET(28, R.drawable.ic_wallet),
-    ANOTHER(29, R.drawable.ic_another)
+    ANOTHER1(29, R.drawable.ic_another),
+    ANOTHER2(30, R.drawable.ic_another),
+    ANOTHER3(31, R.drawable.ic_another),
+    ANOTHER4(32, R.drawable.ic_another),
+    ANOTHER5(33, R.drawable.ic_another),
 }

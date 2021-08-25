@@ -10,7 +10,6 @@ import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.repository.TransactionEditingRepository
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
-import com.tinkoffsirius.koshelok.repository.entities.Response
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -62,7 +61,6 @@ class TransactionEditingViewModel @Inject constructor(
     }
 
     fun updateDate(newDate: LocalDateTime) {
-
         this.defaultDataTime = newDate
         transactionDateTime.value = newDate
     }
@@ -111,13 +109,16 @@ class TransactionEditingViewModel @Inject constructor(
         return ld
     }
 
-    fun saveTransaction(): LiveData<Response> {
-        val liveData: MutableLiveData<Response> = MutableLiveData()
+    fun saveTransaction() {
         disposable += Singles.zip(
             getWalletId(), transactionSharedRepository.getTransaction()
         )
             .map { (walletId, posedTransaction) ->
-                posedTransaction.toCreateTransactionData(walletId, defaultDataTime)
+                val dateFormat = defaultDataTime.toString() + ":00:000Z"
+                posedTransaction.toCreateTransactionData(
+                    walletId,
+                    dateFormat
+                )
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -128,7 +129,6 @@ class TransactionEditingViewModel @Inject constructor(
                 },
                 onError = { Timber.e(it) }
             )
-        return liveData
     }
 
     private fun getWalletId(): Single<Long> {
@@ -136,13 +136,13 @@ class TransactionEditingViewModel @Inject constructor(
     }
 
     fun getCategories(type: TransactionType) {
-        val getCategoriesAction = when(type) {
+        val getCategoriesAction = when (type) {
             TransactionType.INCOME -> transactionEditingRepository::getIncomeCategories
             TransactionType.OUTCOME -> transactionEditingRepository::getOutcomeCategories
         }
         accountSharedRepository.getUserInfo()
             .flatMap { userInfo -> getCategoriesAction(userInfo.id!!) }
-            .map { categoryData -> categoryData.map { it.toCategory() }}
+            .map { categoryData -> categoryData.map { it.toCategory() } }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(

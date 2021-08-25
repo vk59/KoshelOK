@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
@@ -134,9 +133,7 @@ class TransactionEditingFragment : Fragment() {
 
         binding.createTransactionButton.setOnClickListener {
             viewModel.updateDate(LocalDateTime(year, month, day, hour, minute, 0, 0))
-            viewModel.saveTransaction().observe(viewLifecycleOwner) {
-                Snackbar.make(binding.root, it.message, Snackbar.LENGTH_SHORT).show()
-            }
+            viewModel.saveTransaction()
             navController.navigate(R.id.action_transactionEditingFragment_to_mainFragment)
         }
     }

@@ -35,7 +35,7 @@ interface WalletService {
     fun createTransaction(@Body transactionData: CreateTransactionData): Completable
 
     @PUT("transaction/")
-    fun updateTransaction(transactionData: CreateTransactionData): Completable
+    fun updateTransaction(@Body transactionData: CreateTransactionData): Completable
 
     @GET("category/income/")
     fun getIncomeCategories(@Header("id") idUser: Long): Single<List<CategoryData>>
