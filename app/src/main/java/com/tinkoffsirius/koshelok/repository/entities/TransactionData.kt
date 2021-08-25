@@ -1,5 +1,9 @@
 package com.tinkoffsirius.koshelok.repository.entities
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class TransactionData(
     @SerialName("id")
     val id: Long?,

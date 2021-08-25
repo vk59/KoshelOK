@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-        app:title="Новая категорию" />
+        app:title="Новая категория" />
 
     <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
         android:id="@+id/trans_name_label"

@@ -3,20 +3,14 @@ package com.tinkoffsirius.koshelok.ui.newcategory.adapters
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.R
-import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
-import com.tinkoffsirius.koshelok.databinding.ItemTransactionCategoryBinding
-import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
-import com.tinkoffsirius.koshelok.ui.transactioncategory.adapters.TransactionCategoryViewHolder
 
-class NewCategorysAdapter() : RecyclerView.Adapter<NewCategoryViewHolder>() {
+class NewCategoriesAdapter() :
+    RecyclerView.Adapter<NewCategoryViewHolder>() {
 
     private var list: List<Icon> = listOf()
 
@@ -41,15 +35,19 @@ class NewCategorysAdapter() : RecyclerView.Adapter<NewCategoryViewHolder>() {
     override fun onBindViewHolder(holder: NewCategoryViewHolder, position: Int) {
         val icon: Icon = list[position]
 
-        //holder.imgBack.
-//        holder.itemView.setOnClickListener {
-//
-//            holder.itemView.backgroundTintList =
-//                ColorStateList.valueOf(Dependencies.resourceProvider.getColor(R.color.black))
-//            notifyDataSetChanged()
-//
-//        }
+        if(itemPosition == position){
+            holder.imgBack?.backgroundTintList =
+                ColorStateList.valueOf(Color.RED)
+        }
 
+
+        holder.itemView.setOnClickListener {
+
+            itemPosition = holder.absoluteAdapterPosition
+          
+            notifyDataSetChanged()
+
+        }
 
 
         holder.bind(icon)

@@ -5,10 +5,10 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.Dependencies
 import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
-import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
+
+
 
 class NewCategoryViewHolder (itemView: View) :
     RecyclerView.ViewHolder(itemView) {
@@ -25,7 +25,7 @@ class NewCategoryViewHolder (itemView: View) :
 
         binding.transactionCategoryImage.setImageResource(icon.imgId)
        imgBack?.backgroundTintList =
-            ColorStateList.valueOf(Dependencies.resourceProvider.getColor(icon.colorId))
+            ColorStateList.valueOf(binding.root.context.getColor(icon.colorId))
 
     }
 }

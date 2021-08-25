@@ -23,6 +23,7 @@ import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 import javax.inject.Inject
 
+
 class MainFragment : Fragment() {
 
     private val navController by lazy { findNavController() }

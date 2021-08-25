@@ -1,5 +1,7 @@
 package com.tinkoffsirius.koshelok.ui.transactioncategory.adapters
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible

@@ -1,7 +1,9 @@
 package com.tinkoffsirius.koshelok.repository.entities
 
-// TODO: Swagger
-// CreateWalletData.
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class WalletData(
     @SerialName("id")
     val id: Long?,

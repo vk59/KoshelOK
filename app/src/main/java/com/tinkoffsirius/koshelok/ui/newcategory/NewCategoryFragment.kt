@@ -17,7 +17,7 @@ import com.tinkoffsirius.koshelok.databinding.FragmentNewCategoryBinding
 import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
-import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategorysAdapter
+import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategoriesAdapter
 import javax.inject.Inject
 
 class NewCategoryFragment : Fragment() {
@@ -59,7 +59,7 @@ class NewCategoryFragment : Fragment() {
                 }
         })
 
-        val recyclerAdapter = NewCategorysAdapter()
+        val recyclerAdapter = NewCategoriesAdapter()
 
         binding.categoryRecycleView.apply {
             adapter = recyclerAdapter
