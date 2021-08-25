@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/transactionCategoryFragment">
+    app:startDestination="@id/setSumFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.tinkoffsirius.koshelok.ui.main.MainFragment"
@@ -27,7 +27,8 @@
         <action
             android:id="@+id/action_setSumFragment_to_operationTypeFragment"
             app:destination="@id/operationTypeFragment"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_setSumFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -46,7 +47,8 @@
         <action
             android:id="@+id/action_operationTypeFragment_to_transactionCategoryFragment"
             app:destination="@id/transactionCategoryFragment"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
 
     <fragment
@@ -58,18 +60,21 @@
         <action
             android:id="@+id/action_transactionCategoryFragment_to_operationTypeFragment"
             app:destination="@id/operationTypeFragment"
-            app:exitAnim="@anim/slide_out_right" />
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_transactionCategoryFragment_to_transactionEditingFragment"
             app:destination="@id/transactionEditingFragment"
             app:exitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popUpTo="@id/transactionEditingFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_transactionCategoryFragment_to_newCategoryFragment"
             app:destination="@id/newCategoryFragment"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
 
     <fragment
@@ -83,6 +88,7 @@
             android:id="@+id/action_transactionEditingFragment_to_transactionCategoryFragment"
             app:destination="@id/transactionCategoryFragment"
             app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_mainFragment"
@@ -96,11 +102,13 @@
             app:destination="@id/setSumFragment"
             app:exitAnim="@anim/slide_out_right"
             app:launchSingleTop="false"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_transactionEditingFragment_to_operationTypeFragment"
             app:destination="@id/operationTypeFragment"
             app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
@@ -183,32 +191,23 @@
         <action
             android:id="@+id/action_newCategoryFragment_to_categoryNameFragment2"
             app:destination="@id/categoryNameFragment"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_newCategoryFragment_to_newTypeFragment"
             app:destination="@id/newTypeFragment"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
 
     <fragment
         android:id="@+id/categoryNameFragment"
         android:name="com.tinkoffsirius.koshelok.ui.newcategory.CategoryNameFragment"
         android:label="fragment_category_name"
-        tools:layout="@layout/fragment_category_name" >
-
-        <action
-            android:id="@+id/action_categoryNameFragment_to_newCategoryFragment"
-            app:destination="@id/newCategoryFragment"
-            app:exitAnim="@anim/slide_out_right" />
-    </fragment>
+        tools:layout="@layout/fragment_category_name" />
     <fragment
         android:id="@+id/newTypeFragment"
         android:name="com.tinkoffsirius.koshelok.ui.newcategory.NewTypeFragment"
-        android:label="NewTypeFragment" >
-        <action
-            android:id="@+id/action_newTypeFragment_to_newCategoryFragment"
-            app:destination="@id/newCategoryFragment"
-            app:exitAnim="@anim/slide_out_right" />
-    </fragment>
+        android:label="NewTypeFragment" />
 
 </navigation>
