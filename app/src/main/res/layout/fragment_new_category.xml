@@ -39,7 +39,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans_type_label"
-        app:tie_text="Иконка" />
+        app:tie_text="Иконка"
+        app:button_text="Цвет"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView
