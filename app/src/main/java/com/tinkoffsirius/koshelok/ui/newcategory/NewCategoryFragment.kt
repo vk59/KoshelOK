@@ -14,6 +14,7 @@ import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentNewCategoryBinding
+import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
 import com.tinkoffsirius.koshelok.di.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.Icon
 import com.tinkoffsirius.koshelok.entities.TransactionType
@@ -66,7 +67,6 @@ class NewCategoryFragment : Fragment() {
             layoutManager = GridLayoutManager(this@NewCategoryFragment.context, 6)
         }
 
-        //val list = AppConfig.iconList
         val list = Icons.values().toList().map { Icon(it.drawableId, R.color.main_blue) }
 
         recyclerAdapter.setData(list)

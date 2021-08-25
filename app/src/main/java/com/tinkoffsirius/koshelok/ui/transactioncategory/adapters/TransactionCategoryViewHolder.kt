@@ -23,7 +23,6 @@ class TransactionCategoryViewHolder(itemView: View) :
         binding.transactionCategoryImage.setImageResource(category.icon)
         binding.transactionCategoryImageBack.backgroundTintList =
             ColorStateList.valueOf(binding.root.context.getColor(category.color))
-
         binding.transactionCategoryTitle.text = category.categoryName
     }
 }
