@@ -19,7 +19,7 @@ import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentOnBoardingBinding
 import com.tinkoffsirius.koshelok.di.ViewModelFactory
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
+import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
 import com.tinkoffsirius.koshelok.ui.Event
 import io.reactivex.rxjava3.core.Completable

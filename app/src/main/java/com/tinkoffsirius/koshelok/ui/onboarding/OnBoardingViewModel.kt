@@ -3,9 +3,9 @@ package com.tinkoffsirius.koshelok.ui.onboarding
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
+import com.tinkoffsirius.koshelok.repository.main.WalletRepository
+import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.ui.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable

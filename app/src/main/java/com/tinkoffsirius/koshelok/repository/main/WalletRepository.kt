@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.repository
+package com.tinkoffsirius.koshelok.repository.main
 
 import com.tinkoffsirius.koshelok.repository.entities.*
 import io.reactivex.rxjava3.core.Single
@@ -11,7 +11,7 @@ interface WalletRepository {
 
     fun createTransaction(
         transactionData: CreateTransactionData,
-        idUser: String,
+        idUser: Long,
         idToken: String
     ): Single<Response>
 
@@ -23,19 +23,17 @@ interface WalletRepository {
 
     fun updateTransaction(
         transactionData: CreateTransactionData,
-        idUser: String,
+        idUser: Long,
         idToken: String
     ): Single<Response>
 
     fun createWallet(
         walletData: CreateWalletData,
-        idUser: String,
         idToken: String
     ): Single<CreateWalletData>
 
     fun updateWallet(
         walletData: CreateWalletData,
-        idUser: String,
         idToken: String
     ): Single<CreateWalletData>
 

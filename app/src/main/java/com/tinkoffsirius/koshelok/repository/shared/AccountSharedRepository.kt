@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.repository
+package com.tinkoffsirius.koshelok.repository.shared
 
 import android.content.SharedPreferences
 import com.tinkoffsirius.koshelok.di.AccountShared

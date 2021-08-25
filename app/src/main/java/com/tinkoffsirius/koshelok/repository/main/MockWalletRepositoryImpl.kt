@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.repository
+package com.tinkoffsirius.koshelok.repository.main
 
 import com.tinkoffsirius.koshelok.repository.entities.*
 import com.tinkoffsirius.koshelok.service.SampleNetworkService
@@ -17,10 +17,10 @@ class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun createTransaction(
         transactionData: CreateTransactionData,
-        idUser: String,
+        idUser: Long,
         idToken: String
     ): Single<Response> {
-        return SampleNetworkService.createTransaction(transactionData, idUser, idToken)
+        return SampleNetworkService.createTransaction(transactionData, idUser.toString(), idToken)
     }
 
     override fun getCategories(
@@ -33,15 +33,14 @@ class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun updateTransaction(
         transactionData: CreateTransactionData,
-        idUser: String,
+        idUser: Long,
         idToken: String
     ): Single<Response> {
-        return SampleNetworkService.updateTransaction(transactionData, idUser, idToken)
+        return SampleNetworkService.updateTransaction(transactionData, "1", idToken)
     }
 
     override fun createWallet(
         walletData: CreateWalletData,
-        idUser: String,
         idToken: String
     ): Single<CreateWalletData> {
         return Single.fromCallable {
@@ -51,7 +50,6 @@ class MockWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun updateWallet(
         walletData: CreateWalletData,
-        idUser: String,
         idToken: String
     ): Single<CreateWalletData> {
         return Single.just(CreateWalletData(0, 0, "", "", "", "", "", "", false))

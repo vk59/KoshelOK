@@ -1,4 +1,4 @@
-package com.tinkoffsirius.koshelok.repository
+package com.tinkoffsirius.koshelok.repository.main
 
 import com.tinkoffsirius.koshelok.repository.entities.*
 import com.tinkoffsirius.koshelok.service.HttpClientFactory
@@ -19,7 +19,7 @@ class NetWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun createTransaction(
         transactionData: CreateTransactionData,
-        idUser: String,
+        idUser: Long,
         idToken: String
     ): Single<Response> {
         TODO("Not yet implemented")
@@ -35,7 +35,7 @@ class NetWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun updateTransaction(
         transactionData: CreateTransactionData,
-        idUser: String,
+        idUser: Long,
         idToken: String
     ): Single<Response> {
         TODO("Not yet implemented")
@@ -43,7 +43,6 @@ class NetWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun createWallet(
         walletData: CreateWalletData,
-        idUser: String,
         idToken: String
     ): Single<CreateWalletData> {
        return client.createWallet(walletData)
@@ -51,7 +50,6 @@ class NetWalletRepositoryImpl @Inject constructor() : WalletRepository {
 
     override fun updateWallet(
         walletData: CreateWalletData,
-        idUser: String,
         idToken: String
     ): Single<CreateWalletData> {
         TODO("Not yet implemented")

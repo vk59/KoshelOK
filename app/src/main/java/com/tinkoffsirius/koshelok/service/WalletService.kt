@@ -4,11 +4,9 @@ import com.tinkoffsirius.koshelok.repository.entities.CreateWalletData
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.UserInfoWallets
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface WalletService {
 
@@ -17,6 +15,9 @@ interface WalletService {
 
     @GET("wallet/")
     fun getWalletById(@Header("id") id: Long): Single<WalletData>
+
+    @DELETE("transaction/")
+    fun deleteTransactionById(@Header("id") id: Long): Completable
 
     @GET("user/email/")
     fun getUserByEmail(@Header("email") email: String): Single<UserInfo>
@@ -29,4 +30,7 @@ interface WalletService {
 
     @POST("wallet/")
     fun createWallet(@Body createWalletData: CreateWalletData): Single<CreateWalletData>
+
+    @PUT("wallet/")
+    fun updateWallet(@Body createWalletData: CreateWalletData): Single<CreateWalletData>
 }

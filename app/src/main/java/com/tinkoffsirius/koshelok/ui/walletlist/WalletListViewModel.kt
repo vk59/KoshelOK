@@ -3,11 +3,11 @@ package com.tinkoffsirius.koshelok.ui.walletlist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.entities.NewWallet
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.WalletRepository
-import com.tinkoffsirius.koshelok.repository.WalletSharedRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
+import com.tinkoffsirius.koshelok.repository.main.WalletRepository
+import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
+import com.tinkoffsirius.koshelok.repository.shared.WalletSharedRepository
 import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

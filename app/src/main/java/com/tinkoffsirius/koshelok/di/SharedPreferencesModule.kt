@@ -2,7 +2,7 @@ package com.tinkoffsirius.koshelok.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.tinkoffsirius.koshelok.repository.SharedPreferencesFactory
+import com.tinkoffsirius.koshelok.repository.shared.SharedPreferencesFactory
 import dagger.Module
 import dagger.Provides
 

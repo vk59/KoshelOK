@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository.Companion.ACCOUNT_GOOGLE_ID
-import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
 import com.tinkoffsirius.koshelok.repository.entities.Response
+import com.tinkoffsirius.koshelok.repository.main.WalletRepository
+import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
+import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository.Companion.ACCOUNT_GOOGLE_ID
+import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -26,7 +26,7 @@ import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
 import javax.inject.Inject
 
-typealias CreateTransactionAction = (CreateTransactionData, String, String) -> Single<Response>
+typealias CreateTransactionAction = (CreateTransactionData, Long, String) -> Single<Response>
 
 class TransactionEditingViewModel @Inject constructor(
     private val transactionSharedRepository: PosedTransactionSharedRepository,
@@ -133,7 +133,7 @@ class TransactionEditingViewModel @Inject constructor(
         accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID),
         accountSharedRepository.getAccount(ACCOUNT_GOOGLE_ID)
     ).flatMap { (accountId, accountIdToken) ->
-        transactionAction(posedTransaction, accountId, accountIdToken)
+        transactionAction(posedTransaction, accountId.toLong(), accountIdToken)
     }
 
     private fun getCreateTransactionAction(posedTransaction: CreateTransactionData): CreateTransactionAction {

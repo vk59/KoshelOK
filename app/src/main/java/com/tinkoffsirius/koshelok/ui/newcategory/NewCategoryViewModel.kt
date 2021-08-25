@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.TransactionType
-import com.tinkoffsirius.koshelok.repository.NewCategorySharedRepository
+import com.tinkoffsirius.koshelok.repository.shared.NewCategorySharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign

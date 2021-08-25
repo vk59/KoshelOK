@@ -7,12 +7,12 @@ import androidx.lifecycle.liveData
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.entities.TransactionType
-import com.tinkoffsirius.koshelok.repository.AccountSharedRepository
-import com.tinkoffsirius.koshelok.repository.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.repository.WalletRepository
+import com.tinkoffsirius.koshelok.repository.MainRepository
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
+import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
+import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -31,7 +31,7 @@ import kotlin.time.ExperimentalTime
 class MainViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
     private val transactionRepository: PosedTransactionSharedRepository,
-    private val walletRepository: WalletRepository
+    private val mainRepository: MainRepository
 ) : ViewModel() {
 
     val items: MutableLiveData<List<MainItem>> = MutableLiveData(listOf())
@@ -75,24 +75,24 @@ class MainViewModel @Inject constructor(
     }
 
     private fun updateTransactions(userInfo: UserInfo, walletId: Long): Single<WalletData> {
-        return walletRepository.getWalletById(
+        return mainRepository.getWalletById(
             walletId, userInfo.id!!, userInfo.googleToken
         )
     }
 
     fun deleteTransactionById(id: Long) {
-        disposable += walletRepository.deleteTransactionById(id)
-            .flatMap {
-                getUserInfo().flatMap { (userInfo, walletId) ->
-                    updateTransactions(userInfo, walletId)
-                }
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .ignoreElement()
-            .subscribeBy(
-                onError = { Timber.e(it) }
-            )
+        disposable +=
+            mainRepository.deleteTransactionById(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onComplete = {
+                        getUserInfo().flatMap { (userInfo, walletId) ->
+                            updateTransactions(userInfo, walletId)
+                        }
+                    },
+                    onError = { Timber.e(it) }
+                )
     }
 
     @OptIn(ExperimentalTime::class)
