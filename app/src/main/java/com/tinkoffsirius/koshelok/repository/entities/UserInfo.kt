@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class UserInfo(
+data class UserInfo(
     @SerialName("id")
     val id: Long?,
     @SerialName("googleToken")

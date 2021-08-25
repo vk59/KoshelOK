@@ -15,13 +15,14 @@ class AccountSharedRepository @Inject constructor(
 ) {
 
     fun getAccount(name: String = ACCOUNT_GOOGLE_ID): Single<String> = Single.fromCallable {
-        sharedPreferences.getString(name, null)!!
+        sharedPreferences.getString(name, "")
     }
 
     fun saveUserInfo(userInfo: UserInfo) = Completable.fromCallable {
         val data = Json.encodeToString(userInfo)
         sharedPreferences.edit()
             .putString(USER_INFO, data)
+            .apply()
     }
 
     fun getUserInfo() = Single.fromCallable {
@@ -33,11 +34,22 @@ class AccountSharedRepository @Inject constructor(
         }
     }
 
+    fun saveCurrentWalletId(idWallet: Long) = Completable.fromCallable {
+        sharedPreferences.edit()
+            .putLong(ID_WALLET, idWallet)
+            .apply()
+    }
+
+    fun getCurrentWalletId() = Single.fromCallable {
+        sharedPreferences.getLong(USER_INFO, 0)
+    }
+
     companion object {
         const val USER_INFO = "user_info"
         const val ACCOUNT_EMAIL = "account_email"
         const val ACCOUNT_GOOGLE_ID = "account_id"
         const val ACCOUNT_ID_TOKEN = "account_id_token"
         const val ACCOUNT_ID_USER = "account_id_user"
+        const val ID_WALLET = "id_wallet"
     }
 }

@@ -21,19 +21,28 @@ object AppConfig {
             id = 1,
             name = Types.CAPITALIZATION.nameType,
             color = R.color.red,
-            icon = R.drawable.ic_capitalize
+            icon = R.drawable.ic_capitalize,
+            "",
+            "",
+            0
         ),
         CategoryData(
             id = 2,
             name = Types.SALARY.nameType,
             color = R.color.red,
-            icon = R.drawable.ic_salary
+            icon = R.drawable.ic_salary,
+            "",
+            "",
+            0
         ),
         CategoryData(
             id = 3,
             name = Types.PART_WORK_JOB.nameType,
             color = R.color.red,
-            icon = R.drawable.ic_capitalize
+            icon = R.drawable.ic_capitalize,
+            "",
+            "",
+            0
         )
     )
 
@@ -162,7 +171,10 @@ object AppConfig {
                     id = 1,
                     name = "Супермаркеты",
                     color = R.color.green,
-                    icon = R.drawable.ic_food
+                    icon = R.drawable.ic_food,
+                    "",
+                    "",
+                    0
                 ),
                 date = "2021-08-20T22:34",
                 currency = "RUB"
@@ -175,7 +187,10 @@ object AppConfig {
                     id = 2,
                     name = "Спорт",
                     color = R.color.red,
-                    icon = R.drawable.ic_sport
+                    icon = R.drawable.ic_sport,
+                    "",
+                    "",
+                    0
                 ),
                 "2021-08-19T23:59",
                 "RUB"
@@ -188,7 +203,10 @@ object AppConfig {
                     id = 3,
                     name = "Зарплата",
                     color = R.color.red,
-                    icon = R.drawable.ic_salary
+                    icon = R.drawable.ic_salary,
+                    "",
+                    "",
+                    0
                 ),
                 date = "2021-08-19T23:59",
                 currency = "RUB"

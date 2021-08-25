@@ -116,8 +116,15 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun authorizeWithAccount(account: GoogleSignInAccount) {
-//        onBoardingViewModel.authorize(account)
-        onBoardingViewModel.authorize()
-        navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
+        onBoardingViewModel.authorize(account)
+//        onBoardingViewModel.authorize()
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeOn(Schedulers.io())
+//            .subscribeBy (
+//                onComplete = {
+//                    navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
+//                },
+//                onError = Timber::e
+//    )
     }
 }

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.databinding.ItemWalletBinding
 
 class WalletRecyclerAdapter(
-    private val onItemClick: () -> Unit,
+    private val onItemClick: (WalletItem) -> Unit,
     private val deleteItem: (WalletItem) -> Unit,
     private val editItem: (WalletItem) -> Unit,
     private val watchItem: () -> Unit
@@ -34,9 +34,10 @@ class WalletRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
-        holder.bind(diff.currentList[position])
+        val walletItem = diff.currentList[position]
+        holder.bind(walletItem)
         holder.itemView.setOnLongClickListener {
-            onItemClick()
+            onItemClick(walletItem)
             false
         }
     }

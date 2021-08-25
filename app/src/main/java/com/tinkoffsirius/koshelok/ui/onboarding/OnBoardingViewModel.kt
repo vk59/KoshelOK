@@ -8,7 +8,6 @@ import com.tinkoffsirius.koshelok.repository.WalletRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.ui.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -25,9 +24,11 @@ class OnBoardingViewModel @Inject constructor(
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    private var userInfo: UserInfo? = null
+    fun authorize() =
+        accountSharedRepository.saveUserInfo(
+            UserInfo(2, "1", "hello@gmail.com", "", "")
+        )
 
-    fun authorize() = Completable.complete()
 
     fun authorize(account: GoogleSignInAccount) {
         val email = account.email
@@ -37,11 +38,10 @@ class OnBoardingViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
-                    userInfo = it
                     if (it.id == null) {
                         registerUser(email, googleId)
                     } else {
-                        saveUser()
+                        saveUser(it)
                     }
                 },
                 onError = {
@@ -51,27 +51,38 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private fun registerUser(email: String, googleId: String) {
-        disposable += repository.registerUser(UserInfo(null, googleId, email, "2021-08-24T22:05:22.161Z", "2021-08-24T22:05:22.161Z"))
+        disposable += repository.registerUser(
+            UserInfo(
+                null,
+                googleId,
+                email,
+                "2021-08-24T22:05:22.161Z",
+                "2021-08-24T22:05:22.161Z"
+            )
+        )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
-                    saveUser()
+                    saveUser(it)
                 },
                 onError = { status.postValue(Event.Error(it)) }
             )
     }
 
-    private fun saveUser() {
+    private fun saveUser(userInfo: UserInfo) {
         Timber.tag("tut").d(userInfo.toString())
-        accountSharedRepository.saveUserInfo(userInfo!!)
+        accountSharedRepository.saveUserInfo(userInfo)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onComplete = {
                     status.postValue(Event.Success())
-                             },
-                onError = { status.postValue(Event.Error(it))}
+                },
+                onError = {
+                    status.postValue(Event.Error(it))
+                    Timber.e(it)
+                }
             )
     }
 
