@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/walletListFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.tinkoffsirius.koshelok.ui.main.MainFragment"
@@ -135,12 +135,14 @@
         android:label="WalletEditingFragment" >
         <action
             android:id="@+id/action_walletEditingFragment_to_setCurrencyFragment"
-            app:destination="@id/setCurrencyFragment" />
+            app:destination="@id/setCurrencyFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_walletEditingFragment_to_setNameWalletFragment"
             app:destination="@id/setNameWalletFragment"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_walletEditingFragment_to_setLimitWalletFragment"
             app:destination="@id/setLimitWalletFragment"
@@ -148,7 +150,9 @@
             app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_walletEditingFragment_to_walletListFragment"
-            app:destination="@id/walletListFragment" />
+            app:destination="@id/walletListFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/setCurrencyFragment"
@@ -162,8 +166,9 @@
         android:id="@+id/setNameWalletFragment"
         android:name="com.tinkoffsirius.koshelok.ui.createwallet.setname.SetNameWalletFragment"
         android:label="SetNameWalletFragment" >
+
         <action
-            android:id="@+id/action_setNameWalletFragment_to_walletEditingFragment"
+            android:id="@+id/action_setNameWalletFragment_to_walletEditingFragment2"
             app:destination="@id/walletEditingFragment"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left" />
