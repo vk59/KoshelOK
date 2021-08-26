@@ -75,10 +75,16 @@ class WalletListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.statusBarColor = requireContext().getColor(R.color.main_blue)
         initAppbar()
         initRecycler()
         initButtons()
         observeStatus()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireActivity().window.statusBarColor = requireContext().getColor(R.color.white)
     }
 
     private fun initButtons() {
