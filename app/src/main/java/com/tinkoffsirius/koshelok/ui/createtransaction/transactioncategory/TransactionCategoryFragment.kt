@@ -17,6 +17,7 @@ import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.createtransaction.TransactionEditingViewModel
 import com.tinkoffsirius.koshelok.ui.createtransaction.transactioncategory.adapters.TransactionCategoryAdapter
+import com.tinkoffsirius.koshelok.ui.createtransaction.transactioncategory.adapters.TransactionCategorySelectedItem
 import com.tinkoffsirius.koshelok.ui.newcategory.NewCategoryViewModel
 import javax.inject.Inject
 
@@ -58,7 +59,9 @@ class TransactionCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.setCategory.isEnabled = false
+        if(TransactionCategorySelectedItem.itemNumber == -1) {
+            binding.setCategory.isEnabled = false
+        }
 
         val recyclerAdapter = TransactionCategoryAdapter {
             viewModel.updateTransactionCategory(category = it)
@@ -66,11 +69,6 @@ class TransactionCategoryFragment : Fragment() {
                     binding.setCategory.isEnabled = true
                 })
         }
-
-        viewModel.transaction.observe(viewLifecycleOwner, {
-//            recyclerAdapter.setPosition((it.category.id?.toInt()?.minus(1)))
-//            binding.setCategory.isEnabled = true
-        })
 
         binding.transactionCategoryRecycler.apply {
             adapter = recyclerAdapter

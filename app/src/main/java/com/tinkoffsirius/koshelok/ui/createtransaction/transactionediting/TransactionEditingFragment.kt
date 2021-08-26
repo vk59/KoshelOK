@@ -17,6 +17,8 @@ import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.createtransaction.TransactionEditingViewModel
+import com.tinkoffsirius.koshelok.ui.createtransaction.transactioncategory.adapters.TransactionCategorySelectedItem
+import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategorySelectedItem
 import com.tinkoffsirius.koshelok.utils.DateUtils
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -73,9 +75,7 @@ class TransactionEditingFragment : Fragment() {
         var day = dateTransaction.dayOfMonth
         var hour = dateTransaction.hour
         var minute = dateTransaction.minute
-        //val time = "${dateTransaction.hour}:${dateTransaction.minute}"
         val localDate = LocalDate(year, month, day)
-        //val timeZone = TimeZone.getDefault().id
 
         binding.transEditingDateLabel.buttonText.text =
             DateUtils.toUIString(localDate, requireContext())
@@ -133,6 +133,8 @@ class TransactionEditingFragment : Fragment() {
         }
 
         binding.createTransactionButton.setOnClickListener {
+            TransactionCategorySelectedItem.itemNumber = -1
+            NewCategorySelectedItem.itemNumber = -1
             viewModel.updateDate(LocalDateTime(year, month, day, hour, minute, 0, 0))
             viewModel.saveTransaction()
             navController.navigate(R.id.action_transactionEditingFragment_to_mainFragment)

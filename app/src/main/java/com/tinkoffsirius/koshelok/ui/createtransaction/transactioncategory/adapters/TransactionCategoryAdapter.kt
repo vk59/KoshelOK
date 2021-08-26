@@ -12,8 +12,6 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
 
     private var list: List<Category> = listOf()
 
-    var itemPosition: Int? = -1
-
     fun setData(data: List<Category>) {
         list = data
         notifyDataSetChanged()
@@ -37,10 +35,10 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
     override fun onBindViewHolder(holder: TransactionCategoryViewHolder, position: Int) {
         val category: Category = list[position]
 
-        holder.selectionImage?.isVisible = itemPosition == position
+        holder.selectionImage?.isVisible = TransactionCategorySelectedItem.itemNumber == position
 
         holder.itemView.setOnClickListener {
-            itemPosition = holder.absoluteAdapterPosition
+            TransactionCategorySelectedItem.itemNumber = holder.absoluteAdapterPosition
             setSelected(category)
             notifyDataSetChanged()
         }
@@ -49,4 +47,8 @@ class TransactionCategoryAdapter(private val setSelected: (category: Category) -
     }
 
     override fun getItemCount(): Int = list.size
+}
+
+object TransactionCategorySelectedItem {
+    var itemNumber: Int? = -1
 }

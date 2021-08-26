@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
@@ -23,6 +22,9 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
+import android.view.ContextThemeWrapper
+import com.tinkoffsirius.koshelok.R
+
 
 class WalletListFragment : Fragment() {
 
@@ -68,7 +70,12 @@ class WalletListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_wallet_list, container, false)
+
+        val contextThemeWrapper: Context = ContextThemeWrapper(requireContext(), R.style.Theme_Koshelok_Wallet)
+
+        val localInflater = inflater.cloneInContext(contextThemeWrapper)
+
+        return localInflater.inflate(R.layout.fragment_wallet_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
