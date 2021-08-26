@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_mainFragment_to_transactionEditingFragment"
             app:destination="@id/transactionEditingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_walletListFragment"
+            app:destination="@id/walletListFragment" />
     </fragment>
 
     <fragment

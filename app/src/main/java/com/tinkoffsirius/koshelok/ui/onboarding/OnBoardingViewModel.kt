@@ -27,7 +27,7 @@ class OnBoardingViewModel @Inject constructor(
 
     fun authorize() =
         accountSharedRepository.saveUserInfo(
-            UserInfo(2, "1", "hello@gmail.com", "", "")
+            UserInfo(2, "1", "hello@gmail.com")
         )
 
     fun authorize(account: GoogleSignInAccount) {
@@ -68,9 +68,7 @@ class OnBoardingViewModel @Inject constructor(
             UserInfo(
                 null,
                 googleId,
-                email,
-                "2021-08-24T22:05:22.161Z",
-                "2021-08-24T22:05:22.161Z"
+                email
             )
         ).flatMapCompletable { saveUser(it) }
     }

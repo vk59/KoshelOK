@@ -10,7 +10,6 @@ import com.tinkoffsirius.koshelok.repository.entities.CreateWalletData
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.WalletSharedRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.Singles
@@ -86,8 +85,10 @@ class CreateWalletViewModel @Inject constructor(
         return ld
     }
 
-    fun saveWallet() = Completable.fromCallable {
-        Singles.zip(
+    fun saveWallet(): LiveData<Unit> {
+        val ld = MutableLiveData(Unit)
+
+        disposable += Singles.zip(
             accountSharedRepository.getUserInfo(),
             walletSharedRepository.getWallet()
         )
@@ -96,13 +97,17 @@ class CreateWalletViewModel @Inject constructor(
                 val transactionAction = getCreateWalletAction(wallet)
                 performCreateTransactionAction(transactionAction, wallet)
             }
+            .flatMapCompletable { accountSharedRepository.saveCurrentWalletId(it.id!!) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = { walletData -> saveCurrentWalletId(walletData.id!!) },
+                onComplete = { ld.value = Unit },
                 onError = { Timber.e(it) }
             )
+
+        return ld
     }
+
 
     private fun saveCurrentWalletId(id: Long) {
         disposable += accountSharedRepository.saveCurrentWalletId(id)

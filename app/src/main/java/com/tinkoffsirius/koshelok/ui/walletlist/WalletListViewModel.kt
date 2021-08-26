@@ -38,7 +38,7 @@ class WalletListViewModel @Inject constructor(
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    private var currentUserInfo = UserInfo(0, "","","","")
+    private var currentUserInfo = UserInfo(0, "","")
 
     init {
         initUserAccountData()

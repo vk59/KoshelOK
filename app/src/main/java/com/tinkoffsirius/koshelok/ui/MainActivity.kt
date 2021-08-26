@@ -16,10 +16,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (navController.currentDestination == navController.graph.findNode(R.id.walletListFragment)) {
-            finish()
-        } else {
-            navController.popBackStack()
+        with(navController) {
+            when (currentDestination) {
+                graph.findNode(R.id.walletListFragment) -> finish()
+                graph.findNode(R.id.mainFragment) ->
+                    navigate(R.id.action_mainFragment_to_walletListFragment)
+                else -> popBackStack()
+            }
         }
     }
 }

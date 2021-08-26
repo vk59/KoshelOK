@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
@@ -116,19 +115,7 @@ class MainFragment : Fragment() {
     }
 
     private fun onBackPressed() {
-        viewModel.onBackPressed().observe(viewLifecycleOwner) {
-            if (it) {
-                activity?.finish()
-            } else {
-                Snackbar
-                    .make(
-                        binding.root,
-                        getString(R.string.snackbar_push_exit),
-                        Snackbar.LENGTH_LONG
-                    )
-                    .show()
-            }
-        }
+        navController.navigate(R.id.action_mainFragment_to_walletListFragment)
     }
 
     private fun initRecycler() {
