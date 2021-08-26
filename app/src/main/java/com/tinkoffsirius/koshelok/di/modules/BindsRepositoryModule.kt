@@ -21,4 +21,7 @@ interface BindsRepositoryModule {
 
     @Binds
     fun bindNewCategoryRepository(newCategoryRepositoryImpl: NewCategoryRepositoryImpl): NewCategoryRepository
+
+    @Binds
+    fun bindRegisterRepository(registerRepositoryImpl: RegisterRepositoryImpl): RegisterRepository
 }

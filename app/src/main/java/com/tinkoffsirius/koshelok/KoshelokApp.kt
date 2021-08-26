@@ -2,8 +2,8 @@ package com.tinkoffsirius.koshelok
 
 import android.app.Application
 import android.content.Context
-import com.tinkoffsirius.koshelok.di.DaggerAppComponent
 import com.tinkoffsirius.koshelok.di.components.AppComponent
+import com.tinkoffsirius.koshelok.di.components.DaggerAppComponent
 import timber.log.Timber
 
 class KoshelokApp : Application() {

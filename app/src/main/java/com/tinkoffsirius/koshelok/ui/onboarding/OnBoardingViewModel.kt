@@ -3,8 +3,8 @@ package com.tinkoffsirius.koshelok.ui.onboarding
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.tinkoffsirius.koshelok.repository.RegisterRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
-import com.tinkoffsirius.koshelok.repository.main.WalletRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class OnBoardingViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
-    private val repository: WalletRepository
+    private val repository: RegisterRepository
 ) : ViewModel() {
 
     val status: MutableLiveData<Event> = MutableLiveData(Event.Loading())
