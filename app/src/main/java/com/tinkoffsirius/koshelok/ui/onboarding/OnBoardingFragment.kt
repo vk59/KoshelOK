@@ -81,6 +81,7 @@ class OnBoardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initButton()
+        binding.swipeLayout.isEnabled = false
         observeStatus()
     }
 
@@ -88,14 +89,17 @@ class OnBoardingFragment : Fragment() {
         onBoardingViewModel.status.observe(viewLifecycleOwner) {
             when (it) {
                 is Event.Error -> {
+                    binding.swipeLayout.isRefreshing = false
                     Timber.e(it.throwable)
                     ErrorSnackbarFactory(binding.root)
                         .create(R.drawable.ic_warning, getString(R.string.something_went_wrong))
                         .show()
                 }
-                is Event.Success ->
-                    navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
-                else -> {
+                is Event.Success -> {
+                    binding.swipeLayout.isRefreshing = false
+                }
+                is Event.Loading -> {
+                    binding.swipeLayout.isRefreshing = true
                 }
             }
         }
@@ -118,6 +122,8 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun authorizeWithAccount(account: GoogleSignInAccount) {
-        onBoardingViewModel.authorize(account)
+        onBoardingViewModel.authorize(account).observe(viewLifecycleOwner) {
+                navController.navigate(R.id.action_onBoardingFragment_to_walletListFragment)
+            }
     }
 }
