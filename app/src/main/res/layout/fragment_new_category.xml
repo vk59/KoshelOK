@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.transactionediting.TransactionEditingFragment">
+        tools:context=".ui.createtransaction.transactionediting.TransactionEditingFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,7 +21,7 @@
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
             app:title="Новая категория" />
 
-        <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
+        <com.tinkoffsirius.koshelok.ui.createtransaction.transactionediting.TransactionItemEditingView
             android:id="@+id/trans_name_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:tie_text="Название" />
 
-        <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
+        <com.tinkoffsirius.koshelok.ui.createtransaction.transactionediting.TransactionItemEditingView
             android:id="@+id/trans_type_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             app:tie_text="@string/type" />
 
 
-        <com.tinkoffsirius.koshelok.ui.transactionediting.TransactionItemEditingView
+        <com.tinkoffsirius.koshelok.ui.createtransaction.transactionediting.TransactionItemEditingView
             android:id="@+id/trans_category_icon_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

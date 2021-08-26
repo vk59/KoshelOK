@@ -18,10 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentOnBoardingBinding
-import com.tinkoffsirius.koshelok.di.ViewModelFactory
+import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
-import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
-import com.tinkoffsirius.koshelok.ui.Event
+import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
+import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import timber.log.Timber

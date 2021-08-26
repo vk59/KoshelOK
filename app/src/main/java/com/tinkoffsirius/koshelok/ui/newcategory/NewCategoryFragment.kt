@@ -14,12 +14,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentNewCategoryBinding
-import com.tinkoffsirius.koshelok.di.ViewModelFactory
+import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
-import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
-import com.tinkoffsirius.koshelok.ui.Event
+import com.tinkoffsirius.koshelok.ui.createtransaction.TransactionEditingViewModel
 import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategoriesAdapter
-import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
+import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
+import com.tinkoffsirius.koshelok.utils.Event
 import dev.sasikanth.colorsheet.ColorSheet
 import javax.inject.Inject
 

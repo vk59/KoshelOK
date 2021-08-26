@@ -12,7 +12,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletEditingBinding
-import com.tinkoffsirius.koshelok.di.ViewModelFactory
+import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
 import javax.inject.Inject
 

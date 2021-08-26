@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.databinding.ItemNewCategoryBinding
 import com.tinkoffsirius.koshelok.entities.Icon
-import com.tinkoffsirius.koshelok.ui.ColorProvider
+import com.tinkoffsirius.koshelok.utils.ColorProvider
 
 class NewCategoryViewHolder (itemView: View) :
     RecyclerView.ViewHolder(itemView) {

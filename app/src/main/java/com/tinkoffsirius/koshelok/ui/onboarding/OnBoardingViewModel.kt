@@ -6,7 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.main.WalletRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
-import com.tinkoffsirius.koshelok.ui.Event
+import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
