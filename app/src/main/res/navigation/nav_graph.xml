@@ -17,7 +17,9 @@
 
         <action
             android:id="@+id/action_mainFragment_to_transactionEditingFragment"
-            app:destination="@id/transactionEditingFragment" />
+            app:destination="@id/transactionEditingFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_mainFragment_to_walletListFragment"
             app:destination="@id/walletListFragment" />
@@ -200,7 +202,9 @@
             app:popEnterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_walletListFragment_to_walletEditingFragment"
-            app:destination="@id/walletEditingFragment" />
+            app:destination="@id/walletEditingFragment"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
 
     <fragment

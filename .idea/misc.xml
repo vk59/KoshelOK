@@ -7,7 +7,9 @@
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/custom_constrain_backgroud.xml" value="0.2703125" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/ic_selected_arrow.xml" value="0.2703125" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/ic_selected_black_arrow.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/ic_yellow_point.xml" value="0.28229166666666666" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_category_name.xml" value="0.1" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_main.xml" value="0.13020833333333334" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_new_category.xml" value="0.4" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_operation_type.xml" value="0.1" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_set_currency.xml" value="0.25416666666666665" />
@@ -18,10 +20,15 @@
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_transaction_editing.xml" value="0.264" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_wallet_editing.xml" value="0.264" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_wallet_list.xml" value="0.2" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_date.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_home_header.xml" value="0.2269021739130435" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_new_category.xml" value="1.2" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction.xml" value="0.264" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_transaction_category.xml" value="0.536" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/item_wallet.xml" value="0.5135135135135135" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/new_type_fragment.xml" value="0.2269021739130435" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/panel_exchange_rates.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/toolbar_wallet_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/drawable/ic_less.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Ivan/Code/Tinkoff/Koshelok/app/src/main/res/drawable/ic_options_background.xml" value="0.1" />

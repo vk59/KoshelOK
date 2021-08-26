@@ -41,8 +41,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/margin_main_screen"
-                android:layout_marginEnd="@dimen/margin_main_screen"
+
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:overScrollMode="never"

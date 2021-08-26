@@ -5,15 +5,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.R
-import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
 
 class NewCategoriesAdapter(private val setSelected: (icon: Icon) -> Unit) :
     RecyclerView.Adapter<NewCategoryViewHolder>() {
 
     private var list: List<Icon> = listOf()
-
-    var itemPosition: Int? = -1
 
     fun setData(data: List<Icon>) {
         list = data
@@ -34,25 +31,20 @@ class NewCategoriesAdapter(private val setSelected: (icon: Icon) -> Unit) :
     override fun onBindViewHolder(holder: NewCategoryViewHolder, position: Int) {
         val icon: Icon = list[position]
 
-        holder.selectionImage?.isVisible = itemPosition == position
+        holder.selectionImage?.isVisible = NewCategorySelectedItem.itemNumber == position
 
         holder.itemView.setOnClickListener {
-            itemPosition = holder.absoluteAdapterPosition
+            NewCategorySelectedItem.itemNumber = holder.absoluteAdapterPosition
             setSelected(icon)
             notifyDataSetChanged()
         }
-
-//        if (itemPosition == position) {
-//            holder.imgBack?.backgroundTintList =
-//                ColorStateList.valueOf(holder.binding.root.context.getColor(R.color.selected_blue))
-//
-//        } else {
-//            holder.imgBack?.backgroundTintList =
-//                ColorStateList.valueOf(holder.binding.root.context.getColor(R.color.main_blue))
-//        }
 
         holder.bind(icon)
     }
 
     override fun getItemCount(): Int = list.size
+}
+
+object NewCategorySelectedItem {
+    var itemNumber: Int? = -1
 }

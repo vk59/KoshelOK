@@ -57,4 +57,5 @@
     <string name="new_wallet_title">Новый кошелек</string>
     <string name="something_went_wrong">Что-то пошло не так</string>
     <string name="no_connection">Нет подключения к интернету</string>
+    <string name="create_transaction">Создать категорию</string>
 </resources>

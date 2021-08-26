@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
-import com.tinkoffsirius.koshelok.databinding.NewTypeFragmentBinding
+import com.tinkoffsirius.koshelok.databinding.FragmentNewTypeBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class NewTypeFragment : Fragment() {
             newCategoryViewModelFactory
         })
 
-    private val binding by viewBinding(NewTypeFragmentBinding::bind)
+    private val binding by viewBinding(FragmentNewTypeBinding::bind)
 
     private val navController by lazy { findNavController() }
 
@@ -39,7 +39,7 @@ class NewTypeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.new_type_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_new_type, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

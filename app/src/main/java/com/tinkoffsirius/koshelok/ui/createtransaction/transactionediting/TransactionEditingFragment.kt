@@ -17,6 +17,8 @@ import com.tinkoffsirius.koshelok.databinding.FragmentTransactionEditingBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.createtransaction.TransactionEditingViewModel
+import com.tinkoffsirius.koshelok.ui.createtransaction.transactioncategory.adapters.TransactionCategorySelectedItem
+import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategorySelectedItem
 import com.tinkoffsirius.koshelok.utils.DateUtils
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
