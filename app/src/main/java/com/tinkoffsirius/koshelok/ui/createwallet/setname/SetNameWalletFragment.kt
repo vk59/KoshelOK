@@ -59,12 +59,14 @@ class SetNameWalletFragment : Fragment() {
             binding.setNameButton.isEnabled = (text != "")
         }
         binding.setNameButton.setOnClickListener {
-            val name = binding.walletNameEdit.text.toString()
-            createViewModel.updateName(name)
-                .observe(viewLifecycleOwner) {
-                    Timber.d("Successfully updated name $name")
-                    navController.navigate(R.id.walletEditingFragment)
-                }
+            if(binding.walletNameEdit.text.toString().trim() != "") {
+                val name = binding.walletNameEdit.text.toString().trim()
+                createViewModel.updateName(name)
+                    .observe(viewLifecycleOwner) {
+                        Timber.d("Successfully updated name $name")
+                        navController.navigate(R.id.action_setNameWalletFragment_to_walletEditingFragment2)
+                    }
+            }
         }
 
         binding.toolbar.setNavigationOnClickListener {

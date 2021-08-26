@@ -19,6 +19,7 @@ import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
 import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategoriesAdapter
+import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
 import dev.sasikanth.colorsheet.ColorSheet
 import javax.inject.Inject
 
@@ -33,6 +34,15 @@ class NewCategoryFragment : Fragment() {
         factoryProducer = {
             newCategoryViewModelFactory
         })
+
+    @Inject
+    lateinit var transactionViewModelFactory: ViewModelFactory
+
+    private val viewModelTransactionEditing: TransactionEditingViewModel by viewModels(
+        factoryProducer = {
+            transactionViewModelFactory
+        }
+    )
 
     private val navController by lazy { findNavController() }
 
@@ -52,7 +62,7 @@ class NewCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.newCategory.observe(viewLifecycleOwner, {
-            binding.transNameLabel.buttonText.text = it.categoryName
+            binding.transNameLabel.buttonText.text = if(it.categoryName == "") "Новая категория" else it.categoryName
             binding.transTypeLabel.buttonText.text =
                 when (it.typeName.name) {
                     TransactionType.INCOME.name -> "Доход"
@@ -61,11 +71,16 @@ class NewCategoryFragment : Fragment() {
                 }
         })
 
+        viewModel.updateNewCategoryColor(-10996754)
+
+//        viewModelTransactionEditing.transaction.observe(viewLifecycleOwner, {
+//            binding.transTypeLabel.buttonText.text =
+//                if (it.type == TransactionType.INCOME.name) "Доход" else "Расход"
+//        })
+
         val recyclerAdapter = NewCategoriesAdapter {
             viewModel.updateNewCategoryIcon(iconId = it.imgId)
-                .observe(viewLifecycleOwner, {
-
-                })
+                .observe(viewLifecycleOwner, {})
         }
 
         binding.categoryRecycleView.apply {
@@ -82,7 +97,6 @@ class NewCategoryFragment : Fragment() {
                 ),
                 selectedColor = Color.RED,
                 listener = { color ->
-                    //Log.d("TAG" , color.toString())
                     viewModel.updateNewCategoryColor(color)
                 })
                 .show(requireActivity().supportFragmentManager)
@@ -116,8 +130,6 @@ class NewCategoryFragment : Fragment() {
     }
 
     private fun initListeners() {
-
-        binding.createTransactionButton.setOnClickListener {}
 
         binding.toolbar.setNavigationOnClickListener {
             navController.popBackStack()

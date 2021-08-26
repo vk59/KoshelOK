@@ -60,12 +60,18 @@ class SetLimitWalletFragment : Fragment() {
         }
 
         binding.setLimitButton.setOnClickListener {
-            val limit = binding.walletLimitEdit.text.toString()
-            createViewModel.updateLimit(limit)
-                .observe(viewLifecycleOwner) {
-                    Timber.d("Successfully updated limit $limit")
-                    navController.navigate(R.id.action_setLimitWalletFragment_to_walletEditingFragment)
-                }
+
+            if (!binding.walletLimitEdit.text?.trim()
+                    .isNullOrEmpty() && !binding.walletLimitEdit.text?.toString()
+                    .equals(".")
+            ) {
+                val limit = binding.walletLimitEdit.text.toString()
+                createViewModel.updateLimit(limit)
+                    .observe(viewLifecycleOwner) {
+                        Timber.d("Successfully updated limit $limit")
+                        navController.navigate(R.id.action_setLimitWalletFragment_to_walletEditingFragment)
+                    }
+            }
         }
 
         binding.toolbar.setNavigationOnClickListener {
