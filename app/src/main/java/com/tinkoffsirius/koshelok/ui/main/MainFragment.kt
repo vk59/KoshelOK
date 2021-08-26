@@ -20,6 +20,7 @@ import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.utils.DeleteDialog
 import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
 import com.tinkoffsirius.koshelok.utils.Event
+import java.net.ConnectException
 import javax.inject.Inject
 
 
@@ -91,9 +92,7 @@ class MainFragment : Fragment() {
                     }
                     is Event.Error -> {
                         isRefreshing = false
-                        ErrorSnackbarFactory(binding.root)
-                            .create(R.drawable.ic_warning, "Что-то пошло не так")
-                            .show()
+                        showSnackbar(event)
                     }
                 }
             }
@@ -101,6 +100,20 @@ class MainFragment : Fragment() {
 
         binding.swipeLayout.setOnRefreshListener {
             viewModel.updateTransactions()
+        }
+    }
+
+    private fun showSnackbar(event: Event.Error) {
+        if (event.throwable is ConnectException) {
+            ErrorSnackbarFactory(binding.root).create(
+                R.drawable.ic_connection_off,
+                getString(R.string.no_connection)
+            ).show()
+        } else {
+            ErrorSnackbarFactory(binding.root).create(
+                R.drawable.ic_warning,
+                getString(R.string.something_went_wrong)
+            ).show()
         }
     }
 

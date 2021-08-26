@@ -25,11 +25,6 @@ class OnBoardingViewModel @Inject constructor(
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    fun authorize() =
-        accountSharedRepository.saveUserInfo(
-            UserInfo(2, "1", "hello@gmail.com")
-        )
-
     fun authorize(account: GoogleSignInAccount) {
         val email = account.email
         val googleId = account.id

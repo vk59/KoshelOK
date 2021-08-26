@@ -17,11 +17,13 @@ import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
 import com.tinkoffsirius.koshelok.utils.DeleteDialog
+import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
 import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import java.net.ConnectException
 import javax.inject.Inject
 
 class WalletListFragment : Fragment() {
@@ -125,6 +127,17 @@ class WalletListFragment : Fragment() {
                 }
                 is Event.Error -> {
                     binding.swipeLayout.isRefreshing = false
+                    if (event.throwable is ConnectException) {
+                        ErrorSnackbarFactory(binding.root).create(
+                            R.drawable.ic_connection_off,
+                            getString(R.string.no_connection)
+                        ).show()
+                    } else {
+                        ErrorSnackbarFactory(binding.root).create(
+                            R.drawable.ic_warning,
+                            getString(R.string.something_went_wrong)
+                        ).show()
+                    }
                 }
             }
         }

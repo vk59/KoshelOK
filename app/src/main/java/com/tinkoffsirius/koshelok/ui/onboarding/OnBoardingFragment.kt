@@ -19,20 +19,15 @@ import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentOnBoardingBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
-import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
 import com.tinkoffsirius.koshelok.utils.Event
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.kotlin.subscribeBy
 import timber.log.Timber
+import java.net.ConnectException
 import javax.inject.Inject
 
 class OnBoardingFragment : Fragment() {
 
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
-
-    @Inject
-    lateinit var accountShared: AccountSharedRepository
 
     @Inject
     lateinit var onBoardingViewModelFactory: ViewModelFactory
@@ -44,12 +39,19 @@ class OnBoardingFragment : Fragment() {
     private val loginResultHandler =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
             val task = GoogleSignIn.getSignedInAccountFromIntent(result?.data)
-            Completable.fromCallable {
+            try {
                 authorizeWithAccount(task.result)
+            } catch (exception: ConnectException) {
+                ErrorSnackbarFactory(binding.root).create(
+                    R.drawable.ic_connection_off,
+                    getString(R.string.no_connection)
+                ).show()
+            } catch (exception: Exception) {
+                ErrorSnackbarFactory(binding.root).create(
+                    R.drawable.ic_warning,
+                    getString(R.string.something_went_wrong)
+                ).show()
             }
-                .subscribeBy(
-                    onError = Timber::e
-                )
         }
 
     private val navController by lazy { findNavController() }

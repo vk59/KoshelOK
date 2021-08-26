@@ -135,7 +135,8 @@ class NewCategoryViewModel @Inject constructor(
             .flatMapCompletable { (newCategory, userInfo) ->
                 newCategoryRepository.createNewCategory(
                     categoryData = newCategory.toCategoryData(
-                        Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+                        creationDate = Clock.System.now()
+                            .toLocalDateTime(TimeZone.currentSystemDefault()),
                         userId = userInfo.id!!,
                         colorIsFromDrawable = false
                     )
