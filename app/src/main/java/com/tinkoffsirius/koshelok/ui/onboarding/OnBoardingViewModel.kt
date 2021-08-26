@@ -39,16 +39,24 @@ class OnBoardingViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onComplete = { status.value = Event.Success() },
-                onError = { status.value = Event.Error(it) }
+                onError = {
+                    registerOrSaveUser(null, email, googleId!!)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeBy(
+                            onComplete = { status.value = Event.Success() },
+                            onError = { status.value = Event.Error(it) }
+                        )
+                    }
             )
     }
 
     private fun registerOrSaveUser(
-        it: UserInfo,
+        it: UserInfo?,
         email: String,
         googleId: String
     ): Completable {
-        return if (it.id == null) {
+        return if (it == null) {
             registerUser(email, googleId)
         } else {
             saveUser(it)

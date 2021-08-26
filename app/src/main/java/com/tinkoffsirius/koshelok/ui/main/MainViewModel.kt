@@ -92,6 +92,8 @@ class MainViewModel @Inject constructor(
                     },
                     onError = { Timber.e(it) }
                 )
+        status.value = Event.Loading()
+        updateTransactions()
     }
 
     @OptIn(ExperimentalTime::class)

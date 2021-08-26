@@ -40,9 +40,12 @@ interface WalletService {
     @GET("category/income/")
     fun getIncomeCategories(@Header("id") idUser: Long): Single<List<CategoryData>>
 
-    @GET("category/spending/")
+    @GET("category/outcome/")
     fun getSpendingCategories(@Header("id") idUser: Long): Single<List<CategoryData>>
 
     @POST("category/")
     fun createCategory(@Body categoryData: CategoryData): Completable
+
+    @DELETE("wallet/")
+    fun deleteWalletById(@Header("id") idWallet: Long): Completable
 }

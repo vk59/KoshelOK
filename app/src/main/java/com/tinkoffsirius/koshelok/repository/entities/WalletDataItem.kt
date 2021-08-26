@@ -13,7 +13,7 @@ data class WalletDataItem(
     val balance: String,
     @SerialName("income")
     val income: String,
-    @SerialName("spending")
+    @SerialName("outcome")
     val spending: String,
     @SerialName("limit")
     val limit: String,

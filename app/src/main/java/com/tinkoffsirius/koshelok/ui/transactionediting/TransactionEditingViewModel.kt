@@ -114,7 +114,7 @@ class TransactionEditingViewModel @Inject constructor(
             getWalletId(), transactionSharedRepository.getTransaction()
         )
             .map { (walletId, posedTransaction) ->
-                val dateFormat = defaultDataTime.toString() + ":00:000Z"
+                val dateFormat = "$defaultDataTime:00"
                 posedTransaction.toCreateTransactionData(
                     walletId,
                     dateFormat
