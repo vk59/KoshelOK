@@ -16,6 +16,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        navController.popBackStack()
+        if (navController.currentDestination == navController.graph.findNode(R.id.walletListFragment)) {
+            finish()
+        } else {
+            navController.popBackStack()
+        }
     }
 }
