@@ -10,9 +10,5 @@ data class UserInfo(
     @SerialName("googleToken")
     val googleToken: String,
     @SerialName("email")
-    val email: String,
-    @SerialName("lastEntrance")
-    val lastEntrance: String,
-    @SerialName("registrationDate")
-    val registrationDate: String
+    val email: String
 )

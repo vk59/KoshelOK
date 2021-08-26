@@ -6,7 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.main.WalletRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
-import com.tinkoffsirius.koshelok.ui.Event
+import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -27,7 +27,7 @@ class OnBoardingViewModel @Inject constructor(
 
     fun authorize() =
         accountSharedRepository.saveUserInfo(
-            UserInfo(2, "1", "hello@gmail.com", "", "")
+            UserInfo(2, "1", "hello@gmail.com")
         )
 
     fun authorize(account: GoogleSignInAccount) {
@@ -68,9 +68,7 @@ class OnBoardingViewModel @Inject constructor(
             UserInfo(
                 null,
                 googleId,
-                email,
-                "2021-08-24T22:05:22.161Z",
-                "2021-08-24T22:05:22.161Z"
+                email
             )
         ).flatMapCompletable { saveUser(it) }
     }

@@ -18,7 +18,6 @@ annotation class AccountShared
 @Retention(AnnotationRetention.RUNTIME)
 annotation class NewCategoryShared
 
-
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Mocked

@@ -10,17 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.material.snackbar.Snackbar
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
-import com.tinkoffsirius.koshelok.di.ViewModelFactory
-import com.tinkoffsirius.koshelok.ui.DeleteDialog
-import com.tinkoffsirius.koshelok.ui.ErrorSnackbarFactory
-import com.tinkoffsirius.koshelok.ui.Event
+import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
+import com.tinkoffsirius.koshelok.ui.createtransaction.TransactionEditingViewModel
 import com.tinkoffsirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
-import com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingViewModel
+import com.tinkoffsirius.koshelok.utils.DeleteDialog
+import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
+import com.tinkoffsirius.koshelok.utils.Event
 import javax.inject.Inject
 
 
@@ -107,8 +106,7 @@ class MainFragment : Fragment() {
 
     private fun initButtons() {
         binding.toolbar.setNavigationOnClickListener {
-            navController.popBackStack()
-            //onBackPressed()
+            onBackPressed()
         }
         binding.buttonAdd.setOnClickListener {
             viewModelTransactionEditing.removeTransaction()
@@ -116,21 +114,9 @@ class MainFragment : Fragment() {
         }
     }
 
-//    private fun onBackPressed() {
-//        viewModel.onBackPressed().observe(viewLifecycleOwner) {
-//            if (it) {
-//                activity?.finish()
-//            } else {
-//                Snackbar
-//                    .make(
-//                        binding.root,
-//                        getString(R.string.snackbar_push_exit),
-//                        Snackbar.LENGTH_LONG
-//                    )
-//                    .show()
-//            }
-//        }
-//    }
+    private fun onBackPressed() {
+        navController.navigate(R.id.action_mainFragment_to_walletListFragment)
+    }
 
     private fun initRecycler() {
         binding.recyclerView.apply {

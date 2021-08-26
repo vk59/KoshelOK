@@ -3,7 +3,6 @@ package com.tinkoffsirius.koshelok.config
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.TransactionType
-import com.tinkoffsirius.koshelok.entities.Types
 import com.tinkoffsirius.koshelok.repository.entities.CategoryData
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
 import com.tinkoffsirius.koshelok.repository.entities.WalletData

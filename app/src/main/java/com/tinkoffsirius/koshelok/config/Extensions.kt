@@ -1,6 +1,5 @@
 package com.tinkoffsirius.koshelok.config
 
-import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
@@ -8,8 +7,9 @@ import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.repository.entities.CategoryData
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
-import com.tinkoffsirius.koshelok.ui.Colors
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
+import com.tinkoffsirius.koshelok.utils.Colors
+import com.tinkoffsirius.koshelok.utils.Icons
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toLocalDateTime

@@ -2,8 +2,8 @@ package com.tinkoffsirius.koshelok.ui.main.adapters.viewholders
 
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.databinding.ItemDateBinding
-import com.tinkoffsirius.koshelok.ui.DateUtils
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
+import com.tinkoffsirius.koshelok.utils.DateUtils
 import kotlinx.datetime.*
 
 class DateViewHolder(

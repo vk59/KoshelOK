@@ -4,7 +4,6 @@ import androidx.annotation.ColorInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tinkoffsirius.koshelok.Icons
 import com.tinkoffsirius.koshelok.config.toCategoryData
 import com.tinkoffsirius.koshelok.entities.Category
 import com.tinkoffsirius.koshelok.entities.Icon
@@ -13,7 +12,8 @@ import com.tinkoffsirius.koshelok.repository.NewCategoryRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.NewCategorySharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.ui.Event
+import com.tinkoffsirius.koshelok.utils.Event
+import com.tinkoffsirius.koshelok.utils.Icons
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.Singles

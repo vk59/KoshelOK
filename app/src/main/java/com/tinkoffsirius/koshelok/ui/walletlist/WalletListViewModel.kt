@@ -8,8 +8,8 @@ import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.WalletSharedRepository
-import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
+import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -38,7 +38,7 @@ class WalletListViewModel @Inject constructor(
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    private var currentUserInfo = UserInfo(0, "","","","")
+    private var currentUserInfo = UserInfo(0, "","")
 
     init {
         initUserAccountData()

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.setsum.SetSumFragment">
+    tools:context=".ui.createtransaction.setsum.SetSumFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -38,15 +38,15 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/walletLimitEdit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
-            android:inputType="numberDecimal"
-            android:textColor="@color/black"
+            android:layout_height="wrap_content"
             app:boxStrokeColor="@color/edit_text_border"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:inputType="numberDecimal"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

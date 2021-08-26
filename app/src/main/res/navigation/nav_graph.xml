@@ -18,11 +18,14 @@
         <action
             android:id="@+id/action_mainFragment_to_transactionEditingFragment"
             app:destination="@id/transactionEditingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_walletListFragment"
+            app:destination="@id/walletListFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/setSumFragment"
-        android:name="com.tinkoffsirius.koshelok.ui.setsum.SetSumFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createtransaction.setsum.SetSumFragment"
         android:label="set_sum_fragment"
         tools:layout="@layout/fragment_set_sum">
         <action
@@ -38,7 +41,7 @@
 
     <fragment
         android:id="@+id/operationTypeFragment"
-        android:name="com.tinkoffsirius.koshelok.ui.operation.OperationTypeFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createtransaction.operation.OperationTypeFragment"
         android:label="operation_type_fragment"
         tools:layout="@layout/fragment_operation_type">
         <action
@@ -54,7 +57,7 @@
 
     <fragment
         android:id="@+id/transactionCategoryFragment"
-        android:name="com.tinkoffsirius.koshelok.ui.transactioncategory.TransactionCategoryFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createtransaction.transactioncategory.TransactionCategoryFragment"
         android:label="transaction_category_fragment"
         tools:layout="@layout/fragment_transaction_category">
 
@@ -80,7 +83,7 @@
 
     <fragment
         android:id="@+id/transactionEditingFragment"
-        android:name="com.tinkoffsirius.koshelok.ui.transactionediting.TransactionEditingFragment"
+        android:name="com.tinkoffsirius.koshelok.ui.createtransaction.transactionediting.TransactionEditingFragment"
         android:label="transaction_editing_fragment"
         tools:layout="@layout/fragment_transaction_editing">
 

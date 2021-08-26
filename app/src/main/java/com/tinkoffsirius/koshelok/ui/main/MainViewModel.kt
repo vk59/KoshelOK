@@ -11,8 +11,8 @@ import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
-import com.tinkoffsirius.koshelok.ui.Event
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
+import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable

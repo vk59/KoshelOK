@@ -30,7 +30,7 @@ class AccountSharedRepository @Inject constructor(
         if (data != null) {
             Json.decodeFromString(UserInfo.serializer(), data)
         } else {
-            UserInfo(null,"","","","")
+            UserInfo(null,"","")
         }
     }
 

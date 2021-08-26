@@ -13,11 +13,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
-import com.tinkoffsirius.koshelok.di.ViewModelFactory
-import com.tinkoffsirius.koshelok.ui.DeleteDialog
-import com.tinkoffsirius.koshelok.ui.Event
+import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
+import com.tinkoffsirius.koshelok.utils.DeleteDialog
+import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers

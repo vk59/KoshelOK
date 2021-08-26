@@ -2,11 +2,12 @@ package com.tinkoffsirius.koshelok.ui.createwallet.setlimit
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.widget.doOnTextChanged
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,7 +15,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentSetLimitWalletBinding
-import com.tinkoffsirius.koshelok.di.ViewModelFactory
+import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -54,8 +55,8 @@ class SetLimitWalletFragment : Fragment() {
                 )
         }
 
-        binding.walletLimitEdit.doOnTextChanged { text, start, before, count ->
-            binding.setLimitButton.isEnabled = (text != "")
+        binding.walletLimitEdit.addTextChangedListener {
+            binding.setLimitButton.isEnabled = isValidText(it)
         }
 
         binding.setLimitButton.setOnClickListener {
@@ -77,4 +78,7 @@ class SetLimitWalletFragment : Fragment() {
             navController.popBackStack()
         }
     }
+
+    private fun isValidText(editable: Editable?) =
+        (editable?.isEmpty()!! || (editable.isNotEmpty() && (editable.get(0) ?: ".") != "."))
 }
