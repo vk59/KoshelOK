@@ -116,6 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_main_screen"
+            android:layout_marginBottom="32dp"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:overScrollMode="never"

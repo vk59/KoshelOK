@@ -5,15 +5,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
         android:name="com.tinkoffsirius.koshelok.KoshelokApp"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Koshelok.Launcher">
-        <activity android:name="com.tinkoffsirius.koshelok.ui.MainActivity" android:windowSoftInputMode="adjustResize">
+        android:theme="@style/Theme.Koshelok.Launcher"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.tinkoffsirius.koshelok.ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
