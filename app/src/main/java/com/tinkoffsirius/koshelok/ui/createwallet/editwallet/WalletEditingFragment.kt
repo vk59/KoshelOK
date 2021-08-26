@@ -14,6 +14,7 @@ import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletEditingBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createwallet.CreateWalletViewModel
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
 import javax.inject.Inject
 
 class WalletEditingFragment : Fragment() {
@@ -47,6 +48,19 @@ class WalletEditingFragment : Fragment() {
 
         observeWalletData()
         initListeners()
+        firstEntranceShow()
+    }
+
+    private fun firstEntranceShow() {
+        MaterialShowcaseView.Builder(requireActivity())
+            .setTarget(binding.currency)
+            .setTargetTouchable(true)
+            .setDismissOnTargetTouch(true)
+            .setDismissText("ПОНЯТНО")
+            .setMaskColour(R.color.black)
+            .setContentText("Задайте параметры вашему кошельку!")
+            .singleUse(SHOWCASE_ID_WALLET_CREATE)
+            .show()
     }
 
     private fun observeWalletData() {
@@ -85,5 +99,9 @@ class WalletEditingFragment : Fragment() {
                 navController.navigate(R.id.action_walletEditingFragment_to_walletListFragment)
             }
         }
+    }
+
+    companion object {
+        private const val SHOWCASE_ID_WALLET_CREATE = "wallet_create"
     }
 }

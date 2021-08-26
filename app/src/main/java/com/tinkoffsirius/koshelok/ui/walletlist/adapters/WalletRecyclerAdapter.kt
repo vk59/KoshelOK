@@ -1,6 +1,7 @@
 package com.tinkoffsirius.koshelok.ui.walletlist.adapters
 
 import android.annotation.SuppressLint
+import android.graphics.PointF
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -8,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.databinding.ItemWalletBinding
-import java.util.*
+import java.lang.Math.abs
 
 class WalletRecyclerAdapter(
     private val onItemClick: (WalletItem) -> Unit,
@@ -37,19 +38,17 @@ class WalletRecyclerAdapter(
         )
 
         holder.itemView.setOnTouchListener(object : View.OnTouchListener {
-            private val MAX_CLICK_DURATION = 70
-            private var startClickTime: Long = 0
+            private var downClick: PointF = PointF(0f, 0f)
 
             @SuppressLint("ClickableViewAccessibility")
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        startClickTime = Calendar.getInstance().timeInMillis
+                        downClick = PointF(event.x, event.y)
                     }
                     MotionEvent.ACTION_UP -> {
-                        val clickDuration: Long =
-                            Calendar.getInstance().timeInMillis - startClickTime
-                        if (clickDuration < MAX_CLICK_DURATION) {
+                        if (isClick(PointF(event.x, event.y), downClick)
+                        ) {
                             onItemClick(diff.currentList[holder.adapterPosition])
                         }
                     }
@@ -58,6 +57,10 @@ class WalletRecyclerAdapter(
             }
         })
         return holder
+    }
+
+    private fun isClick(upClick: PointF, downClick: PointF): Boolean {
+        return (abs(upClick.x - downClick.x) < 10 && abs(upClick.y - downClick.y) < 10)
     }
 
     override fun onViewRecycled(holder: WalletViewHolder) {

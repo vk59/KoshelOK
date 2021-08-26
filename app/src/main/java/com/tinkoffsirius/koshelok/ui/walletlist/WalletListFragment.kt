@@ -24,6 +24,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
 import java.net.ConnectException
 import javax.inject.Inject
 
@@ -84,8 +85,22 @@ class WalletListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAppbar()
         initRecycler()
-        initButtons()
+        binding.buttonAddWallet.setOnClickListener {
+            navController.navigate(R.id.action_walletListFragment_to_setNameWalletFragment)
+        }
         observeStatus()
+        firstEntranceShow()
+    }
+
+    private fun firstEntranceShow() {
+        MaterialShowcaseView.Builder(requireActivity())
+            .setTarget(binding.buttonAddWallet)
+            .setTargetTouchable(true)
+            .setDismissOnTargetTouch(true)
+            .setMaskColour(R.color.black)
+            .setContentText("Добро пожаловать! Создайте ваш первый кошелек!")
+            .singleUse(SHOWCASE_ID_WALLET)
+            .show()
     }
 
     override fun onResume() {
@@ -96,12 +111,6 @@ class WalletListFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         requireActivity().window.statusBarColor = requireContext().getColor(R.color.white)
-    }
-
-    private fun initButtons() {
-        binding.buttonAddWallet.setOnClickListener {
-            navController.navigate(R.id.action_walletListFragment_to_setNameWalletFragment)
-        }
     }
 
     private fun initRecycler() {
@@ -173,5 +182,9 @@ class WalletListFragment : Fragment() {
             { dialog, _ -> dialog.cancel() },
             requireContext()
         ).create().show()
+    }
+
+    companion object {
+        private const val SHOWCASE_ID_WALLET = "WALLET_LIST"
     }
 }

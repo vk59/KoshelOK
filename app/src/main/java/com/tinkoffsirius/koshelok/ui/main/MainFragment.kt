@@ -20,6 +20,8 @@ import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.utils.DeleteDialog
 import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
 import com.tinkoffsirius.koshelok.utils.Event
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 import java.net.ConnectException
 import javax.inject.Inject
 
@@ -78,6 +80,28 @@ class MainFragment : Fragment() {
         initButtons()
         initRecycler()
         observeStatus()
+        firstEntranceShow()
+    }
+
+    private fun firstEntranceShow() {
+        val config = ShowcaseConfig()
+        config.maskColor = R.color.black
+
+        val sequence = MaterialShowcaseSequence(requireActivity(), "wallet_info")
+
+        sequence.setConfig(config)
+
+        sequence.addSequenceItem(
+            binding.recyclerView.getChildAt(0),
+            "Здесь находится информация о данном кошельке", "ПОНЯТНО"
+        )
+
+        sequence.addSequenceItem(
+            binding.buttonAdd, "Теперь создайте вашу первую транзакцию", "ПОЕХАЛИ!"
+        )
+
+        sequence.singleUse("wallet_info")
+        sequence.start()
     }
 
     private fun observeStatus() {

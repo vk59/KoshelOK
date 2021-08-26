@@ -87,7 +87,7 @@ class WalletListViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { userInfoWallets ->
-                    doOnSuccess(userInfoWallets)
+                    updateViewModel(userInfoWallets)
                 },
                 onError = {
                     status.postValue(Event.Error(it))
@@ -95,7 +95,7 @@ class WalletListViewModel @Inject constructor(
             )
     }
 
-    private fun doOnSuccess(userInfoWallets: UserInfoWallets) {
+    private fun updateViewModel(userInfoWallets: UserInfoWallets) {
         status.postValue(Event.Success())
         isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
         items.postValue(createNewWalletItemList(userInfoWallets.wallets))
