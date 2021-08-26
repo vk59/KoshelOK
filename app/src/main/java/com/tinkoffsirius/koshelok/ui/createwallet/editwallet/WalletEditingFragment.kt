@@ -45,6 +45,11 @@ class WalletEditingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeWalletData()
+        initListeners()
+    }
+
+    private fun observeWalletData() {
         createViewModel.wallet.observe(viewLifecycleOwner) {
             binding.walletEditingNameLabel.buttonText.text = it.name
             binding.currency.buttonText.text = it.currencyType
@@ -55,8 +60,6 @@ class WalletEditingFragment : Fragment() {
                     it.limit
                 }
         }
-
-        initListeners()
     }
 
     private fun initListeners() {

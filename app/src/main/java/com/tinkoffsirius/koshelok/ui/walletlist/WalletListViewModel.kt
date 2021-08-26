@@ -34,8 +34,6 @@ class WalletListViewModel @Inject constructor(
 
     val status: MutableLiveData<Event> = MutableLiveData(Event.Success())
 
-    private var userId: Long? = 0L
-
     private val disposable: CompositeDisposable = CompositeDisposable()
 
     private var currentUserInfo = UserInfo(0, "","")

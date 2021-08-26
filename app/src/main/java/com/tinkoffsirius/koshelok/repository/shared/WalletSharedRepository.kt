@@ -32,7 +32,7 @@ class WalletSharedRepository @Inject constructor(
         }
     }
 
-    fun removeWallet() {
+    fun removeWallet(): Completable = Completable.fromCallable {
         sharedPreferences.edit()
             .clear()
             .apply()

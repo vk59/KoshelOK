@@ -3,6 +3,7 @@ package com.tinkoffsirius.koshelok.ui.createwallet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tinkoffsirius.koshelok.config.toCreateWalletData
 import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.NewWallet
 import com.tinkoffsirius.koshelok.repository.CreateWalletRepository
@@ -92,12 +93,13 @@ class CreateWalletViewModel @Inject constructor(
             accountSharedRepository.getUserInfo(),
             walletSharedRepository.getWallet()
         )
-            .map { (userInfo, walletData) -> createWalletData(walletData, userInfo.id!!) }
+            .map { (userInfo, walletData) -> walletData.toCreateWalletData(userInfo.id!!) }
             .flatMap { wallet ->
                 val transactionAction = getCreateWalletAction(wallet)
                 performCreateTransactionAction(transactionAction, wallet)
             }
             .flatMapCompletable { accountSharedRepository.saveCurrentWalletId(it.id!!) }
+            .mergeWith(walletSharedRepository.removeWallet())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
@@ -106,17 +108,6 @@ class CreateWalletViewModel @Inject constructor(
             )
 
         return ld
-    }
-
-
-    private fun saveCurrentWalletId(id: Long) {
-        disposable += accountSharedRepository.saveCurrentWalletId(id)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onComplete = {},
-                onError = Timber::e
-            )
     }
 
     private fun getCreateWalletAction(wallet: CreateWalletData): CreateWalletAction {
@@ -130,23 +121,10 @@ class CreateWalletViewModel @Inject constructor(
     private fun performCreateTransactionAction(
         transactionAction: CreateWalletAction,
         walletData: CreateWalletData
-    ) = Singles.zip(
-        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_GOOGLE_ID),
-        accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID_TOKEN)
-    ).flatMap { (accountId, accountIdToken) ->
-        transactionAction(walletData, accountIdToken)
-    }
-
-    private fun createWalletData(it: NewWallet, userId: Long) =
-        CreateWalletData(
-            id = it.id,
-            userId = userId,
-            name = it.name,
-            balance = "0",
-            limit = it.limit,
-            currencyType = it.currencyType,
-            hidden = false
-        )
+    ) = accountSharedRepository.getAccount(AccountSharedRepository.ACCOUNT_ID_TOKEN)
+        .flatMap { accountIdToken ->
+            transactionAction(walletData, accountIdToken)
+        }
 
     override fun onCleared() {
         disposable.dispose()

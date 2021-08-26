@@ -1,11 +1,9 @@
 package com.tinkoffsirius.koshelok.config
 
-import com.tinkoffsirius.koshelok.entities.Category
-import com.tinkoffsirius.koshelok.entities.Currency
-import com.tinkoffsirius.koshelok.entities.PosedTransaction
-import com.tinkoffsirius.koshelok.entities.TransactionType
+import com.tinkoffsirius.koshelok.entities.*
 import com.tinkoffsirius.koshelok.repository.entities.CategoryData
 import com.tinkoffsirius.koshelok.repository.entities.CreateTransactionData
+import com.tinkoffsirius.koshelok.repository.entities.CreateWalletData
 import com.tinkoffsirius.koshelok.repository.entities.TransactionData
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.utils.Colors
@@ -76,3 +74,14 @@ fun LocalDateTime.toLocalDate(): LocalDate {
 fun LocalDateTime.toStringTime(): String {
     return if (this.minute > 10) "${this.hour}:${this.minute}" else "${this.hour}:0${this.minute}"
 }
+
+fun NewWallet.toCreateWalletData(userId: Long)=
+    CreateWalletData(
+        id = id,
+        userId = userId,
+        name = name,
+        balance = "0",
+        limit = limit,
+        currencyType = currencyType,
+        hidden = false
+    )
