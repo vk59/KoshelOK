@@ -40,7 +40,7 @@ interface WalletService {
     @GET("category/income/")
     fun getIncomeCategories(@Header("id") idUser: Long): Single<List<CategoryData>>
 
-    @GET("category/spending/")
+    @GET("category/outcome/")
     fun getSpendingCategories(@Header("id") idUser: Long): Single<List<CategoryData>>
 
     @POST("category/")

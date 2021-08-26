@@ -9,7 +9,7 @@ data class UserInfoWallets(
     val overallBalance: String,
     @SerialName("income")
     val overallIncome: String,
-    @SerialName("spending")
+    @SerialName("outcome")
     val overallSpending: String,
     @SerialName("walletsList")
     val wallets: List<WalletDataItem>
