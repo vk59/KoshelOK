@@ -133,19 +133,23 @@ class WalletListFragment : Fragment() {
                 }
                 is Event.Error -> {
                     binding.swipeLayout.isRefreshing = false
-                    if (event.throwable is ConnectException) {
-                        ErrorSnackbarFactory(binding.root).create(
-                            R.drawable.ic_connection_off,
-                            getString(R.string.no_connection)
-                        ).show()
-                    } else {
-                        ErrorSnackbarFactory(binding.root).create(
-                            R.drawable.ic_warning,
-                            getString(R.string.something_went_wrong)
-                        ).show()
-                    }
+                    showError(event)
                 }
             }
+        }
+    }
+
+    private fun showError(event: Event.Error) {
+        if (event.throwable is ConnectException) {
+            ErrorSnackbarFactory(binding.root).create(
+                R.drawable.ic_connection_off,
+                getString(R.string.no_connection)
+            ).show()
+        } else {
+            ErrorSnackbarFactory(binding.root).create(
+                R.drawable.ic_warning,
+                getString(R.string.something_went_wrong)
+            ).show()
         }
     }
 

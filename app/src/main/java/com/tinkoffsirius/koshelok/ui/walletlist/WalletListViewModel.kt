@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.entities.NewWallet
 import com.tinkoffsirius.koshelok.repository.WalletListRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
+import com.tinkoffsirius.koshelok.repository.entities.UserInfoWallets
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.WalletSharedRepository
@@ -86,23 +87,25 @@ class WalletListViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { userInfoWallets ->
-                    status.postValue(Event.Success())
-                    isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
-                    Timber.tag("tut").d(userInfoWallets.wallets.toString())
-                    Timber.tag("tut").d(createNewWalletItemList(userInfoWallets.wallets).toString())
-                    items.postValue(createNewWalletItemList(userInfoWallets.wallets))
-                    userInfoBalance.postValue(
-                        UserInfoBalance(
-                            "${userInfoWallets.overallBalance} RUB",
-                            "${userInfoWallets.overallIncome} RUB",
-                            "${userInfoWallets.overallSpending} RUB"
-                        )
-                    )
+                    doOnSuccess(userInfoWallets)
                 },
                 onError = {
                     status.postValue(Event.Error(it))
                 }
             )
+    }
+
+    private fun doOnSuccess(userInfoWallets: UserInfoWallets) {
+        status.postValue(Event.Success())
+        isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
+        items.postValue(createNewWalletItemList(userInfoWallets.wallets))
+        userInfoBalance.postValue(
+            UserInfoBalance(
+                "${userInfoWallets.overallBalance} RUB",
+                "${userInfoWallets.overallIncome} RUB",
+                "${userInfoWallets.overallSpending} RUB"
+            )
+        )
     }
 
     private fun initUserAccountData() {
