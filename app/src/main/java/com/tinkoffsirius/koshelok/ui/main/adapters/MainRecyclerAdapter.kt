@@ -19,7 +19,8 @@ class MainRecyclerAdapter(
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
     private val diff = AsyncListDiffer(this, TransactionsDiffUtils())
-    private val HEADER_ID = -1L
+
+    private val headerId = -1L
 
     init {
         setHasStableIds(true)
@@ -62,13 +63,12 @@ class MainRecyclerAdapter(
     override fun getItemCount(): Int = diff.currentList.size
 
     override fun getItemId(position: Int): Long {
-        val mainItem = diff.currentList[position]
-        return when (mainItem) {
+        return when (val mainItem = diff.currentList[position]) {
             is MainItem.Date -> {
                 val time = mainItem.date
-                -(time.year * 10000 + time.monthNumber * 100 + time.dayOfMonth).toLong()
+                -(time.year * YEAR_C + time.monthNumber * MONTH_C + time.dayOfMonth).toLong()
             }
-            is MainItem.Header -> HEADER_ID
+            is MainItem.Header -> headerId
             is MainItem.Transaction -> mainItem.id
         }
     }
@@ -77,5 +77,7 @@ class MainRecyclerAdapter(
         private const val TYPE_HEADER = 0
         private const val TYPE_TRANSACTION = 1
         private const val TYPE_DATE = 2
+        private const val YEAR_C = 10000
+        private const val MONTH_C = 100
     }
 }

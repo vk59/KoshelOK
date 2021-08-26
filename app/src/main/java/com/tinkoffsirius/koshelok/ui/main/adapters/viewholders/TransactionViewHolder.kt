@@ -25,9 +25,7 @@ class TransactionViewHolder(
 
                 categoryTransaction.text = data.category.categoryName
                 moneyTransaction.text =
-                    if (type == root.context.getString(R.string.outcome)) "-" else {
-                        "+"
-                    } + "${data.sum} ${data.currency}"
+                    if (type == root.context.getString(R.string.outcome)) "-" else { "+" } + "${data.sum} ${data.currency}"
                 typeTransaction.text = type
                 timeTransaction.text = data.time
                 iconTransaction.setImageResource(data.category.icon)

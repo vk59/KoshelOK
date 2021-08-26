@@ -1,9 +1,7 @@
 package com.tinkoffsirius.koshelok.ui.main
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import com.tinkoffsirius.koshelok.config.toMainItemTransaction
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.repository.MainRepository
@@ -16,16 +14,13 @@ import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
 class MainViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
@@ -39,8 +34,6 @@ class MainViewModel @Inject constructor(
 
     val status: MutableLiveData<Event> = MutableLiveData(Event.Loading())
 
-    private var lastTimeBackPressed: Instant = Instant.DISTANT_PAST
-
     private val disposable: CompositeDisposable = CompositeDisposable()
 
     init {
@@ -48,21 +41,23 @@ class MainViewModel @Inject constructor(
         disposable += loadData()
     }
 
-    private fun loadData() = getUserInfo()
-        .flatMap { (userInfo, walletId) -> updateTransactions(userInfo, walletId) }
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
-        .subscribeBy(
-            onSuccess = { walletData ->
-                status.postValue(Event.Success())
-                isThereTransactions.postValue(walletData.transactions.isNotEmpty())
-                items.postValue(createNewMainItemList(walletData))
-            },
-            onError = {
-                status.postValue(Event.Error(it))
-                Timber.e(it)
-            }
-        )
+    private fun loadData(): Disposable {
+        return getUserInfo()
+            .flatMap { (userInfo, walletId) -> updateTransactions(userInfo, walletId) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { walletData ->
+                    status.postValue(Event.Success())
+                    isThereTransactions.postValue(walletData.transactions.isNotEmpty())
+                    items.postValue(createNewMainItemList(walletData))
+                },
+                onError = {
+                    status.postValue(Event.Error(it))
+                    Timber.e(it)
+                }
+            )
+    }
 
     private fun getUserInfo() = Singles.zip(
         accountSharedRepository.getUserInfo(),
@@ -70,41 +65,34 @@ class MainViewModel @Inject constructor(
     )
 
     fun updateTransactions() {
-        loadData()
+        disposable += loadData()
     }
 
     private fun updateTransactions(userInfo: UserInfo, walletId: Long): Single<WalletData> {
-        return mainRepository.getWalletById(
-            walletId, userInfo.id!!, userInfo.googleToken
-        )
+        return mainRepository.getWalletById(walletId, userInfo.id!!, userInfo.googleToken)
     }
 
     fun deleteTransactionById(id: Long) {
-        disposable +=
-            mainRepository.deleteTransactionById(id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onComplete = {
-                        getUserInfo().flatMap { (userInfo, walletId) ->
-                            updateTransactions(userInfo, walletId)
-                        }
-                    },
-                    onError = { Timber.e(it) }
-                )
         status.value = Event.Loading()
-        updateTransactions()
-    }
 
-    @OptIn(ExperimentalTime::class)
-    fun onBackPressed(): LiveData<Boolean> = liveData {
-        val now = Clock.System.now()
-        if (now.minus(lastTimeBackPressed) < Duration.seconds(3)) {
-            emit(true)
-        } else {
-            lastTimeBackPressed = now
-            emit(false)
-        }
+        disposable += mainRepository.deleteTransactionById(id)
+            .andThen(
+                getUserInfo().flatMap { (userInfo, walletId) ->
+                    updateTransactions(userInfo, walletId)
+                }
+            )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = {
+                    status.value = Event.Success()
+                    items.postValue(createNewMainItemList(it))
+                },
+                onError = {
+                    status.postValue(Event.Error(it))
+                    Timber.e(it)
+                }
+            )
     }
 
     fun editCurrentTransaction(element: MainItem.Transaction) {
@@ -120,7 +108,10 @@ class MainViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onComplete = { Timber.d("Saved") },
-                onError = { Timber.e(it) }
+                onError = {
+                    status.postValue(Event.Error(it))
+                    Timber.e(it)
+                }
             )
     }
 
