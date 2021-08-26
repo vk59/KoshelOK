@@ -2,6 +2,7 @@ package com.tinkoffsirius.koshelok.ui.walletlist
 
 import android.content.Context
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
@@ -24,8 +26,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import java.net.ConnectException
 import javax.inject.Inject
-import android.view.ContextThemeWrapper
-import com.tinkoffsirius.koshelok.R
 
 
 class WalletListFragment : Fragment() {
@@ -82,11 +82,15 @@ class WalletListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.statusBarColor = requireContext().getColor(R.color.main_blue)
         initAppbar()
         initRecycler()
         initButtons()
         observeStatus()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.statusBarColor = requireContext().getColor(R.color.main_blue)
     }
 
     override fun onStop() {
