@@ -107,7 +107,8 @@ class MainFragment : Fragment() {
 
     private fun initButtons() {
         binding.toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            navController.popBackStack()
+            //onBackPressed()
         }
         binding.buttonAdd.setOnClickListener {
             viewModelTransactionEditing.removeTransaction()
@@ -115,21 +116,21 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun onBackPressed() {
-        viewModel.onBackPressed().observe(viewLifecycleOwner) {
-            if (it) {
-                activity?.finish()
-            } else {
-                Snackbar
-                    .make(
-                        binding.root,
-                        getString(R.string.snackbar_push_exit),
-                        Snackbar.LENGTH_LONG
-                    )
-                    .show()
-            }
-        }
-    }
+//    private fun onBackPressed() {
+//        viewModel.onBackPressed().observe(viewLifecycleOwner) {
+//            if (it) {
+//                activity?.finish()
+//            } else {
+//                Snackbar
+//                    .make(
+//                        binding.root,
+//                        getString(R.string.snackbar_push_exit),
+//                        Snackbar.LENGTH_LONG
+//                    )
+//                    .show()
+//            }
+//        }
+//    }
 
     private fun initRecycler() {
         binding.recyclerView.apply {

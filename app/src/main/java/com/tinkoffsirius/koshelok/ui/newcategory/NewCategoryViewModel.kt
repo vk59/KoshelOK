@@ -12,6 +12,7 @@ import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.repository.NewCategoryRepository
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.NewCategorySharedRepository
+import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
 import com.tinkoffsirius.koshelok.ui.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -27,6 +28,7 @@ import javax.inject.Inject
 
 class NewCategoryViewModel @Inject constructor(
     private val accountSharedRepository: AccountSharedRepository,
+    private val posedTransactionSharedRepository: PosedTransactionSharedRepository,
     private val newCategorySharedRepository: NewCategorySharedRepository,
     private val newCategoryRepository: NewCategoryRepository
 ) : ViewModel() {
@@ -46,7 +48,10 @@ class NewCategoryViewModel @Inject constructor(
     }
 
     fun updateState() {
-        disposable += newCategorySharedRepository.getNewCategory()
+        disposable += posedTransactionSharedRepository.getTransaction()
+            .flatMap { transaction ->
+                newCategorySharedRepository.getNewCategory(TransactionType.valueOf(transaction.type))
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
@@ -77,14 +82,18 @@ class NewCategoryViewModel @Inject constructor(
     fun updateNewCategoryType(type: TransactionType): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
 
-        disposable += newCategorySharedRepository.getNewCategory()
-            .map { it.copy(typeName = type) }
-            .doOnSuccess { newCategory.value = it }
-            .flatMapCompletable { newCategorySharedRepository.saveNewCategory(it) }
-            .subscribeBy(
-                onComplete = { ld.value = Unit },
-                onError = Timber::e
-            )
+        disposable +=
+            posedTransactionSharedRepository.getTransaction()
+                .flatMap { transaction ->
+                    newCategorySharedRepository.getNewCategory(TransactionType.valueOf(transaction.type))
+                }
+                .map { it.copy(typeName = type) }
+                .doOnSuccess { newCategory.value = it }
+                .flatMapCompletable { newCategorySharedRepository.saveNewCategory(it) }
+                .subscribeBy(
+                    onComplete = { ld.value = Unit },
+                    onError = Timber::e
+                )
 
         return ld
     }

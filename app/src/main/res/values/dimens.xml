@@ -7,7 +7,7 @@
     <dimen name="margin_between_cards">4dp</dimen>
     <dimen name="text_name_koshelok">12sp</dimen>
     <dimen name="text_current_money">32sp</dimen>
-    <dimen name="margin_main_screen">16sp</dimen>
+    <dimen name="margin_main_screen">16dp</dimen>
     <dimen name="padding_recycler">20dp</dimen>
     <dimen name="text_button_size">16sp</dimen>
     <dimen name="text_description_app_size">20sp</dimen>

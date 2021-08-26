@@ -54,5 +54,6 @@
     <string name="no_wallets">У вас пока нет кошельков\nСоздайте свой первый кошелек</string>
     <string name="button_create_wallet">Создать кошелек</string>
     <string name="wallet_title">Кошелек</string>
+    <string name="new_wallet_title">Новый кошелек</string>
     <string name="something_went_wrong">Что-то пошло не так</string>
 </resources>

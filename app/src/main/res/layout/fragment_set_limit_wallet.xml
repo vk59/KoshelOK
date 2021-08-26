@@ -38,15 +38,15 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/walletLimitEdit"
             android:layout_width="match_parent"
-            android:focusableInTouchMode="true"
             android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/edit_text_border"
+            android:focusableInTouchMode="true"
+            android:inputType="numberDecimal"
             android:textColor="@color/black"
+            app:boxStrokeColor="@color/edit_text_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            android:inputType="textCapWords"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

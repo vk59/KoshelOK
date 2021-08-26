@@ -23,12 +23,12 @@ class NewCategorySharedRepository @Inject constructor(
                 .apply()
         }
 
-    fun getNewCategory(): Single<Category> = Single.fromCallable {
+    fun getNewCategory(type : TransactionType = TransactionType.INCOME): Single<Category> = Single.fromCallable {
         val data = sharedPreferences.getString(NEW_CATEGORY_DATA, null)
         if (data != null) {
             Json.decodeFromString(Category.serializer(), data)
         } else {
-            Category(0, TransactionType.OUTCOME, "", 0, 0)
+            Category(0, type, "", 0, 0)
         }
     }
 
