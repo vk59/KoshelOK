@@ -18,14 +18,14 @@ class AccountSharedRepository @Inject constructor(
         sharedPreferences.getString(name, "")
     }
 
-    fun saveUserInfo(userInfo: UserInfo) = Completable.fromCallable {
+    fun saveUserInfo(userInfo: UserInfo): Completable = Completable.fromCallable {
         val data = Json.encodeToString(userInfo)
         sharedPreferences.edit()
             .putString(USER_INFO, data)
             .apply()
     }
 
-    fun getUserInfo() = Single.fromCallable {
+    fun getUserInfo(): Single<UserInfo> = Single.fromCallable {
         val data = sharedPreferences.getString(USER_INFO, null)
         if (data != null) {
             Json.decodeFromString(UserInfo.serializer(), data)

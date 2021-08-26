@@ -35,8 +35,6 @@ class TransactionEditingViewModel @Inject constructor(
     private val transactionEditingRepository: TransactionEditingRepository
 ) : ViewModel() {
 
-    private val disposable: CompositeDisposable = CompositeDisposable()
-
     val transaction: MutableLiveData<PosedTransaction> = MutableLiveData()
 
     val categories = MutableLiveData<List<Category>>()
@@ -44,7 +42,9 @@ class TransactionEditingViewModel @Inject constructor(
     private var defaultDataTime: LocalDateTime =
         Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
-    val transactionDateTime: MutableLiveData<LocalDateTime> = MutableLiveData(defaultDataTime)
+    var transactionDateTime: LocalDateTime = defaultDataTime
+
+    private val disposable: CompositeDisposable = CompositeDisposable()
 
     init {
         disposable += transactionSharedRepository.getTransaction()
@@ -56,13 +56,40 @@ class TransactionEditingViewModel @Inject constructor(
             )
     }
 
+    fun saveTransaction(): LiveData<Unit> {
+        val liveData = MutableLiveData<Unit>()
+        disposable += Singles.zip(
+            getWalletId(), transactionSharedRepository.getTransaction()
+        )
+            .map { (walletId, posedTransaction) ->
+                val dateFormat = "$defaultDataTime:00"
+                posedTransaction.toCreateTransactionData(
+                    walletId,
+                    dateFormat
+                )
+            }
+            .flatMapCompletable { createTransactionData ->
+                performCreateTransactionAction(
+                    getCreateTransactionAction(createTransactionData),
+                    createTransactionData
+                )
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = { liveData.value = Unit },
+                onError = { Timber.e(it) }
+            )
+        return liveData
+    }
+
     fun removeTransaction() {
         transactionSharedRepository.removeTransaction()
     }
 
     fun updateDate(newDate: LocalDateTime) {
         this.defaultDataTime = newDate
-        transactionDateTime.value = newDate
+        transactionDateTime = newDate
     }
 
     fun updateTransactionType(type: String): LiveData<Unit> {
@@ -109,28 +136,6 @@ class TransactionEditingViewModel @Inject constructor(
         return ld
     }
 
-    fun saveTransaction() {
-        disposable += Singles.zip(
-            getWalletId(), transactionSharedRepository.getTransaction()
-        )
-            .map { (walletId, posedTransaction) ->
-                val dateFormat = "$defaultDataTime:00"
-                posedTransaction.toCreateTransactionData(
-                    walletId,
-                    dateFormat
-                )
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = { createTransactionData ->
-                    val transactionAction = getCreateTransactionAction(createTransactionData)
-                    performCreateTransactionAction(transactionAction, createTransactionData)
-                },
-                onError = { Timber.e(it) }
-            )
-    }
-
     private fun getWalletId(): Single<Long> {
         return accountSharedRepository.getCurrentWalletId()
     }
@@ -154,15 +159,7 @@ class TransactionEditingViewModel @Inject constructor(
     private fun performCreateTransactionAction(
         transactionAction: CreateTransactionAction,
         posedTransaction: CreateTransactionData
-    ) {
-        transactionAction(posedTransaction)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onComplete = { },
-                onError = Timber::e
-            )
-    }
+    ) = transactionAction(posedTransaction)
 
     private fun getCreateTransactionAction(createTransactionData: CreateTransactionData): CreateTransactionAction {
         return if (createTransactionData.id == null) {

@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.core.Single
 import timber.log.Timber
 
 object SampleNetworkService {
+
     private var walletData = AppConfig.walletExample
 
     fun getWalletById(id: Long, idUser: String, idToken: String): Single<WalletData> {
@@ -26,7 +27,6 @@ object SampleNetworkService {
                 2,
                 transactionData.amount,
                 transactionData.transactionType,
-//                categoriesExample.filter { it.id == transactionData.categoryId }[0],
                 categoriesExample[0],
                 transactionData.date,
                 Currency.RUB.name

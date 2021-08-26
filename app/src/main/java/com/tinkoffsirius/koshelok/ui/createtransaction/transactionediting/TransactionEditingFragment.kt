@@ -66,56 +66,12 @@ class TransactionEditingFragment : Fragment() {
     private val navController by lazy { findNavController() }
 
     private fun initListeners() {
-        val c = Calendar.getInstance()
-        val dateTransaction: LocalDateTime = viewModel.transactionDateTime.value!!
-        var year = dateTransaction.year
-        var month = dateTransaction.monthNumber
-        var day = dateTransaction.dayOfMonth
-        var hour = dateTransaction.hour
-        var minute = dateTransaction.minute
-        //val time = "${dateTransaction.hour}:${dateTransaction.minute}"
-        val localDate = LocalDate(year, month, day)
-        //val timeZone = TimeZone.getDefault().id
+        initDateTimePickers()
 
-        binding.transEditingDateLabel.buttonText.text =
-            DateUtils.toUIString(localDate, requireContext())
-        binding.transEditingTimeLabel.buttonText.text = "$hour:$minute"
+        initButtonClickListeners()
+    }
 
-        binding.transEditingDateLabel.setOnClickListener {
-
-            val dpd = DatePickerDialog(requireContext(), { view, dYear, dMonthOfYear, dDayOfMonth ->
-                binding.transEditingDateLabel.buttonText.text =
-                    DateUtils.toUIString(
-                        LocalDate(dYear, dMonthOfYear + 1, dDayOfMonth),
-                        requireContext()
-                    )
-                year = dYear
-                month = dMonthOfYear + 1
-                day = dDayOfMonth
-            }, year, month - 1, day)
-            dpd.show()
-        }
-
-        binding.transEditingTimeLabel.setOnClickListener {
-
-            Instant.fromEpochMilliseconds(c.timeInMillis)
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, pHour, pMinute ->
-                c.set(Calendar.HOUR_OF_DAY, pHour)
-                c.set(Calendar.MINUTE, pMinute)
-                binding.transEditingTimeLabel.buttonText.text =
-                    SimpleDateFormat("HH:mm").format(c.time)
-                hour = pHour
-                minute = pMinute
-            }
-            TimePickerDialog(
-                requireContext(),
-                timeSetListener,
-                c.get(Calendar.HOUR_OF_DAY),
-                c.get(Calendar.MINUTE),
-                true
-            ).show()
-        }
-
+    private fun initButtonClickListeners() {
         binding.toolbar.setNavigationOnClickListener {
             navController.popBackStack()
         }
@@ -131,11 +87,77 @@ class TransactionEditingFragment : Fragment() {
         binding.transCategoryLabel.setOnClickListener {
             navController.navigate(R.id.action_transactionEditingFragment_to_transactionCategoryFragment)
         }
+    }
+
+    private fun initDateTimePickers() {
+        val c = Calendar.getInstance()
+        val dateTransaction: LocalDateTime = viewModel.transactionDateTime
+        val year = dateTransaction.year
+        val month = dateTransaction.monthNumber
+        val day = dateTransaction.dayOfMonth
+        val hour = dateTransaction.hour
+        val minute = dateTransaction.minute
+        val localDate = LocalDate(year, month, day)
+
+        binding.transEditingDateLabel.buttonText.text =
+            DateUtils.toUIString(localDate, requireContext())
+        binding.transEditingTimeLabel.buttonText.text = String.format("%2d:%2d", hour, minute)
+
+        binding.transEditingDateLabel.setOnClickListener {
+            showDatePickerDialog(year, month, day).show()
+        }
+
+        binding.transEditingTimeLabel.setOnClickListener {
+            showTimePickerDialog(c, hour, minute)
+        }
 
         binding.createTransactionButton.setOnClickListener {
             viewModel.updateDate(LocalDateTime(year, month, day, hour, minute, 0, 0))
             viewModel.saveTransaction()
-            navController.navigate(R.id.action_transactionEditingFragment_to_mainFragment)
+                .observe(viewLifecycleOwner) {
+                    navController.navigate(R.id.action_transactionEditingFragment_to_mainFragment)
+                }
         }
+    }
+
+    private fun showTimePickerDialog(c: Calendar, hour: Int, minute: Int) {
+        var hour1 = hour
+        var minute1 = minute
+        Instant.fromEpochMilliseconds(c.timeInMillis)
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, pHour, pMinute ->
+            c.set(Calendar.HOUR_OF_DAY, pHour)
+            c.set(Calendar.MINUTE, pMinute)
+            binding.transEditingTimeLabel.buttonText.text =
+                SimpleDateFormat("HH:mm").format(c.time)
+            hour1 = pHour
+            minute1 = pMinute
+        }
+        TimePickerDialog(
+            requireContext(),
+            timeSetListener,
+            c.get(Calendar.HOUR_OF_DAY),
+            c.get(Calendar.MINUTE),
+            true
+        ).show()
+    }
+
+    private fun showDatePickerDialog(
+        year: Int,
+        month: Int,
+        day: Int
+    ): DatePickerDialog {
+        var year1 = year
+        var month1 = month
+        var day1 = day
+        return DatePickerDialog(requireContext(), { view, dYear, dMonthOfYear, dDayOfMonth ->
+            binding.transEditingDateLabel.buttonText.text =
+                DateUtils.toUIString(
+                    LocalDate(dYear, dMonthOfYear + 1, dDayOfMonth),
+                    requireContext()
+                )
+            year1 = dYear
+            month1 = dMonthOfYear + 1
+            day1 = dDayOfMonth
+        }, year1, month1 - 1, day1)
     }
 }

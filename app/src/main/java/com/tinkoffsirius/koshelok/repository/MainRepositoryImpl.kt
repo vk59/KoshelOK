@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class MainRepositoryImpl @Inject constructor(): MainRepository {
+class MainRepositoryImpl @Inject constructor() : MainRepository {
 
     @Inject
     lateinit var walletService: WalletService
