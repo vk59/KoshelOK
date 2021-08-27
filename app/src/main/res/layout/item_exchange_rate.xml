@@ -15,7 +15,7 @@
         android:textColor="@color/black50"
         android:fontFamily="@font/roboto"
         android:layout_marginEnd="4dp"
-        android:text="USD" />
+        android:text="VAL" />
 
     <TextView
         android:id="@+id/rate"
@@ -24,12 +24,12 @@
         android:textColor="@color/black"
         android:textSize="@dimen/currency_text_size"
         android:layout_marginEnd="4dp"
-        android:text="74,32"/>
+        android:text="--.--"/>
 
     <ImageView
         android:id="@+id/isUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_less"
+        android:src="@drawable/ic_more"
         android:layout_gravity="center"/>
 </LinearLayout>
