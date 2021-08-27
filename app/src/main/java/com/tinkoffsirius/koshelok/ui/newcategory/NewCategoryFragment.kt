@@ -97,6 +97,7 @@ class NewCategoryFragment : Fragment() {
                 ),
                 selectedColor = Color.RED,
                 listener = { color ->
+                    Log.d("TAG" , color.toString())
                     viewModel.updateNewCategoryColor(color)
                 })
                 .show(requireActivity().supportFragmentManager)

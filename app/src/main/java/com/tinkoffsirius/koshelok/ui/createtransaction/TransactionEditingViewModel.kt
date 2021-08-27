@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.config.toCategory
 import com.tinkoffsirius.koshelok.config.toCreateTransactionData
 import com.tinkoffsirius.koshelok.entities.Category
+import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.entities.TransactionType
 import com.tinkoffsirius.koshelok.repository.TransactionEditingRepository
@@ -47,6 +48,7 @@ class TransactionEditingViewModel @Inject constructor(
     private val disposable: CompositeDisposable = CompositeDisposable()
 
     init {
+
         disposable += transactionSharedRepository.getTransaction()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -65,7 +67,9 @@ class TransactionEditingViewModel @Inject constructor(
                 val dateFormat = "$defaultDataTime:00"
                 posedTransaction.toCreateTransactionData(
                     walletId,
-                    dateFormat
+                    dateFormat,
+                    //Получить и передать валюту текущего кошелька
+                    Currency.RUB
                 )
             }
             .flatMapCompletable { createTransactionData ->
@@ -91,6 +95,22 @@ class TransactionEditingViewModel @Inject constructor(
         this.defaultDataTime = newDate
         transactionDateTime = newDate
     }
+
+//    fun updateTransactionCurrencyType(currencyType: String): LiveData<Unit> {
+//        val ld = MutableLiveData<Unit>()
+//
+//        disposable += transactionSharedRepository.getTransaction()
+//            .map { it.copy() }
+//            .doOnSuccess { transaction.value = it }
+//            .flatMapCompletable { transactionSharedRepository.saveTransaction(it) }
+//            .subscribeBy(
+//                onComplete = { ld.value = Unit },
+//                onError = Timber::e
+//            )
+//
+//        return ld
+//    }
+
 
     fun updateTransactionType(type: String): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
