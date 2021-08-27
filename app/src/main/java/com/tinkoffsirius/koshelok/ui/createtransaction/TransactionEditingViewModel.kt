@@ -68,8 +68,7 @@ class TransactionEditingViewModel @Inject constructor(
                 posedTransaction.toCreateTransactionData(
                     walletId,
                     dateFormat,
-                    //Получить и передать валюту текущего кошелька
-                    Currency.RUB
+                    CurrentCurrency.currency
                 )
             }
             .flatMapCompletable { createTransactionData ->
@@ -95,22 +94,6 @@ class TransactionEditingViewModel @Inject constructor(
         this.defaultDataTime = newDate
         transactionDateTime = newDate
     }
-
-//    fun updateTransactionCurrencyType(currencyType: String): LiveData<Unit> {
-//        val ld = MutableLiveData<Unit>()
-//
-//        disposable += transactionSharedRepository.getTransaction()
-//            .map { it.copy() }
-//            .doOnSuccess { transaction.value = it }
-//            .flatMapCompletable { transactionSharedRepository.saveTransaction(it) }
-//            .subscribeBy(
-//                onComplete = { ld.value = Unit },
-//                onError = Timber::e
-//            )
-//
-//        return ld
-//    }
-
 
     fun updateTransactionType(type: String): LiveData<Unit> {
         val ld = MutableLiveData<Unit>()
@@ -192,4 +175,9 @@ class TransactionEditingViewModel @Inject constructor(
     override fun onCleared() {
         disposable.dispose()
     }
+}
+
+// Bad solution
+object CurrentCurrency {
+    var currency = Currency.RUB
 }

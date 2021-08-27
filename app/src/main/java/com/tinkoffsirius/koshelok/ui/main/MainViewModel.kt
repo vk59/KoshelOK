@@ -3,12 +3,14 @@ package com.tinkoffsirius.koshelok.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.config.toMainItemTransaction
+import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.entities.PosedTransaction
 import com.tinkoffsirius.koshelok.repository.MainRepository
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.WalletData
 import com.tinkoffsirius.koshelok.repository.shared.AccountSharedRepository
 import com.tinkoffsirius.koshelok.repository.shared.PosedTransactionSharedRepository
+import com.tinkoffsirius.koshelok.ui.createtransaction.CurrentCurrency
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
 import com.tinkoffsirius.koshelok.utils.Event
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -116,6 +118,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun createNewMainItemList(walletData: WalletData): List<MainItem> {
+        CurrentCurrency.currency = Currency.valueOf(walletData.currencyType)
         val items: MutableList<MainItem> = createHeaderInList(walletData)
         val transactions = walletData.transactions.map { it.toMainItemTransaction() }
 
