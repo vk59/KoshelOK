@@ -92,7 +92,7 @@ class MainFragment : Fragment() {
         sequence.setConfig(config)
 
         sequence.addSequenceItem(
-            binding.recyclerView.getChildAt(0),
+            binding.toolbar,
             "Здесь находится информация о данном кошельке", "ПОНЯТНО"
         )
 

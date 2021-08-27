@@ -15,6 +15,7 @@ import com.tinkoffsirius.koshelok.R
 import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentWalletListBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
+import com.tinkoffsirius.koshelok.entities.Currency
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletItem
 import com.tinkoffsirius.koshelok.ui.walletlist.adapters.WalletRecyclerAdapter
 import com.tinkoffsirius.koshelok.utils.DeleteDialog
@@ -74,7 +75,8 @@ class WalletListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val contextThemeWrapper: Context = ContextThemeWrapper(requireContext(), R.style.Theme_Koshelok_Wallet)
+        val contextThemeWrapper: Context =
+            ContextThemeWrapper(requireContext(), R.style.Theme_Koshelok_Wallet)
 
         val localInflater = inflater.cloneInContext(contextThemeWrapper)
 
@@ -143,6 +145,35 @@ class WalletListFragment : Fragment() {
         binding.swipeLayout.setOnRefreshListener {
             walletListViewModel.updateUserInfo()
         }
+
+        walletListViewModel.currencyData.observe(viewLifecycleOwner) {
+            with(binding) {
+                usdExchange.currencyName.text = Currency.USD.name
+                usdExchange.rate.text = it.usd.slice(0..4)
+                if (it.usdUp) {
+                    usdExchange.isUp.setImageResource(R.drawable.ic_more)
+                } else {
+                    usdExchange.isUp.setImageResource(R.drawable.ic_less)
+                }
+
+                eurExchange.currencyName.text = Currency.EUR.name
+                eurExchange.rate.text = it.eur.slice(0..4)
+                if (it.eurUp) {
+                    eurExchange.isUp.setImageResource(R.drawable.ic_more)
+                } else {
+                    eurExchange.isUp.setImageResource(R.drawable.ic_less)
+                }
+
+                gbpExchange.currencyName.text = "GBP"
+                gbpExchange.rate.text = it.gbp.slice(0..4)
+                if (it.gbpUp) {
+                    gbpExchange.isUp.setImageResource(R.drawable.ic_more)
+                } else {
+                    gbpExchange.isUp.setImageResource(R.drawable.ic_less)
+                }
+            }
+        }
+
         walletListViewModel.status.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is Event.Success -> {

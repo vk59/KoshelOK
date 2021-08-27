@@ -48,4 +48,7 @@ interface WalletService {
 
     @DELETE("wallet/")
     fun deleteWalletById(@Header("id") idWallet: Long): Completable
+
+    @GET("rate/")
+    fun getExchangeCurrency(): Single<CurrencyData>
 }

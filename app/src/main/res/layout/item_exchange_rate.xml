@@ -18,6 +18,7 @@
         android:text="USD" />
 
     <TextView
+        android:id="@+id/rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
@@ -26,6 +27,7 @@
         android:text="74,32"/>
 
     <ImageView
+        android:id="@+id/isUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_less"

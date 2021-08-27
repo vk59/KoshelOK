@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinkoffsirius.koshelok.entities.NewWallet
 import com.tinkoffsirius.koshelok.repository.WalletListRepository
+import com.tinkoffsirius.koshelok.repository.entities.CurrencyData
 import com.tinkoffsirius.koshelok.repository.entities.UserInfo
 import com.tinkoffsirius.koshelok.repository.entities.UserInfoWallets
 import com.tinkoffsirius.koshelok.repository.entities.WalletDataItem
@@ -17,6 +18,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.kotlin.zipWith
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -34,6 +36,8 @@ class WalletListViewModel @Inject constructor(
     val isThereWallets = MutableLiveData<Boolean>()
 
     val status: MutableLiveData<Event> = MutableLiveData(Event.Success())
+
+    val currencyData = MutableLiveData<CurrencyData>()
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
@@ -83,11 +87,12 @@ class WalletListViewModel @Inject constructor(
     private fun updateUserInfo(userId: Long, token: String): Disposable {
         status.postValue(Event.Loading())
         return walletRepository.getUserInfoWallets(idUser = userId, idToken = token)
+            .zipWith(walletRepository.getExchangeCurrency())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = { userInfoWallets ->
-                    updateViewModel(userInfoWallets)
+                onSuccess = { (userInfoWallets, currencyData) ->
+                    updateViewModel(userInfoWallets, currencyData)
                 },
                 onError = {
                     status.postValue(Event.Error(it))
@@ -95,10 +100,11 @@ class WalletListViewModel @Inject constructor(
             )
     }
 
-    private fun updateViewModel(userInfoWallets: UserInfoWallets) {
+    private fun updateViewModel(userInfoWallets: UserInfoWallets, currencyData: CurrencyData) {
         status.postValue(Event.Success())
         isThereWallets.postValue(userInfoWallets.wallets.isNotEmpty())
         items.postValue(createNewWalletItemList(userInfoWallets.wallets))
+        this.currencyData.postValue(currencyData)
         userInfoBalance.postValue(
             UserInfoBalance(
                 "${userInfoWallets.overallBalance} RUB",

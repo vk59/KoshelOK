@@ -104,7 +104,7 @@
                     layout="@layout/item_exchange_rate" />
 
                 <include
-                    android:id="@+id/gbrExchange"
+                    android:id="@+id/gbp_exchange"
                     layout="@layout/item_exchange_rate" />
 
             </LinearLayout>
