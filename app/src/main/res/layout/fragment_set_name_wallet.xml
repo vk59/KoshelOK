@@ -15,18 +15,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:title="@string/set_name_wallet"
-        app:titleTextColor="@color/black"/>
+        app:titleTextColor="@color/black" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputWalletName"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="12dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:hint="@string/set_wallet_name_field"
         app:boxStrokeColor="@color/edit_text_border"
         app:hintTextColor="@color/edit_text_hint"
@@ -39,15 +39,16 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/walletNameEdit"
             android:layout_width="match_parent"
-            android:focusableInTouchMode="true"
             android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/edit_text_border"
+            android:focusableInTouchMode="true"
+            android:inputType="textCapWords"
+            android:maxLength="18"
             android:textColor="@color/black"
+            app:boxStrokeColor="@color/edit_text_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            android:inputType="textCapWords"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,9 +59,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/button_margin"
         android:backgroundTint="@color/black"
+        android:enabled="true"
         android:fontFamily="@font/roboto"
         android:text="@string/set_sum_fragment_button_text"
-        android:enabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
