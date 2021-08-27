@@ -9,6 +9,8 @@
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/drawable/ic_selected_black_arrow.xml" value="0.28229166666666666" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_category_name.xml" value="0.1" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_new_category.xml" value="0.4" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_new_type.xml" value="0.1" />
+        <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_on_boarding.xml" value="0.1" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_operation_type.xml" value="0.1" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_set_currency.xml" value="0.25416666666666665" />
         <entry key="..\:/AndProject/KoshelOK/app/src/main/res/layout/fragment_set_limit_wallet.xml" value="0.25416666666666665" />

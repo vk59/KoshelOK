@@ -15,8 +15,10 @@ import com.tinkoffsirius.koshelok.appComponent
 import com.tinkoffsirius.koshelok.databinding.FragmentMainBinding
 import com.tinkoffsirius.koshelok.di.modules.ViewModelFactory
 import com.tinkoffsirius.koshelok.ui.createtransaction.TransactionEditingViewModel
+import com.tinkoffsirius.koshelok.ui.createtransaction.transactioncategory.adapters.TransactionCategorySelectedItem
 import com.tinkoffsirius.koshelok.ui.main.adapters.MainRecyclerAdapter
 import com.tinkoffsirius.koshelok.ui.main.adapters.model.MainItem
+import com.tinkoffsirius.koshelok.ui.newcategory.adapters.NewCategorySelectedItem
 import com.tinkoffsirius.koshelok.utils.DeleteDialog
 import com.tinkoffsirius.koshelok.utils.ErrorSnackbarFactory
 import com.tinkoffsirius.koshelok.utils.Event
@@ -146,6 +148,8 @@ class MainFragment : Fragment() {
             onBackPressed()
         }
         binding.buttonAdd.setOnClickListener {
+            TransactionCategorySelectedItem.itemNumber = -1
+            NewCategorySelectedItem.itemNumber = 0
             viewModelTransactionEditing.removeTransaction()
             navController.navigate(R.id.action_mainFragment_to_setSumFragment)
         }

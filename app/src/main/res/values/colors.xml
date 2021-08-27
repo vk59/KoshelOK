@@ -10,6 +10,11 @@
     <color name="white60">#99FFFFFF</color>
     
     <color name="main_blue">#5833EE</color>
+    <color name="blue">#339FEE</color>
+    <color name="brown">#994747</color>
+    <color name="pink">#EE33BA</color>
+    <color name="orange">#EEA333</color>
+    <color name="purple">#91397D</color>
     <color name="selected_blue">#2E0EAE</color>
     <color name="black50">#80000000</color>
     <color name="grey">#299C9C9C</color>

@@ -14,7 +14,8 @@ import kotlinx.datetime.toLocalDateTime
 
 fun PosedTransaction.toCreateTransactionData(
     walletId: Long,
-    dateTime: String
+    dateTime: String,
+    currencyType: Currency
 ): CreateTransactionData {
     return CreateTransactionData(
         id,
@@ -23,7 +24,7 @@ fun PosedTransaction.toCreateTransactionData(
         type,
         category.id!!,
         dateTime.toString(),
-        Currency.RUB.name
+        currencyType.name
     )
 }
 

@@ -3,6 +3,7 @@ package com.tinkoffsirius.koshelok.ui.newcategory
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +63,8 @@ class NewCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.newCategory.observe(viewLifecycleOwner, {
-            binding.transNameLabel.buttonText.text = if(it.categoryName == "") "Новая категория" else it.categoryName
+            binding.transNameLabel.buttonText.text =
+                if (it.categoryName == "") "Новая категория" else it.categoryName
             binding.transTypeLabel.buttonText.text =
                 when (it.typeName.name) {
                     TransactionType.INCOME.name -> "Доход"
@@ -70,13 +72,6 @@ class NewCategoryFragment : Fragment() {
                     else -> "Выберите тип"
                 }
         })
-
-        viewModel.updateNewCategoryColor(-10996754)
-
-//        viewModelTransactionEditing.transaction.observe(viewLifecycleOwner, {
-//            binding.transTypeLabel.buttonText.text =
-//                if (it.type == TransactionType.INCOME.name) "Доход" else "Расход"
-//        })
 
         val recyclerAdapter = NewCategoriesAdapter {
             viewModel.updateNewCategoryIcon(iconId = it.imgId)
@@ -93,10 +88,16 @@ class NewCategoryFragment : Fragment() {
                 colors = intArrayOf(
                     requireContext().getColor(R.color.red),
                     requireContext().getColor(R.color.green),
-                    requireContext().getColor(R.color.main_blue)
+                    requireContext().getColor(R.color.main_blue),
+                    requireContext().getColor(R.color.pink),
+                    requireContext().getColor(R.color.brown),
+                    requireContext().getColor(R.color.blue),
+                    requireContext().getColor(R.color.purple),
+                    requireContext().getColor(R.color.orange)
                 ),
                 selectedColor = Color.RED,
                 listener = { color ->
+                    Log.d("TAG" , color.toString())
                     viewModel.updateNewCategoryColor(color)
                 })
                 .show(requireActivity().supportFragmentManager)

@@ -43,7 +43,9 @@ class NewCategoryViewModel @Inject constructor(
 
     init {
         updateState()
-
+        updateNewCategoryColor(-10996754)
+        updateNewCategoryName("Новая категория")
+        updateNewCategoryIcon(Icons.CLOTHES.drawableId)
         icons.value = Icons.values().map { Icon(it.drawableId, -10996754) }
     }
 

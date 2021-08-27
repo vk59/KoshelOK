@@ -46,5 +46,5 @@ class NewCategoriesAdapter(private val setSelected: (icon: Icon) -> Unit) :
 }
 
 object NewCategorySelectedItem {
-    var itemNumber: Int? = -1
+    var itemNumber: Int? = 0
 }
