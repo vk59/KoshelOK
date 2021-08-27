@@ -1,10 +1,14 @@
 package com.tinkoffsirius.koshelok.ui.walletlist.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkoffsirius.koshelok.databinding.ItemWalletBinding
+import java.util.*
 
 class WalletRecyclerAdapter(
     private val onItemClick: (WalletItem) -> Unit,
@@ -25,12 +29,35 @@ class WalletRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return WalletViewHolder(
+        val holder = WalletViewHolder(
             ItemWalletBinding.inflate(inflater, parent, false),
             deleteItem,
             editItem,
             watchItem
         )
+
+        holder.itemView.setOnTouchListener(object : View.OnTouchListener {
+            private val MAX_CLICK_DURATION = 70
+            private var startClickTime: Long = 0
+
+            @SuppressLint("ClickableViewAccessibility")
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        startClickTime = Calendar.getInstance().timeInMillis
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        val clickDuration: Long =
+                            Calendar.getInstance().timeInMillis - startClickTime
+                        if (clickDuration < MAX_CLICK_DURATION) {
+                            onItemClick(diff.currentList[holder.adapterPosition])
+                        }
+                    }
+                }
+                return false
+            }
+        })
+        return holder
     }
 
     override fun onViewRecycled(holder: WalletViewHolder) {
@@ -41,10 +68,6 @@ class WalletRecyclerAdapter(
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
         val walletItem = diff.currentList[position]
         holder.bind(walletItem)
-        holder.itemView.setOnLongClickListener {
-            onItemClick(walletItem)
-            false
-        }
     }
 
     override fun getItemViewType(position: Int): Int {

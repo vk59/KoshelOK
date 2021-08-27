@@ -33,18 +33,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:button="@drawable/ic_selected_arrow"
+            android:button="@drawable/radio_button"
             android:layoutDirection="rtl"
-            android:text="@string/operation_type_fragment_radio_button_1" />
+            android:text="@string/operation_type_fragment_radio_button_1"
+            app:useMaterialThemeColors="false" />
 
         <RadioButton
             android:id="@+id/operation_type_radio_button_expense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:button="@drawable/ic_selected_arrow"
+            android:button="@drawable/radio_button"
             android:layoutDirection="rtl"
-            android:text="@string/operation_type_fragment_radio_button_2" />
+            android:text="@string/operation_type_fragment_radio_button_2"
+            app:useMaterialThemeColors="false"/>
 
 
     </RadioGroup>
